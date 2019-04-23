@@ -1,0 +1,16 @@
+C:\projects\AutoRender\trunk\build\AutoRender.Service.exe.config
+C:\projects\AutoRender\trunk\build\AutoRender.Service.exe
+C:\projects\AutoRender\trunk\build\AutoRender.Service.pdb
+C:\projects\AutoRender\trunk\AutoRender.Service\obj\Debug\AutoRender.Service.csprojAssemblyReference.cache
+C:\projects\AutoRender\trunk\AutoRender.Service\obj\Debug\AutoRender.Service.csproj.CoreCompileInputs.cache
+C:\projects\AutoRender\trunk\AutoRender.Service\obj\Debug\AutoRender.Service.csproj.CopyComplete
+C:\projects\AutoRender\trunk\AutoRender.Service\obj\Debug\AutoRender.Service.exe
+C:\projects\AutoRender\trunk\AutoRender.Service\obj\Debug\AutoRender.Service.pdb
+C:\projects\MLT.AutoRender\src\AutoRender.Service\obj\Debug\AutoRender.Service.csprojAssemblyReference.cache
+C:\projects\MLT.AutoRender\src\AutoRender.Service\obj\Debug\AutoRender.Service.csproj.CoreCompileInputs.cache
+C:\projects\MLT.AutoRender\src\build\AutoRender.Service.exe.config
+C:\projects\MLT.AutoRender\src\build\AutoRender.Service.exe
+C:\projects\MLT.AutoRender\src\build\AutoRender.Service.pdb
+C:\projects\MLT.AutoRender\src\AutoRender.Service\obj\Debug\AutoRender.Service.csproj.CopyComplete
+C:\projects\MLT.AutoRender\src\AutoRender.Service\obj\Debug\AutoRender.Service.exe
+C:\projects\MLT.AutoRender\src\AutoRender.Service\obj\Debug\AutoRender.Service.pdb

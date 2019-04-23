@@ -1,0 +1,10 @@
+C:\projects\MLT.AutoRender\src\AutoRender.Data\bin\Debug\AutoRender.Data.dll
+C:\projects\MLT.AutoRender\src\AutoRender.Data\bin\Debug\AutoRender.Data.pdb
+C:\projects\MLT.AutoRender\src\AutoRender.Data\bin\Debug\CrazyUtils.dll
+C:\projects\MLT.AutoRender\src\AutoRender.Data\bin\Debug\INIFileParser.dll
+C:\projects\MLT.AutoRender\src\AutoRender.Data\bin\Debug\CrazyUtils.pdb
+C:\projects\MLT.AutoRender\src\AutoRender.Data\obj\Debug\AutoRender.Data.csprojAssemblyReference.cache
+C:\projects\MLT.AutoRender\src\AutoRender.Data\obj\Debug\AutoRender.Data.csproj.CoreCompileInputs.cache
+C:\projects\MLT.AutoRender\src\AutoRender.Data\obj\Debug\AutoRender.Data.csproj.CopyComplete
+C:\projects\MLT.AutoRender\src\AutoRender.Data\obj\Debug\AutoRender.Data.dll
+C:\projects\MLT.AutoRender\src\AutoRender.Data\obj\Debug\AutoRender.Data.pdb

@@ -1,0 +1,715 @@
+{
+  "version": 3,
+  "targets": {
+    ".NETFramework,Version=v4.6": {
+      "DirectShowLib/1.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/DirectShowLib.dll": {}
+        },
+        "runtime": {
+          "lib/DirectShowLib.dll": {}
+        }
+      },
+      "ini-parser/2.5.2": {
+        "type": "package",
+        "compile": {
+          "lib/net20/INIFileParser.dll": {}
+        },
+        "runtime": {
+          "lib/net20/INIFileParser.dll": {}
+        }
+      },
+      "MediaToolkit/1.1.0.1": {
+        "type": "package",
+        "compile": {
+          "lib/net40/MediaToolkit.dll": {}
+        },
+        "runtime": {
+          "lib/net40/MediaToolkit.dll": {}
+        }
+      },
+      "AutoRender.Data/1.0.0": {
+        "type": "project",
+        "dependencies": {
+          "CrazyUtils": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/AutoRender.Data.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/AutoRender.Data.dll": {}
+        }
+      },
+      "AutoRender.Messaging/1.0.0": {
+        "type": "project",
+        "dependencies": {
+          "AutoRender.Data": "1.0.0",
+          "CrazyUtils": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/AutoRender.Messaging.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/AutoRender.Messaging.dll": {}
+        }
+      },
+      "AutoRender.MLT/1.0.0": {
+        "type": "project",
+        "dependencies": {
+          "AutoRender.Data": "1.0.0",
+          "AutoRender.Video": "1.0.0",
+          "CrazyUtils": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/AutoRender.MLT.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/AutoRender.MLT.dll": {}
+        }
+      },
+      "AutoRender.Server/1.0.0": {
+        "type": "project",
+        "dependencies": {
+          "AutoRender.Data": "1.0.0",
+          "AutoRender.Messaging": "1.0.0",
+          "AutoRender.Subscription.Messaging": "1.0.0",
+          "AutoRender.Workspace": "1.0.0",
+          "CrazyUtils": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/AutoRender.Server.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/AutoRender.Server.dll": {}
+        }
+      },
+      "AutoRender.Subscription.Messaging/1.0.0": {
+        "type": "project",
+        "dependencies": {
+          "AutoRender.Data": "1.0.0",
+          "AutoRender.Messaging": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/AutoRender.Subscription.Messaging.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/AutoRender.Subscription.Messaging.dll": {}
+        }
+      },
+      "AutoRender.Video/1.0.0": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.6",
+        "dependencies": {
+          "AutoRender.Data": "1.0.0",
+          "CrazyUtils": "1.0.0",
+          "DirectShowLib": "1.0.0",
+          "MediaToolkit": "1.1.0.1"
+        },
+        "compile": {
+          "bin/placeholder/AutoRender.Video.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/AutoRender.Video.dll": {}
+        }
+      },
+      "AutoRender.Workspace/1.0.0": {
+        "type": "project",
+        "dependencies": {
+          "AutoRender.Data": "1.0.0",
+          "AutoRender.MLT": "1.0.0",
+          "AutoRender.Video": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/AutoRender.Workspace.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/AutoRender.Workspace.dll": {}
+        }
+      },
+      "CrazyUtils/1.0.0": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.6",
+        "dependencies": {
+          "ini-parser": "2.5.2"
+        },
+        "compile": {
+          "bin/placeholder/CrazyUtils.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/CrazyUtils.dll": {}
+        }
+      }
+    },
+    ".NETFramework,Version=v4.6/win": {
+      "DirectShowLib/1.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/DirectShowLib.dll": {}
+        },
+        "runtime": {
+          "lib/DirectShowLib.dll": {}
+        }
+      },
+      "ini-parser/2.5.2": {
+        "type": "package",
+        "compile": {
+          "lib/net20/INIFileParser.dll": {}
+        },
+        "runtime": {
+          "lib/net20/INIFileParser.dll": {}
+        }
+      },
+      "MediaToolkit/1.1.0.1": {
+        "type": "package",
+        "compile": {
+          "lib/net40/MediaToolkit.dll": {}
+        },
+        "runtime": {
+          "lib/net40/MediaToolkit.dll": {}
+        }
+      },
+      "AutoRender.Data/1.0.0": {
+        "type": "project",
+        "dependencies": {
+          "CrazyUtils": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/AutoRender.Data.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/AutoRender.Data.dll": {}
+        }
+      },
+      "AutoRender.Messaging/1.0.0": {
+        "type": "project",
+        "dependencies": {
+          "AutoRender.Data": "1.0.0",
+          "CrazyUtils": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/AutoRender.Messaging.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/AutoRender.Messaging.dll": {}
+        }
+      },
+      "AutoRender.MLT/1.0.0": {
+        "type": "project",
+        "dependencies": {
+          "AutoRender.Data": "1.0.0",
+          "AutoRender.Video": "1.0.0",
+          "CrazyUtils": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/AutoRender.MLT.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/AutoRender.MLT.dll": {}
+        }
+      },
+      "AutoRender.Server/1.0.0": {
+        "type": "project",
+        "dependencies": {
+          "AutoRender.Data": "1.0.0",
+          "AutoRender.Messaging": "1.0.0",
+          "AutoRender.Subscription.Messaging": "1.0.0",
+          "AutoRender.Workspace": "1.0.0",
+          "CrazyUtils": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/AutoRender.Server.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/AutoRender.Server.dll": {}
+        }
+      },
+      "AutoRender.Subscription.Messaging/1.0.0": {
+        "type": "project",
+        "dependencies": {
+          "AutoRender.Data": "1.0.0",
+          "AutoRender.Messaging": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/AutoRender.Subscription.Messaging.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/AutoRender.Subscription.Messaging.dll": {}
+        }
+      },
+      "AutoRender.Video/1.0.0": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.6",
+        "dependencies": {
+          "AutoRender.Data": "1.0.0",
+          "CrazyUtils": "1.0.0",
+          "DirectShowLib": "1.0.0",
+          "MediaToolkit": "1.1.0.1"
+        },
+        "compile": {
+          "bin/placeholder/AutoRender.Video.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/AutoRender.Video.dll": {}
+        }
+      },
+      "AutoRender.Workspace/1.0.0": {
+        "type": "project",
+        "dependencies": {
+          "AutoRender.Data": "1.0.0",
+          "AutoRender.MLT": "1.0.0",
+          "AutoRender.Video": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/AutoRender.Workspace.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/AutoRender.Workspace.dll": {}
+        }
+      },
+      "CrazyUtils/1.0.0": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.6",
+        "dependencies": {
+          "ini-parser": "2.5.2"
+        },
+        "compile": {
+          "bin/placeholder/CrazyUtils.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/CrazyUtils.dll": {}
+        }
+      }
+    },
+    ".NETFramework,Version=v4.6/win-x64": {
+      "DirectShowLib/1.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/DirectShowLib.dll": {}
+        },
+        "runtime": {
+          "lib/DirectShowLib.dll": {}
+        }
+      },
+      "ini-parser/2.5.2": {
+        "type": "package",
+        "compile": {
+          "lib/net20/INIFileParser.dll": {}
+        },
+        "runtime": {
+          "lib/net20/INIFileParser.dll": {}
+        }
+      },
+      "MediaToolkit/1.1.0.1": {
+        "type": "package",
+        "compile": {
+          "lib/net40/MediaToolkit.dll": {}
+        },
+        "runtime": {
+          "lib/net40/MediaToolkit.dll": {}
+        }
+      },
+      "AutoRender.Data/1.0.0": {
+        "type": "project",
+        "dependencies": {
+          "CrazyUtils": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/AutoRender.Data.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/AutoRender.Data.dll": {}
+        }
+      },
+      "AutoRender.Messaging/1.0.0": {
+        "type": "project",
+        "dependencies": {
+          "AutoRender.Data": "1.0.0",
+          "CrazyUtils": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/AutoRender.Messaging.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/AutoRender.Messaging.dll": {}
+        }
+      },
+      "AutoRender.MLT/1.0.0": {
+        "type": "project",
+        "dependencies": {
+          "AutoRender.Data": "1.0.0",
+          "AutoRender.Video": "1.0.0",
+          "CrazyUtils": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/AutoRender.MLT.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/AutoRender.MLT.dll": {}
+        }
+      },
+      "AutoRender.Server/1.0.0": {
+        "type": "project",
+        "dependencies": {
+          "AutoRender.Data": "1.0.0",
+          "AutoRender.Messaging": "1.0.0",
+          "AutoRender.Subscription.Messaging": "1.0.0",
+          "AutoRender.Workspace": "1.0.0",
+          "CrazyUtils": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/AutoRender.Server.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/AutoRender.Server.dll": {}
+        }
+      },
+      "AutoRender.Subscription.Messaging/1.0.0": {
+        "type": "project",
+        "dependencies": {
+          "AutoRender.Data": "1.0.0",
+          "AutoRender.Messaging": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/AutoRender.Subscription.Messaging.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/AutoRender.Subscription.Messaging.dll": {}
+        }
+      },
+      "AutoRender.Video/1.0.0": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.6",
+        "dependencies": {
+          "AutoRender.Data": "1.0.0",
+          "CrazyUtils": "1.0.0",
+          "DirectShowLib": "1.0.0",
+          "MediaToolkit": "1.1.0.1"
+        },
+        "compile": {
+          "bin/placeholder/AutoRender.Video.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/AutoRender.Video.dll": {}
+        }
+      },
+      "AutoRender.Workspace/1.0.0": {
+        "type": "project",
+        "dependencies": {
+          "AutoRender.Data": "1.0.0",
+          "AutoRender.MLT": "1.0.0",
+          "AutoRender.Video": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/AutoRender.Workspace.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/AutoRender.Workspace.dll": {}
+        }
+      },
+      "CrazyUtils/1.0.0": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.6",
+        "dependencies": {
+          "ini-parser": "2.5.2"
+        },
+        "compile": {
+          "bin/placeholder/CrazyUtils.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/CrazyUtils.dll": {}
+        }
+      }
+    },
+    ".NETFramework,Version=v4.6/win-x86": {
+      "DirectShowLib/1.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/DirectShowLib.dll": {}
+        },
+        "runtime": {
+          "lib/DirectShowLib.dll": {}
+        }
+      },
+      "ini-parser/2.5.2": {
+        "type": "package",
+        "compile": {
+          "lib/net20/INIFileParser.dll": {}
+        },
+        "runtime": {
+          "lib/net20/INIFileParser.dll": {}
+        }
+      },
+      "MediaToolkit/1.1.0.1": {
+        "type": "package",
+        "compile": {
+          "lib/net40/MediaToolkit.dll": {}
+        },
+        "runtime": {
+          "lib/net40/MediaToolkit.dll": {}
+        }
+      },
+      "AutoRender.Data/1.0.0": {
+        "type": "project",
+        "dependencies": {
+          "CrazyUtils": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/AutoRender.Data.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/AutoRender.Data.dll": {}
+        }
+      },
+      "AutoRender.Messaging/1.0.0": {
+        "type": "project",
+        "dependencies": {
+          "AutoRender.Data": "1.0.0",
+          "CrazyUtils": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/AutoRender.Messaging.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/AutoRender.Messaging.dll": {}
+        }
+      },
+      "AutoRender.MLT/1.0.0": {
+        "type": "project",
+        "dependencies": {
+          "AutoRender.Data": "1.0.0",
+          "AutoRender.Video": "1.0.0",
+          "CrazyUtils": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/AutoRender.MLT.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/AutoRender.MLT.dll": {}
+        }
+      },
+      "AutoRender.Server/1.0.0": {
+        "type": "project",
+        "dependencies": {
+          "AutoRender.Data": "1.0.0",
+          "AutoRender.Messaging": "1.0.0",
+          "AutoRender.Subscription.Messaging": "1.0.0",
+          "AutoRender.Workspace": "1.0.0",
+          "CrazyUtils": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/AutoRender.Server.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/AutoRender.Server.dll": {}
+        }
+      },
+      "AutoRender.Subscription.Messaging/1.0.0": {
+        "type": "project",
+        "dependencies": {
+          "AutoRender.Data": "1.0.0",
+          "AutoRender.Messaging": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/AutoRender.Subscription.Messaging.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/AutoRender.Subscription.Messaging.dll": {}
+        }
+      },
+      "AutoRender.Video/1.0.0": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.6",
+        "dependencies": {
+          "AutoRender.Data": "1.0.0",
+          "CrazyUtils": "1.0.0",
+          "DirectShowLib": "1.0.0",
+          "MediaToolkit": "1.1.0.1"
+        },
+        "compile": {
+          "bin/placeholder/AutoRender.Video.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/AutoRender.Video.dll": {}
+        }
+      },
+      "AutoRender.Workspace/1.0.0": {
+        "type": "project",
+        "dependencies": {
+          "AutoRender.Data": "1.0.0",
+          "AutoRender.MLT": "1.0.0",
+          "AutoRender.Video": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/AutoRender.Workspace.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/AutoRender.Workspace.dll": {}
+        }
+      },
+      "CrazyUtils/1.0.0": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.6",
+        "dependencies": {
+          "ini-parser": "2.5.2"
+        },
+        "compile": {
+          "bin/placeholder/CrazyUtils.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/CrazyUtils.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "DirectShowLib/1.0.0": {
+      "sha512": "oWwOk9Lj8JIMWPsfx8bUbJ/uWhHlRKpMaU5oVf8Kl9SLMhmrnr0kXg0ebDv3oOmKxZ/D1yrmw+x7UGmgMqUxFA==",
+      "type": "package",
+      "path": "directshowlib/1.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "directshowlib.1.0.0.nupkg.sha512",
+        "directshowlib.nuspec",
+        "lib/DirectShowLib.dll",
+        "lib/DirectShowLib.pdb"
+      ]
+    },
+    "ini-parser/2.5.2": {
+      "sha512": "hp3gKmC/14+6eKLgv7Jd1Z7OV86lO+tNfOXr/stQbwmRhdQuXVSvrRAuAe7G5+lwhkov0XkqZ8/bn1PYWMx6eg==",
+      "type": "package",
+      "path": "ini-parser/2.5.2",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "ini-parser.2.5.2.nupkg.sha512",
+        "ini-parser.nuspec",
+        "lib/net20/INIFileParser.dll",
+        "lib/net20/INIFileParser.dll.mdb",
+        "lib/net20/INIFileParser.xml"
+      ]
+    },
+    "MediaToolkit/1.1.0.1": {
+      "sha512": "R3u+udQOUDBGUzx4wOHsp6yiSLMdJle7a9E7JK4/btL4w/pdXAmNHP2JMe2Fpt35kLjKNE74oNKUM1hc6RceIA==",
+      "type": "package",
+      "path": "mediatoolkit/1.1.0.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "build/readme.txt",
+        "lib/net20/MediaToolkit.dll",
+        "lib/net40/MediaToolkit.dll",
+        "mediatoolkit.1.1.0.1.nupkg.sha512",
+        "mediatoolkit.nuspec"
+      ]
+    },
+    "AutoRender.Data/1.0.0": {
+      "type": "project",
+      "path": "../AutoRender.Data/AutoRender.Data.csproj",
+      "msbuildProject": "../AutoRender.Data/AutoRender.Data.csproj"
+    },
+    "AutoRender.Messaging/1.0.0": {
+      "type": "project",
+      "path": "../AutoRender.Messaging/AutoRender.Messaging.csproj",
+      "msbuildProject": "../AutoRender.Messaging/AutoRender.Messaging.csproj"
+    },
+    "AutoRender.MLT/1.0.0": {
+      "type": "project",
+      "path": "../AutoRender.MLT/AutoRender.MLT.csproj",
+      "msbuildProject": "../AutoRender.MLT/AutoRender.MLT.csproj"
+    },
+    "AutoRender.Server/1.0.0": {
+      "type": "project",
+      "path": "../AutoRender.Server/AutoRender.Server.csproj",
+      "msbuildProject": "../AutoRender.Server/AutoRender.Server.csproj"
+    },
+    "AutoRender.Subscription.Messaging/1.0.0": {
+      "type": "project",
+      "path": "../AutoRender.Subscription.Messaging/AutoRender.Subscription.Messaging.csproj",
+      "msbuildProject": "../AutoRender.Subscription.Messaging/AutoRender.Subscription.Messaging.csproj"
+    },
+    "AutoRender.Video/1.0.0": {
+      "type": "project",
+      "path": "../AutoRender.Video/AutoRender.Video.csproj",
+      "msbuildProject": "../AutoRender.Video/AutoRender.Video.csproj"
+    },
+    "AutoRender.Workspace/1.0.0": {
+      "type": "project",
+      "path": "../AutoRender.Workspace/AutoRender.Workspace.csproj",
+      "msbuildProject": "../AutoRender.Workspace/AutoRender.Workspace.csproj"
+    },
+    "CrazyUtils/1.0.0": {
+      "type": "project",
+      "path": "../CrazyUtils/CrazyUtils.csproj",
+      "msbuildProject": "../CrazyUtils/CrazyUtils.csproj"
+    }
+  },
+  "projectFileDependencyGroups": {
+    ".NETFramework,Version=v4.6": [
+      "AutoRender.Server >= 1.0.0",
+      "ini-parser >= 2.5.2"
+    ]
+  },
+  "packageFolders": {
+    "C:\\Users\\crazy\\.nuget\\packages\\": {},
+    "C:\\ProgramData\\Xamarin\\NuGet\\": {}
+  },
+  "project": {
+    "version": "1.0.0",
+    "restore": {
+      "projectUniqueName": "C:\\projects\\MLT.AutoRender\\src\\AutoRender.Service\\AutoRender.Service.csproj",
+      "projectName": "AutoRender.Service",
+      "projectPath": "C:\\projects\\MLT.AutoRender\\src\\AutoRender.Service\\AutoRender.Service.csproj",
+      "packagesPath": "C:\\Users\\crazy\\.nuget\\packages\\",
+      "outputPath": "C:\\projects\\MLT.AutoRender\\src\\AutoRender.Service\\obj\\",
+      "projectStyle": "PackageReference",
+      "skipContentFileWrite": true,
+      "fallbackFolders": [
+        "C:\\ProgramData\\Xamarin\\NuGet\\"
+      ],
+      "configFilePaths": [
+        "C:\\Users\\crazy\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+      ],
+      "originalTargetFrameworks": [
+        "net46"
+      ],
+      "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "https://api.nuget.org/v3/index.json": {}
+      },
+      "frameworks": {
+        "net46": {
+          "projectReferences": {
+            "C:\\projects\\MLT.AutoRender\\src\\AutoRender.Server\\AutoRender.Server.csproj": {
+              "projectPath": "C:\\projects\\MLT.AutoRender\\src\\AutoRender.Server\\AutoRender.Server.csproj"
+            }
+          }
+        }
+      }
+    },
+    "frameworks": {
+      "net46": {
+        "dependencies": {
+          "ini-parser": {
+            "target": "Package",
+            "version": "[2.5.2, )"
+          }
+        }
+      }
+    },
+    "runtimes": {
+      "win": {
+        "#import": []
+      },
+      "win-x64": {
+        "#import": []
+      },
+      "win-x86": {
+        "#import": []
+      }
+    }
+  }
+}
