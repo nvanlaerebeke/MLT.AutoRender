@@ -53,13 +53,13 @@
       <Project>{59d58f7e-ec28-4e70-bbc3-5d02b577bd11}</Project>
       <Name>AutoRender.Data</Name>
     </ProjectReference>
+    <ProjectReference Include="..\AutoRender.Messaging\AutoRender.Messaging.csproj">
+      <Project>{35101fce-d2b0-437b-b694-b0e04dd0bc3c}</Project>
+      <Name>AutoRender.Messaging</Name>
+    </ProjectReference>
     <ProjectReference Include="..\AutoRender.MLT\AutoRender.MLT.csproj">
       <Project>{0e9a1e35-ba14-4823-83fb-7bdc64c18f91}</Project>
       <Name>AutoRender.MLT</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\AutoRender.Shared\AutoRender.Messaging.csproj">
-      <Project>{35101fce-d2b0-437b-b694-b0e04dd0bc3c}</Project>
-      <Name>AutoRender.Messaging</Name>
     </ProjectReference>
     <ProjectReference Include="..\AutoRender.Workspace\AutoRender.Workspace.csproj">
       <Project>{5abe5f5a-6fd0-4db7-a045-00ed6e91c473}</Project>

@@ -42,10 +42,8 @@
     <Compile Include="Monitor\ProjectMonitor.cs" />
     <Compile Include="Monitor\WorkspaceMonitor.cs" />
     <Compile Include="WorkspaceContainer.cs" />
-    <Compile Include="WorkspaceAction.cs" />
     <Compile Include="WorkspaceFactory.cs" />
     <Compile Include="WorkspaceItem.cs" />
-    <Compile Include="WorkspaceUpdatedEventArgs.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />

@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.28803.156
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoRender.Service", "AutoRender.Service\AutoRender.Service.csproj", "{5982A638-65ED-457B-9D82-4C64BD292B7C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoRender.Messaging", "AutoRender.Shared\AutoRender.Messaging.csproj", "{35101FCE-D2B0-437B-B694-B0E04DD0BC3C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoRender.Messaging", "AutoRender.Messaging\AutoRender.Messaging.csproj", "{35101FCE-D2B0-437B-B694-B0E04DD0BC3C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrazyUtils", "CrazyUtils\CrazyUtils.csproj", "{232647D8-8CA8-4F02-91B9-72EE17E99DD1}"
 EndProject

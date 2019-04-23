@@ -42,6 +42,7 @@
     <Compile Include="WorkspaceAction.cs" />
     <Compile Include="WorkspaceItem.cs" />
     <Compile Include="WorkspaceItemUpdate.cs" />
+    <Compile Include="WorkspaceUpdatedEventArgs.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CrazyUtils\CrazyUtils.csproj">

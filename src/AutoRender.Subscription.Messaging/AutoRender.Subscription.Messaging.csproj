@@ -49,7 +49,11 @@
     <Compile Include="UnSubscribe\WorkspaceUpdatedUnSubscribe.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AutoRender.Shared\AutoRender.Messaging.csproj">
+    <ProjectReference Include="..\AutoRender.Data\AutoRender.Data.csproj">
+      <Project>{59d58f7e-ec28-4e70-bbc3-5d02b577bd11}</Project>
+      <Name>AutoRender.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AutoRender.Messaging\AutoRender.Messaging.csproj">
       <Project>{35101fce-d2b0-437b-b694-b0e04dd0bc3c}</Project>
       <Name>AutoRender.Messaging</Name>
     </ProjectReference>

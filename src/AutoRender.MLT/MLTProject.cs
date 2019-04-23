@@ -172,5 +172,21 @@ namespace AutoRender.MLT {
         }
 
         #endregion Equals
+
+        public Project GetProject() {
+            return new Project() {
+                Progress = Progress,
+                ProjectName = Name,
+                SourceExists = SourceExists,
+                SourceIsValid = SourceIsValid,
+                SourceName = Path.GetFileName(SourcePath),
+                StartTime = StartTime,
+                Status = Status,
+                TargetExists = TargetExists,
+                TargetIsValid = TargetIsValid,
+                TargetName = TargetName,
+                TimeTaken = TimeTaken
+            };
+        }
     }
 }

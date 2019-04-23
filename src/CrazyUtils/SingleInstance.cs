@@ -13,7 +13,10 @@ namespace CrazyUtils {
         private Mutex _mutex;
 
         private void InitMutex() {
-            string appGuid = ((GuidAttribute)Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(GuidAttribute), false).GetValue(0)).Value;
+            string appGuid = Assembly.GetExecutingAssembly().FullName;
+            try {
+                appGuid = ((GuidAttribute)Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(GuidAttribute), false).GetValue(0)).Value;
+            } catch { }
             string mutexId = string.Format("Global\\{{{0}}}", appGuid);
             _mutex = new Mutex(false, mutexId);
 

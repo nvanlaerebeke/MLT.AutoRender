@@ -1,6 +1,5 @@
 ﻿using AutoRender.Data;
 using AutoRender.MLT;
-using AutoRender.Video;
 using System;
 using System.Collections.Generic;
 
@@ -26,7 +25,12 @@ namespace AutoRender.Workspace {
         }
 
         private void Project_ProjectChanged(object sender, EventArgs e) {
-            Updated?.Invoke(this, new List<WorkspaceUpdatedEventArgs> { new WorkspaceUpdatedEventArgs(this, WorkspaceAction.Updated) });
+            Updated?.Invoke(this, new List<WorkspaceUpdatedEventArgs> { new WorkspaceUpdatedEventArgs(new Data.WorkspaceItem() {
+                Final = Final,
+                ID = ID,
+                New = New,
+                Project = Project.GetProject()
+            }, WorkspaceAction.Updated) });
         }
 
         #region Update Methods

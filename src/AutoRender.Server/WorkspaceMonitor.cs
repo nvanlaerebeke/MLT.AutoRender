@@ -1,4 +1,5 @@
-﻿using AutoRender.Subscription.Messaging.Handlers;
+﻿using AutoRender.Data;
+using AutoRender.Subscription.Messaging.Handlers;
 using AutoRender.Workspace;
 using ILogging;
 using Logging;
@@ -25,7 +26,7 @@ namespace AutoRender.Server {
             Task.Run(() => {
                 Log.Debug($"Workspace was updated, notifying clients...");
                 MessagingFactory.Provider.GetSubscriptionHandler<WorkspaceUpdatedHandler>().Notify(
-                    new Subscription.Messaging.Request.SendWorkspaceUpdatedRequest()
+                    new Subscription.Messaging.Request.SendWorkspaceUpdatedRequest(e)
                 );
             });
         }

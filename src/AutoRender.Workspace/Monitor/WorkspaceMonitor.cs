@@ -69,10 +69,24 @@ namespace AutoRender.Workspace.Monitor {
                                     WorkspaceItems.Where(i => i.Project != null && i.Project.TargetPath == e.Args.FullPath).ToList().ForEach(i => {
                                         i.Project.Reload();
                                         i.UpdateFinal(null);
-                                        lstChanges.Add(new WorkspaceUpdatedEventArgs(i, WorkspaceAction.Updated));
+                                        lstChanges.Add(new WorkspaceUpdatedEventArgs(
+                                            new Data.WorkspaceItem() {
+                                                Final = i.Final,
+                                                ID = i.ID,
+                                                New = i.New,
+                                                Project = i.Project.GetProject()
+                                            }, WorkspaceAction.Updated)
+                                        );
                                     });
                                     WorkspaceItems.Where(i => i.Project == null && i.Final != null && i.Final.Path == e.Args.FullPath).ToList().ForEach(i => {
-                                        lstChanges.Add(new WorkspaceUpdatedEventArgs(i, WorkspaceAction.Deleted));
+                                        lstChanges.Add(new WorkspaceUpdatedEventArgs(
+                                            new Data.WorkspaceItem() {
+                                                Final = i.Final,
+                                                ID = i.ID,
+                                                New = i.New,
+                                                Project = i.Project.GetProject()
+                                            }, WorkspaceAction.Deleted)
+                                        );
                                         WorkspaceItems.Remove(i);
                                     });
                                 }
@@ -94,7 +108,7 @@ namespace AutoRender.Workspace.Monitor {
                             }
                             break;
 
-                        case System.IO.WatcherChangeTypes.Changed:
+                        case WatcherChangeTypes.Changed:
                             WorkspaceItems.Where(i =>
                                 (
                                     i.Project != null &&
@@ -103,14 +117,23 @@ namespace AutoRender.Workspace.Monitor {
                                    i.Final != null && i.Final.Path == e.Args.FullPath
                                 )
                             ).ToList().ForEach(i => {
-                                lstChanges.Add(new WorkspaceUpdatedEventArgs(i, WorkspaceAction.Updated));
+                                lstChanges.Add(new WorkspaceUpdatedEventArgs(
+                                    new Data.WorkspaceItem() {
+                                        Final = i.Final,
+                                        ID = i.ID,
+                                        New = i.New,
+                                        Project = i.Project.GetProject()
+                                    },
+                                    WorkspaceAction.Updated));
                             });
                             break;
                     }
                 });
+
                 if (blnRequireReload) {
                     Load();
                 }
+
                 if (lstChanges.Count > 0) {
                     Updated?.Invoke(this, lstChanges);
                 }
@@ -139,7 +162,15 @@ namespace AutoRender.Workspace.Monitor {
                                 foreach (var objItem in objItems) {
                                     if (objItem.New == null && objItem.Final == null) {
                                         WorkspaceItems.Remove(objItem);
-                                        lstChanges.Add(new WorkspaceUpdatedEventArgs(objItem, WorkspaceAction.Deleted));
+                                        lstChanges.Add(new WorkspaceUpdatedEventArgs(
+                                            new Data.WorkspaceItem() {
+                                                Final = objItem.Final,
+                                                ID = objItem.ID,
+                                                New = objItem.New,
+                                                Project = objItem.Project.GetProject()
+                                            }
+                                            , WorkspaceAction.Deleted)
+                                        );
                                     }
                                 }
                             }
@@ -155,11 +186,28 @@ namespace AutoRender.Workspace.Monitor {
                                 if (lstItemsToRemove.Count > 0) {
                                     lstItemsToRemove.ForEach(i => {
                                         i.UpdateProject(objProject);
-                                        lstChanges.Add(new WorkspaceUpdatedEventArgs(i, WorkspaceAction.Updated));
+                                        lstChanges.Add(new WorkspaceUpdatedEventArgs(
+                                            new Data.WorkspaceItem() {
+                                                Final = i.Final,
+                                                ID = i.ID,
+                                                New = i.New,
+                                                Project = i.Project.GetProject()
+                                            }
+                                            , WorkspaceAction.Updated)
+                                        );
                                     });
                                 } else {
                                     var objWSItem = new WorkspaceItem(objProject, VideoCache.Get(objProject.Config.SourceFile), VideoCache.Get(objProject.Config.TargetPath));
-                                    lstChanges.Add(new WorkspaceUpdatedEventArgs(objWSItem, WorkspaceAction.New));
+                                    lstChanges.Add(new WorkspaceUpdatedEventArgs(
+                                        new Data.WorkspaceItem() {
+                                            Final = objWSItem.Final,
+                                            ID = objWSItem.ID,
+                                            New = objWSItem.New,
+                                            Project = objWSItem.Project.GetProject()
+                                        },
+                                        WorkspaceAction.New
+                                    )
+                                    );
                                     WorkspaceItems.Add(objWSItem);
                                 }
                             }
@@ -196,14 +244,30 @@ namespace AutoRender.Workspace.Monitor {
                             var wsl = WorkspaceItems.Where(i => (i.Project != null && i.Project.TargetPath.Equals(e.Args.FullPath)) || (i.New != null && i.New.Path.Equals(e.Args.FullPath))).ToList();
                             wsl.ForEach(i => {
                                 i.UpdateNew(VideoCache.Get(e.Args.FullPath));
-                                lstChanges.Add(new WorkspaceUpdatedEventArgs(i, WorkspaceAction.Updated));
+                                lstChanges.Add(new WorkspaceUpdatedEventArgs(
+                                    new Data.WorkspaceItem() {
+                                        Final = i.Final,
+                                        ID = i.ID,
+                                        New = i.New,
+                                        Project = i.Project.GetProject()
+                                    },
+                                    WorkspaceAction.Updated
+                                ));
                             });
                             if (wsl.Count == 0) { // -- new file not linked to any project
                                 var objItem = new WorkspaceItem(null, VideoCache.Get(e.Args.FullPath), null);
                                 lock (WorkspaceItems) {
                                     WorkspaceItems.Add(objItem);
                                 }
-                                lstChanges.Add(new WorkspaceUpdatedEventArgs(objItem, WorkspaceAction.New));
+                                lstChanges.Add(new WorkspaceUpdatedEventArgs(
+                                    new Data.WorkspaceItem() {
+                                        Final = objItem.Final,
+                                        ID = objItem.ID,
+                                        New = objItem.New,
+                                        Project = objItem.Project.GetProject()
+                                    },
+                                    WorkspaceAction.New)
+                                );
                             }
                             break;
 
@@ -216,7 +280,12 @@ namespace AutoRender.Workspace.Monitor {
                                 lock (WorkspaceItems) {
                                     WorkspaceItems.Remove(i);
                                 }
-                                lstChanges.Add(new WorkspaceUpdatedEventArgs(i, WorkspaceAction.Deleted));
+                                lstChanges.Add(new WorkspaceUpdatedEventArgs(new Data.WorkspaceItem() {
+                                    Final = i.Final,
+                                    ID = i.ID,
+                                    New = i.New,
+                                    Project = i.Project.GetProject()
+                                }, WorkspaceAction.Deleted));
                             });
                             break;
 
@@ -285,13 +354,23 @@ namespace AutoRender.Workspace.Monitor {
                     if (objWsItem == null) {
                         objWsItem = new WorkspaceItem(objProject, objNew, objFinal);
                         WorkspaceItems.Add(objWsItem);
-                        lstChanges.Add(new WorkspaceUpdatedEventArgs(objWsItem, WorkspaceAction.New));
+                        lstChanges.Add(new WorkspaceUpdatedEventArgs(new Data.WorkspaceItem() {
+                            Final = objWsItem.Final,
+                            ID = objWsItem.ID,
+                            New = objWsItem.New,
+                            Project = objWsItem.Project.GetProject()
+                        }, WorkspaceAction.New));
                     } else {
                         if (
                             objWsItem.UpdateNew(objNew) ||
                             objWsItem.UpdateFinal(objFinal)
                         ) {
-                            lstChanges.Add(new WorkspaceUpdatedEventArgs(objWsItem, WorkspaceAction.Updated));
+                            lstChanges.Add(new WorkspaceUpdatedEventArgs(new Data.WorkspaceItem() {
+                                Final = objWsItem.Final,
+                                ID = objWsItem.ID,
+                                New = objWsItem.New,
+                                Project = objWsItem.Project.GetProject()
+                            }, WorkspaceAction.Updated));
                         }
                     }
                 }
@@ -316,14 +395,24 @@ namespace AutoRender.Workspace.Monitor {
                     if (objWsItem == null) {
                         objWsItem = new WorkspaceItem(null, objNewVideoInfo, objFinal);
                         WorkspaceItems.Add(objWsItem);
-                        lstChanges.Add(new WorkspaceUpdatedEventArgs(objWsItem, WorkspaceAction.New));
+                        lstChanges.Add(new WorkspaceUpdatedEventArgs(new Data.WorkspaceItem() {
+                            Final = objWsItem.Final,
+                            ID = objWsItem.ID,
+                            New = objWsItem.New,
+                            Project = objWsItem.Project.GetProject()
+                        }, WorkspaceAction.New));
                     } else {
                         if (
                             objWsItem.UpdateNew(objNewVideoInfo) ||
                             objWsItem.UpdateProject(null) ||
                             objWsItem.UpdateFinal(objFinal)
                         ) {
-                            lstChanges.Add(new WorkspaceUpdatedEventArgs(objWsItem, WorkspaceAction.Updated));
+                            lstChanges.Add(new WorkspaceUpdatedEventArgs(new Data.WorkspaceItem() {
+                                Final = objWsItem.Final,
+                                ID = objWsItem.ID,
+                                New = objWsItem.New,
+                                Project = objWsItem.Project.GetProject()
+                            }, WorkspaceAction.Updated));
                         }
                     }
                 }
@@ -336,14 +425,24 @@ namespace AutoRender.Workspace.Monitor {
                     if (objWsItem == null) {
                         objWsItem = new WorkspaceItem(null, null, VideoCache.Get(objFinal.FullName));
                         WorkspaceItems.Add(objWsItem);
-                        lstChanges.Add(new WorkspaceUpdatedEventArgs(objWsItem, WorkspaceAction.New));
+                        lstChanges.Add(new WorkspaceUpdatedEventArgs(new Data.WorkspaceItem() {
+                            Final = objWsItem.Final,
+                            ID = objWsItem.ID,
+                            New = objWsItem.New,
+                            Project = objWsItem.Project.GetProject()
+                        }, WorkspaceAction.New));
                     } else {
                         if (
                             objWsItem.UpdateNew(null) ||
                             objWsItem.UpdateProject(null) ||
                             objWsItem.UpdateFinal(objFinalVideoInfo)
                         ) {
-                            lstChanges.Add(new WorkspaceUpdatedEventArgs(objWsItem, WorkspaceAction.Updated));
+                            lstChanges.Add(new WorkspaceUpdatedEventArgs(new Data.WorkspaceItem() {
+                                Final = objWsItem.Final,
+                                ID = objWsItem.ID,
+                                New = objWsItem.New,
+                                Project = objWsItem.Project.GetProject()
+                            }, WorkspaceAction.Updated));
                         }
                     }
                 }

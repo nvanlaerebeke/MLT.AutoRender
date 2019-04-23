@@ -17,19 +17,7 @@ namespace AutoRender.Messaging.Action.Request {
             Workspace.WorkspaceFactory.Get("").WorkspaceItems.ForEach(i =>
                 lstItems.Add(new WorkspaceItem() {
                     ID = i.ID,
-                    Project = new Project() {
-                        Progress = i.Project.Progress,
-                        ProjectName = i.Project.Name,
-                        SourceExists = i.Project.SourceExists,
-                        SourceIsValid = i.Project.SourceIsValid,
-                        SourceName = System.IO.Path.GetFileName(i.Project.SourcePath),
-                        StartTime = i.Project.StartTime,
-                        Status = i.Project.Status,
-                        TargetExists = i.Project.TargetExists,
-                        TargetIsValid = i.Project.TargetIsValid,
-                        TargetName = i.Project.TargetName,
-                        TimeTaken = i.Project.TimeTaken
-                    },
+                    Project = i.Project.GetProject(),
                     New = i.New,
                     Final = i.Final
                 })
