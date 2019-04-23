@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{A35BCC76-8ECE-436F-8DF7-B7AA12DA13BB}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>AutoRender.Messaging.Actions</RootNamespace>
+    <AssemblyName>AutoRender.Messaging.Actions</AssemblyName>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Mitto">
+      <HintPath>..\..\bin\Mitto.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="Microsoft.CSharp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Request\GetStatusRequestAction.cs" />
+    <Compile Include="Request\JobPauseRequestAction.cs" />
+    <Compile Include="Request\JobStartRequestAction.cs" />
+    <Compile Include="Request\JobStopRequestAction.cs" />
+    <Compile Include="Request\ReloadRequestAction.cs" />
+    <Compile Include="Request\UpdateProjectSourceRequestAction.cs" />
+    <Compile Include="Request\UpdateProjectTargetRequestAction.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AutoRender.Data\AutoRender.Data.csproj">
+      <Project>{59d58f7e-ec28-4e70-bbc3-5d02b577bd11}</Project>
+      <Name>AutoRender.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AutoRender.Messaging\AutoRender.Messaging.csproj">
+      <Project>{35101fce-d2b0-437b-b694-b0e04dd0bc3c}</Project>
+      <Name>AutoRender.Messaging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AutoRender.MLT\AutoRender.MLT.csproj">
+      <Project>{0e9a1e35-ba14-4823-83fb-7bdc64c18f91}</Project>
+      <Name>AutoRender.MLT</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AutoRender.Workspace\AutoRender.Workspace.csproj">
+      <Project>{5abe5f5a-6fd0-4db7-a045-00ed6e91c473}</Project>
+      <Name>AutoRender.Workspace</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
