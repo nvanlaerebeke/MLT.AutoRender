@@ -2,13 +2,12 @@
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Collections.Generic;
-using ILogging;
-using Logging;
+using log4net;
 
 namespace AutoRender.Lib.Helpers {
 
     public class ErrorHandler {
-        private readonly ILog Log = LogFactory.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+        private readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
         public void Start() {
             // Add the event handler for handling non-UI thread exceptions to the event.

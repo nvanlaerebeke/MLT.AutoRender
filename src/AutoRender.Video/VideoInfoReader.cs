@@ -1,6 +1,5 @@
 ﻿using AutoRender.Data;
-using ILogging;
-using Logging;
+using log4net;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -16,7 +15,7 @@ namespace AutoRender.Video {
     /// ToDo: Split the reading/getting of all settings and creating/returning of the VideoInfo
     /// </summary>
     public class VideoInfoReader {
-        private readonly ILog Log = LogFactory.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+        private readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         private readonly string Path;
 
         private Process Process;

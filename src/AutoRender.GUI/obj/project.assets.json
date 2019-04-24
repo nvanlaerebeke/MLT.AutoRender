@@ -40,6 +40,15 @@
           "lib/net20/INIFileParser.dll": {}
         }
       },
+      "log4net/2.0.8": {
+        "type": "package",
+        "compile": {
+          "lib/net45-full/log4net.dll": {}
+        },
+        "runtime": {
+          "lib/net45-full/log4net.dll": {}
+        }
+      },
       "MahApps.Metro/1.6.5": {
         "type": "package",
         "dependencies": {
@@ -96,6 +105,15 @@
           "lib/net40/MediaToolkit.dll": {}
         }
       },
+      "Newtonsoft.Json/11.0.2": {
+        "type": "package",
+        "compile": {
+          "lib/net45/Newtonsoft.Json.dll": {}
+        },
+        "runtime": {
+          "lib/net45/Newtonsoft.Json.dll": {}
+        }
+      },
       "ShowMeTheXAML/1.0.12": {
         "type": "package",
         "compile": {
@@ -126,11 +144,27 @@
           "bin/placeholder/AutoRender.Data.dll": {}
         }
       },
+      "AutoRender.Logging/1.0.0": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.6",
+        "dependencies": {
+          "log4net": "2.0.8"
+        },
+        "compile": {
+          "bin/placeholder/AutoRender.Logging.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/AutoRender.Logging.dll": {}
+        }
+      },
       "AutoRender.Messaging/1.0.0": {
         "type": "project",
+        "framework": ".NETFramework,Version=v4.6",
         "dependencies": {
           "AutoRender.Data": "1.0.0",
-          "CrazyUtils": "1.0.0"
+          "CrazyUtils": "1.0.0",
+          "Newtonsoft.Json": "11.0.2",
+          "log4net": "2.0.8"
         },
         "compile": {
           "bin/placeholder/AutoRender.Messaging.dll": {}
@@ -141,9 +175,11 @@
       },
       "AutoRender.Subscription.Messaging/1.0.0": {
         "type": "project",
+        "framework": ".NETFramework,Version=v4.6",
         "dependencies": {
           "AutoRender.Data": "1.0.0",
-          "AutoRender.Messaging": "1.0.0"
+          "AutoRender.Messaging": "1.0.0",
+          "log4net": "2.0.8"
         },
         "compile": {
           "bin/placeholder/AutoRender.Subscription.Messaging.dll": {}
@@ -205,6 +241,15 @@
           "lib/net20/INIFileParser.dll": {}
         }
       },
+      "log4net/2.0.8": {
+        "type": "package",
+        "compile": {
+          "lib/net45-full/log4net.dll": {}
+        },
+        "runtime": {
+          "lib/net45-full/log4net.dll": {}
+        }
+      },
       "MahApps.Metro/1.6.5": {
         "type": "package",
         "dependencies": {
@@ -261,6 +306,15 @@
           "lib/net40/MediaToolkit.dll": {}
         }
       },
+      "Newtonsoft.Json/11.0.2": {
+        "type": "package",
+        "compile": {
+          "lib/net45/Newtonsoft.Json.dll": {}
+        },
+        "runtime": {
+          "lib/net45/Newtonsoft.Json.dll": {}
+        }
+      },
       "ShowMeTheXAML/1.0.12": {
         "type": "package",
         "compile": {
@@ -291,11 +345,27 @@
           "bin/placeholder/AutoRender.Data.dll": {}
         }
       },
+      "AutoRender.Logging/1.0.0": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.6",
+        "dependencies": {
+          "log4net": "2.0.8"
+        },
+        "compile": {
+          "bin/placeholder/AutoRender.Logging.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/AutoRender.Logging.dll": {}
+        }
+      },
       "AutoRender.Messaging/1.0.0": {
         "type": "project",
+        "framework": ".NETFramework,Version=v4.6",
         "dependencies": {
           "AutoRender.Data": "1.0.0",
-          "CrazyUtils": "1.0.0"
+          "CrazyUtils": "1.0.0",
+          "Newtonsoft.Json": "11.0.2",
+          "log4net": "2.0.8"
         },
         "compile": {
           "bin/placeholder/AutoRender.Messaging.dll": {}
@@ -306,9 +376,11 @@
       },
       "AutoRender.Subscription.Messaging/1.0.0": {
         "type": "project",
+        "framework": ".NETFramework,Version=v4.6",
         "dependencies": {
           "AutoRender.Data": "1.0.0",
-          "AutoRender.Messaging": "1.0.0"
+          "AutoRender.Messaging": "1.0.0",
+          "log4net": "2.0.8"
         },
         "compile": {
           "bin/placeholder/AutoRender.Subscription.Messaging.dll": {}
@@ -370,6 +442,15 @@
           "lib/net20/INIFileParser.dll": {}
         }
       },
+      "log4net/2.0.8": {
+        "type": "package",
+        "compile": {
+          "lib/net45-full/log4net.dll": {}
+        },
+        "runtime": {
+          "lib/net45-full/log4net.dll": {}
+        }
+      },
       "MahApps.Metro/1.6.5": {
         "type": "package",
         "dependencies": {
@@ -426,6 +507,15 @@
           "lib/net40/MediaToolkit.dll": {}
         }
       },
+      "Newtonsoft.Json/11.0.2": {
+        "type": "package",
+        "compile": {
+          "lib/net45/Newtonsoft.Json.dll": {}
+        },
+        "runtime": {
+          "lib/net45/Newtonsoft.Json.dll": {}
+        }
+      },
       "ShowMeTheXAML/1.0.12": {
         "type": "package",
         "compile": {
@@ -456,11 +546,27 @@
           "bin/placeholder/AutoRender.Data.dll": {}
         }
       },
+      "AutoRender.Logging/1.0.0": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.6",
+        "dependencies": {
+          "log4net": "2.0.8"
+        },
+        "compile": {
+          "bin/placeholder/AutoRender.Logging.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/AutoRender.Logging.dll": {}
+        }
+      },
       "AutoRender.Messaging/1.0.0": {
         "type": "project",
+        "framework": ".NETFramework,Version=v4.6",
         "dependencies": {
           "AutoRender.Data": "1.0.0",
-          "CrazyUtils": "1.0.0"
+          "CrazyUtils": "1.0.0",
+          "Newtonsoft.Json": "11.0.2",
+          "log4net": "2.0.8"
         },
         "compile": {
           "bin/placeholder/AutoRender.Messaging.dll": {}
@@ -471,9 +577,11 @@
       },
       "AutoRender.Subscription.Messaging/1.0.0": {
         "type": "project",
+        "framework": ".NETFramework,Version=v4.6",
         "dependencies": {
           "AutoRender.Data": "1.0.0",
-          "AutoRender.Messaging": "1.0.0"
+          "AutoRender.Messaging": "1.0.0",
+          "log4net": "2.0.8"
         },
         "compile": {
           "bin/placeholder/AutoRender.Subscription.Messaging.dll": {}
@@ -535,6 +643,15 @@
           "lib/net20/INIFileParser.dll": {}
         }
       },
+      "log4net/2.0.8": {
+        "type": "package",
+        "compile": {
+          "lib/net45-full/log4net.dll": {}
+        },
+        "runtime": {
+          "lib/net45-full/log4net.dll": {}
+        }
+      },
       "MahApps.Metro/1.6.5": {
         "type": "package",
         "dependencies": {
@@ -591,6 +708,15 @@
           "lib/net40/MediaToolkit.dll": {}
         }
       },
+      "Newtonsoft.Json/11.0.2": {
+        "type": "package",
+        "compile": {
+          "lib/net45/Newtonsoft.Json.dll": {}
+        },
+        "runtime": {
+          "lib/net45/Newtonsoft.Json.dll": {}
+        }
+      },
       "ShowMeTheXAML/1.0.12": {
         "type": "package",
         "compile": {
@@ -621,11 +747,27 @@
           "bin/placeholder/AutoRender.Data.dll": {}
         }
       },
+      "AutoRender.Logging/1.0.0": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.6",
+        "dependencies": {
+          "log4net": "2.0.8"
+        },
+        "compile": {
+          "bin/placeholder/AutoRender.Logging.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/AutoRender.Logging.dll": {}
+        }
+      },
       "AutoRender.Messaging/1.0.0": {
         "type": "project",
+        "framework": ".NETFramework,Version=v4.6",
         "dependencies": {
           "AutoRender.Data": "1.0.0",
-          "CrazyUtils": "1.0.0"
+          "CrazyUtils": "1.0.0",
+          "Newtonsoft.Json": "11.0.2",
+          "log4net": "2.0.8"
         },
         "compile": {
           "bin/placeholder/AutoRender.Messaging.dll": {}
@@ -636,9 +778,11 @@
       },
       "AutoRender.Subscription.Messaging/1.0.0": {
         "type": "project",
+        "framework": ".NETFramework,Version=v4.6",
         "dependencies": {
           "AutoRender.Data": "1.0.0",
-          "AutoRender.Messaging": "1.0.0"
+          "AutoRender.Messaging": "1.0.0",
+          "log4net": "2.0.8"
         },
         "compile": {
           "bin/placeholder/AutoRender.Subscription.Messaging.dll": {}
@@ -731,6 +875,30 @@
         "lib/net20/INIFileParser.dll",
         "lib/net20/INIFileParser.dll.mdb",
         "lib/net20/INIFileParser.xml"
+      ]
+    },
+    "log4net/2.0.8": {
+      "sha512": "N41MQGHZImiCfn0cUuSBjZxrcNfIQCuCgQP0rpgB3J/NWponEh3lc1LxJEuIsPAR9Oc1jVvfkNNFCY1C5hf9LA==",
+      "type": "package",
+      "path": "log4net/2.0.8",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net20-full/log4net.dll",
+        "lib/net20-full/log4net.xml",
+        "lib/net35-client/log4net.dll",
+        "lib/net35-client/log4net.xml",
+        "lib/net35-full/log4net.dll",
+        "lib/net35-full/log4net.xml",
+        "lib/net40-client/log4net.dll",
+        "lib/net40-client/log4net.xml",
+        "lib/net40-full/log4net.dll",
+        "lib/net40-full/log4net.xml",
+        "lib/net45-full/log4net.dll",
+        "lib/net45-full/log4net.xml",
+        "lib/netstandard1.3/log4net.dll",
+        "log4net.2.0.8.nupkg.sha512",
+        "log4net.nuspec"
       ]
     },
     "MahApps.Metro/1.6.5": {
@@ -944,6 +1112,36 @@
         "mediatoolkit.nuspec"
       ]
     },
+    "Newtonsoft.Json/11.0.2": {
+      "sha512": "IvJe1pj7JHEsP8B8J8DwlMEx8UInrs/x+9oVY+oCD13jpLu4JbJU2WCIsMRn5C4yW9+DgkaO8uiVE5VHKjpmdQ==",
+      "type": "package",
+      "path": "newtonsoft.json/11.0.2",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.md",
+        "lib/net20/Newtonsoft.Json.dll",
+        "lib/net20/Newtonsoft.Json.xml",
+        "lib/net35/Newtonsoft.Json.dll",
+        "lib/net35/Newtonsoft.Json.xml",
+        "lib/net40/Newtonsoft.Json.dll",
+        "lib/net40/Newtonsoft.Json.xml",
+        "lib/net45/Newtonsoft.Json.dll",
+        "lib/net45/Newtonsoft.Json.xml",
+        "lib/netstandard1.0/Newtonsoft.Json.dll",
+        "lib/netstandard1.0/Newtonsoft.Json.xml",
+        "lib/netstandard1.3/Newtonsoft.Json.dll",
+        "lib/netstandard1.3/Newtonsoft.Json.xml",
+        "lib/netstandard2.0/Newtonsoft.Json.dll",
+        "lib/netstandard2.0/Newtonsoft.Json.xml",
+        "lib/portable-net40+sl5+win8+wp8+wpa81/Newtonsoft.Json.dll",
+        "lib/portable-net40+sl5+win8+wp8+wpa81/Newtonsoft.Json.xml",
+        "lib/portable-net45+win8+wp8+wpa81/Newtonsoft.Json.dll",
+        "lib/portable-net45+win8+wp8+wpa81/Newtonsoft.Json.xml",
+        "newtonsoft.json.11.0.2.nupkg.sha512",
+        "newtonsoft.json.nuspec"
+      ]
+    },
     "ShowMeTheXAML/1.0.12": {
       "sha512": "oPR4alJeT7mYJ+ocSoQvu7JoQKntF1eAI7WaohQDOX2b2U4dS27fCUyjgxO/aK5z6MzsqsgokS68S/qAxh8dxg==",
       "type": "package",
@@ -974,6 +1172,11 @@
       "path": "../AutoRender.Data/AutoRender.Data.csproj",
       "msbuildProject": "../AutoRender.Data/AutoRender.Data.csproj"
     },
+    "AutoRender.Logging/1.0.0": {
+      "type": "project",
+      "path": "../AutoRender.Logging/AutoRender.Logging.csproj",
+      "msbuildProject": "../AutoRender.Logging/AutoRender.Logging.csproj"
+    },
     "AutoRender.Messaging/1.0.0": {
       "type": "project",
       "path": "../AutoRender.Messaging/AutoRender.Messaging.csproj",
@@ -993,6 +1196,7 @@
   "projectFileDependencyGroups": {
     ".NETFramework,Version=v4.6.1": [
       "AutoRender.Data >= 1.0.0",
+      "AutoRender.Logging >= 1.0.0",
       "AutoRender.Messaging >= 1.0.0",
       "AutoRender.Subscription.Messaging >= 1.0.0",
       "CrazyUtils >= 1.0.0",
@@ -1004,7 +1208,8 @@
       "MaterialDesignThemes.MahApps >= 0.0.12",
       "MediaToolkit >= 1.1.0.1",
       "ShowMeTheXAML.MSBuild >= 1.0.12",
-      "ini-parser >= 2.5.2"
+      "ini-parser >= 2.5.2",
+      "log4net >= 2.0.8"
     ]
   },
   "packageFolders": {
@@ -1041,6 +1246,9 @@
           "projectReferences": {
             "C:\\projects\\MLT.AutoRender\\src\\AutoRender.Data\\AutoRender.Data.csproj": {
               "projectPath": "C:\\projects\\MLT.AutoRender\\src\\AutoRender.Data\\AutoRender.Data.csproj"
+            },
+            "C:\\projects\\MLT.AutoRender\\src\\AutoRender.Logging\\AutoRender.Logging.csproj": {
+              "projectPath": "C:\\projects\\MLT.AutoRender\\src\\AutoRender.Logging\\AutoRender.Logging.csproj"
             },
             "C:\\projects\\MLT.AutoRender\\src\\AutoRender.Messaging\\AutoRender.Messaging.csproj": {
               "projectPath": "C:\\projects\\MLT.AutoRender\\src\\AutoRender.Messaging\\AutoRender.Messaging.csproj"
@@ -1093,6 +1301,10 @@
           "ini-parser": {
             "target": "Package",
             "version": "[2.5.2, )"
+          },
+          "log4net": {
+            "target": "Package",
+            "version": "[2.0.8, )"
           }
         }
       }

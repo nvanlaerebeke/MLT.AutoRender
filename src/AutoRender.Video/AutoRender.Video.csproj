@@ -31,9 +31,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Logging">
-      <HintPath>..\Lib\Logging\bin\Logging.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
@@ -49,6 +46,10 @@
     <ProjectReference Include="..\AutoRender.Data\AutoRender.Data.csproj">
       <Project>{59d58f7e-ec28-4e70-bbc3-5d02b577bd11}</Project>
       <Name>AutoRender.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AutoRender.Logging\AutoRender.Logging.csproj">
+      <Project>{d51c4ce3-0473-4ddf-9f0c-b3022e493dbd}</Project>
+      <Name>AutoRender.Logging</Name>
     </ProjectReference>
     <ProjectReference Include="..\CrazyUtils\CrazyUtils.csproj">
       <Project>{232647d8-8ca8-4f02-91b9-72ee17e99dd1}</Project>

@@ -31,12 +31,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Logging, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Lib\Logging\bin\Logging.dll</HintPath>
-    </Reference>
     <Reference Include="Mitto">
-      <HintPath>..\..\bin\Mitto.dll</HintPath>
+      <HintPath>..\Lib\mitto\bin\Mitto.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="Microsoft.CSharp" />
@@ -52,7 +48,11 @@
       <Project>{59d58f7e-ec28-4e70-bbc3-5d02b577bd11}</Project>
       <Name>AutoRender.Data</Name>
     </ProjectReference>
-    <ProjectReference Include="..\AutoRender.Shared\AutoRender.Messaging.csproj">
+    <ProjectReference Include="..\AutoRender.Logging\AutoRender.Logging.csproj">
+      <Project>{d51c4ce3-0473-4ddf-9f0c-b3022e493dbd}</Project>
+      <Name>AutoRender.Logging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AutoRender.Messaging\AutoRender.Messaging.csproj">
       <Project>{35101fce-d2b0-437b-b694-b0e04dd0bc3c}</Project>
       <Name>AutoRender.Messaging</Name>
     </ProjectReference>
@@ -71,6 +71,11 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="log4net">
+      <Version>2.0.8</Version>
+    </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

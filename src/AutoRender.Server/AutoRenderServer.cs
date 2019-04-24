@@ -1,6 +1,8 @@
 ﻿using CrazyUtils;
 using Mitto;
 using AutoRender.Workspace;
+using AutoRender.Logging;
+using log4net;
 
 namespace AutoRender.Server {
 
@@ -9,7 +11,11 @@ namespace AutoRender.Server {
         private readonly WebSocketServer Server;
 
         public AutoRenderServer() {
-            Config.Initialize(new Config.ConfigParams() { });
+            Config.Initialize(
+                new Config.ConfigParams() {
+                    Logger = new MittoLogger(LogManager.GetLogger(typeof(Mitto.Server)))
+                }
+            );
             Server = new WebSocketServer();
 
             WorkspaceMonitor = new WorkspaceMonitor(WorkspaceFactory.Get(""));

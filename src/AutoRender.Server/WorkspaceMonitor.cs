@@ -1,8 +1,7 @@
 ﻿using AutoRender.Data;
 using AutoRender.Subscription.Messaging.Handlers;
 using AutoRender.Workspace;
-using ILogging;
-using Logging;
+using log4net;
 using Mitto.IMessaging;
 using System.Collections.Generic;
 using System.Reflection;
@@ -11,7 +10,7 @@ using System.Threading.Tasks;
 namespace AutoRender.Server {
 
     internal class WorkspaceMonitor {
-        private readonly ILog Log = LogFactory.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+        private readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         private readonly WorkspaceContainer Workspace;
 
         public WorkspaceMonitor(WorkspaceContainer pWorkspace) {

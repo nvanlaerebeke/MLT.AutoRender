@@ -1,7 +1,6 @@
 ﻿using AutoRender.Subscription.Messaging.Request;
 using AutoRender.Subscription.Messaging.UnSubscribe;
-using ILogging;
-using Logging;
+using log4net;
 using Mitto.IMessaging;
 using Mitto.IRouting;
 using Mitto.Messaging.Response;
@@ -17,7 +16,7 @@ namespace AutoRender.Subscription.Messaging.Handlers {
             WorkspaceUpdatedUnSubscribe,
             SendWorkspaceUpdatedRequest
         > {
-        private readonly ILog Log = LogFactory.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+        private readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
         private ConcurrentDictionary<string, IRouter> _dicClients = new ConcurrentDictionary<string, IRouter>();
 

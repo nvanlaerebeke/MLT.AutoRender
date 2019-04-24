@@ -59,9 +59,6 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Logging.Log4Net">
-      <HintPath>..\Lib\Logging\bin\Logging.Log4Net.dll</HintPath>
-    </Reference>
     <Reference Include="Mitto">
       <HintPath>..\Lib\mitto\bin\Mitto.dll</HintPath>
     </Reference>
@@ -202,6 +199,10 @@
       <Project>{59d58f7e-ec28-4e70-bbc3-5d02b577bd11}</Project>
       <Name>AutoRender.Data</Name>
     </ProjectReference>
+    <ProjectReference Include="..\AutoRender.Logging\AutoRender.Logging.csproj">
+      <Project>{d51c4ce3-0473-4ddf-9f0c-b3022e493dbd}</Project>
+      <Name>AutoRender.Logging</Name>
+    </ProjectReference>
     <ProjectReference Include="..\AutoRender.Messaging\AutoRender.Messaging.csproj">
       <Project>{35101fce-d2b0-437b-b694-b0e04dd0bc3c}</Project>
       <Name>AutoRender.Messaging</Name>
@@ -224,6 +225,9 @@
     </PackageReference>
     <PackageReference Include="ini-parser">
       <Version>2.5.2</Version>
+    </PackageReference>
+    <PackageReference Include="log4net">
+      <Version>2.0.8</Version>
     </PackageReference>
     <PackageReference Include="MahApps.Metro">
       <Version>1.6.5</Version>

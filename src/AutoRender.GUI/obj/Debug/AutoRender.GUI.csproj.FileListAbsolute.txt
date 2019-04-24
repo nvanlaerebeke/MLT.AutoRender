@@ -102,17 +102,12 @@ C:\projects\MLT.AutoRender\src\AutoRender.GUI\bin\Debug\AutoRender.Data.dll
 C:\projects\MLT.AutoRender\src\AutoRender.GUI\bin\Debug\AutoRender.Messaging.dll
 C:\projects\MLT.AutoRender\src\AutoRender.GUI\bin\Debug\AutoRender.Subscription.Messaging.dll
 C:\projects\MLT.AutoRender\src\AutoRender.GUI\bin\Debug\CrazyUtils.dll
-C:\projects\MLT.AutoRender\src\AutoRender.GUI\bin\Debug\Logging.Log4Net.dll
 C:\projects\MLT.AutoRender\src\AutoRender.GUI\bin\Debug\Mitto.dll
-C:\projects\MLT.AutoRender\src\AutoRender.GUI\bin\Debug\Logging.dll
-C:\projects\MLT.AutoRender\src\AutoRender.GUI\bin\Debug\log4net.dll
 C:\projects\MLT.AutoRender\src\AutoRender.GUI\bin\Debug\AutoRender.Data.pdb
 C:\projects\MLT.AutoRender\src\AutoRender.GUI\bin\Debug\AutoRender.Messaging.pdb
 C:\projects\MLT.AutoRender\src\AutoRender.GUI\bin\Debug\AutoRender.Subscription.Messaging.pdb
 C:\projects\MLT.AutoRender\src\AutoRender.GUI\bin\Debug\CrazyUtils.pdb
-C:\projects\MLT.AutoRender\src\AutoRender.GUI\bin\Debug\Logging.Log4Net.pdb
 C:\projects\MLT.AutoRender\src\AutoRender.GUI\bin\Debug\Mitto.pdb
-C:\projects\MLT.AutoRender\src\AutoRender.GUI\bin\Debug\Logging.pdb
 C:\projects\MLT.AutoRender\src\AutoRender.GUI\obj\Debug\AutoRender.GUI.csprojAssemblyReference.cache
 C:\projects\MLT.AutoRender\src\AutoRender.GUI\obj\Debug\UserControls\ContextMenuButton.baml
 C:\projects\MLT.AutoRender\src\AutoRender.GUI\obj\Debug\UserControls\ProjectField.baml
@@ -138,3 +133,7 @@ C:\projects\MLT.AutoRender\src\AutoRender.GUI\obj\Debug\AutoRender.GUI.csproj.Co
 C:\projects\MLT.AutoRender\src\AutoRender.GUI\obj\Debug\AutoRender.GUI.csproj.CopyComplete
 C:\projects\MLT.AutoRender\src\AutoRender.GUI\obj\Debug\AutoRender.exe
 C:\projects\MLT.AutoRender\src\AutoRender.GUI\obj\Debug\AutoRender.pdb
+C:\projects\MLT.AutoRender\src\AutoRender.GUI\bin\Debug\log4net.dll
+C:\projects\MLT.AutoRender\src\AutoRender.GUI\bin\Debug\Newtonsoft.Json.dll
+C:\projects\MLT.AutoRender\src\AutoRender.GUI\bin\Debug\AutoRender.Logging.dll
+C:\projects\MLT.AutoRender\src\AutoRender.GUI\bin\Debug\AutoRender.Logging.pdb

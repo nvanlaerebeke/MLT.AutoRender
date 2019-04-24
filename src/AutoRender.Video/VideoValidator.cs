@@ -1,6 +1,5 @@
 ﻿using AutoRender.Data;
-using ILogging;
-using Logging;
+using log4net;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -12,7 +11,7 @@ using System.Threading.Tasks;
 namespace AutoRender.Video {
 
     public class VideoValidator {
-        private readonly ILog Log = LogFactory.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+        private readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         private readonly string Path;
         private Process _objProcess;
         private Thread _thdStdOut;

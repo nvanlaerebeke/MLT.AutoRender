@@ -1,10 +1,11 @@
 C:\projects\MLT.AutoRender\src\AutoRender.Subscription.Messaging\bin\Debug\AutoRender.Subscription.Messaging.dll
 C:\projects\MLT.AutoRender\src\AutoRender.Subscription.Messaging\bin\Debug\AutoRender.Subscription.Messaging.pdb
+C:\projects\MLT.AutoRender\src\AutoRender.Subscription.Messaging\bin\Debug\INIFileParser.dll
+C:\projects\MLT.AutoRender\src\AutoRender.Subscription.Messaging\bin\Debug\log4net.dll
 C:\projects\MLT.AutoRender\src\AutoRender.Subscription.Messaging\bin\Debug\AutoRender.Data.dll
 C:\projects\MLT.AutoRender\src\AutoRender.Subscription.Messaging\bin\Debug\AutoRender.Messaging.dll
 C:\projects\MLT.AutoRender\src\AutoRender.Subscription.Messaging\bin\Debug\Mitto.dll
 C:\projects\MLT.AutoRender\src\AutoRender.Subscription.Messaging\bin\Debug\CrazyUtils.dll
-C:\projects\MLT.AutoRender\src\AutoRender.Subscription.Messaging\bin\Debug\INIFileParser.dll
 C:\projects\MLT.AutoRender\src\AutoRender.Subscription.Messaging\bin\Debug\AutoRender.Data.pdb
 C:\projects\MLT.AutoRender\src\AutoRender.Subscription.Messaging\bin\Debug\AutoRender.Messaging.pdb
 C:\projects\MLT.AutoRender\src\AutoRender.Subscription.Messaging\bin\Debug\Mitto.pdb

@@ -12,7 +12,6 @@ C:\projects\AutoRender\trunk\CrazyUtils\obj\Debug\CrazyUtils.pdb
 C:\projects\MLT.AutoRender\src\CrazyUtils\bin\Debug\CrazyUtils.dll
 C:\projects\MLT.AutoRender\src\CrazyUtils\bin\Debug\CrazyUtils.pdb
 C:\projects\MLT.AutoRender\src\CrazyUtils\bin\Debug\INIFileParser.dll
-C:\projects\MLT.AutoRender\src\CrazyUtils\obj\Debug\CrazyUtils.csprojAssemblyReference.cache
 C:\projects\MLT.AutoRender\src\CrazyUtils\obj\Debug\CrazyUtils.csproj.CoreCompileInputs.cache
 C:\projects\MLT.AutoRender\src\CrazyUtils\obj\Debug\CrazyUtils.csproj.CopyComplete
 C:\projects\MLT.AutoRender\src\CrazyUtils\obj\Debug\CrazyUtils.dll

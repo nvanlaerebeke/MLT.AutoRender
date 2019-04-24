@@ -24,6 +24,59 @@
         "net46": {}
       }
     },
+    "C:\\projects\\MLT.AutoRender\\src\\AutoRender.Logging\\AutoRender.Logging.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\projects\\MLT.AutoRender\\src\\AutoRender.Logging\\AutoRender.Logging.csproj",
+        "projectName": "AutoRender.Logging",
+        "projectPath": "C:\\projects\\MLT.AutoRender\\src\\AutoRender.Logging\\AutoRender.Logging.csproj",
+        "packagesPath": "C:\\Users\\crazy\\.nuget\\packages\\",
+        "outputPath": "C:\\projects\\MLT.AutoRender\\src\\AutoRender.Logging\\obj\\",
+        "projectStyle": "PackageReference",
+        "skipContentFileWrite": true,
+        "fallbackFolders": [
+          "C:\\ProgramData\\Xamarin\\NuGet\\"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\crazy\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net46"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net46": {
+            "projectReferences": {}
+          }
+        }
+      },
+      "frameworks": {
+        "net46": {
+          "dependencies": {
+            "log4net": {
+              "target": "Package",
+              "version": "[2.0.8, )"
+            }
+          }
+        }
+      },
+      "runtimes": {
+        "win": {
+          "#import": []
+        },
+        "win-x64": {
+          "#import": []
+        },
+        "win-x86": {
+          "#import": []
+        }
+      }
+    },
     "C:\\projects\\MLT.AutoRender\\src\\AutoRender.Video\\AutoRender.Video.csproj": {
       "version": "1.0.0",
       "restore": {
@@ -54,6 +107,9 @@
             "projectReferences": {
               "C:\\projects\\MLT.AutoRender\\src\\AutoRender.Data\\AutoRender.Data.csproj": {
                 "projectPath": "C:\\projects\\MLT.AutoRender\\src\\AutoRender.Data\\AutoRender.Data.csproj"
+              },
+              "C:\\projects\\MLT.AutoRender\\src\\AutoRender.Logging\\AutoRender.Logging.csproj": {
+                "projectPath": "C:\\projects\\MLT.AutoRender\\src\\AutoRender.Logging\\AutoRender.Logging.csproj"
               },
               "C:\\projects\\MLT.AutoRender\\src\\CrazyUtils\\CrazyUtils.csproj": {
                 "projectPath": "C:\\projects\\MLT.AutoRender\\src\\CrazyUtils\\CrazyUtils.csproj"

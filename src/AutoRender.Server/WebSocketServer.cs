@@ -1,14 +1,13 @@
 ﻿using System.Collections.Concurrent;
 using System.Net;
 using System.Reflection;
-using ILogging;
-using Logging;
+using log4net;
 using Mitto.IConnection;
 
 namespace AutoRender.Server {
 
     internal class WebSocketServer {
-        private readonly ILog Log = LogFactory.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+        private readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         private ConcurrentDictionary<string, IConnection> _lstClients = new ConcurrentDictionary<string, IConnection>();
 
         public WebSocketServer() {

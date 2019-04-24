@@ -1,6 +1,5 @@
 ﻿using AutoRender.Data;
-using ILogging;
-using Logging;
+using log4net;
 using System.Collections.Concurrent;
 using System.IO;
 using System.Reflection;
@@ -8,7 +7,7 @@ using System.Reflection;
 namespace AutoRender.Video {
 
     public class VideoInfoCache {
-        private readonly ILog Log = LogFactory.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+        private readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
         private ConcurrentDictionary<string, VideoInfoWrapper> _dicVideoCache = new ConcurrentDictionary<string, VideoInfoWrapper>();
 

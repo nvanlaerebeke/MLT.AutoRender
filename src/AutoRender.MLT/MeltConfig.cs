@@ -4,10 +4,9 @@ using System.IO;
 using System.Xml.Linq;
 using System.Linq;
 using AutoRender.Video;
-using ILogging;
-using Logging;
 using System.Reflection;
 using AutoRender.Data;
+using log4net;
 
 namespace AutoRender.MLT {
 
@@ -15,7 +14,7 @@ namespace AutoRender.MLT {
     /// ToDo: Cleanup
     /// </summary>
     public class MeltConfig {
-        private readonly ILog Log = LogFactory.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+        private readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
         private Dictionary<string, string> _dicConsumerProperties = null;
         private string _strSourceFile;

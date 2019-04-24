@@ -52,12 +52,6 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Logging">
-      <HintPath>..\Lib\Logging\bin\Logging.dll</HintPath>
-    </Reference>
-    <Reference Include="Logging.Log4Net">
-      <HintPath>..\Lib\Logging\bin\Logging.Log4Net.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
@@ -69,6 +63,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\AutoRender.Logging\AutoRender.Logging.csproj">
+      <Project>{d51c4ce3-0473-4ddf-9f0c-b3022e493dbd}</Project>
+      <Name>AutoRender.Logging</Name>
+    </ProjectReference>
     <ProjectReference Include="..\AutoRender.Server\AutoRender.Server.csproj">
       <Project>{7ecc99b6-75a2-43aa-934a-f41ce749dac9}</Project>
       <Name>AutoRender.Server</Name>

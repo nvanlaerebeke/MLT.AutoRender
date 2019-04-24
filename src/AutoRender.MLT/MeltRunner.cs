@@ -1,6 +1,5 @@
 ﻿using AutoRender.Data;
-using ILogging;
-using Logging;
+using log4net;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -14,7 +13,7 @@ using System.Threading;
 namespace AutoRender.MLT {
 
     public class MeltRunner {
-        private readonly ILog Log = LogFactory.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+        private readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
         private Process _objProcess;
         private Thread _thdStdOut;

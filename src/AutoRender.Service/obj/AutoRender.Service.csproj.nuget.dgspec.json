@@ -24,12 +24,84 @@
         "net46": {}
       }
     },
+    "C:\\projects\\MLT.AutoRender\\src\\AutoRender.Logging\\AutoRender.Logging.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\projects\\MLT.AutoRender\\src\\AutoRender.Logging\\AutoRender.Logging.csproj",
+        "projectName": "AutoRender.Logging",
+        "projectPath": "C:\\projects\\MLT.AutoRender\\src\\AutoRender.Logging\\AutoRender.Logging.csproj",
+        "packagesPath": "C:\\Users\\crazy\\.nuget\\packages\\",
+        "outputPath": "C:\\projects\\MLT.AutoRender\\src\\AutoRender.Logging\\obj\\",
+        "projectStyle": "PackageReference",
+        "skipContentFileWrite": true,
+        "fallbackFolders": [
+          "C:\\ProgramData\\Xamarin\\NuGet\\"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\crazy\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net46"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net46": {
+            "projectReferences": {}
+          }
+        }
+      },
+      "frameworks": {
+        "net46": {
+          "dependencies": {
+            "log4net": {
+              "target": "Package",
+              "version": "[2.0.8, )"
+            }
+          }
+        }
+      },
+      "runtimes": {
+        "win": {
+          "#import": []
+        },
+        "win-x64": {
+          "#import": []
+        },
+        "win-x86": {
+          "#import": []
+        }
+      }
+    },
     "C:\\projects\\MLT.AutoRender\\src\\AutoRender.Messaging\\AutoRender.Messaging.csproj": {
       "version": "1.0.0",
       "restore": {
         "projectUniqueName": "C:\\projects\\MLT.AutoRender\\src\\AutoRender.Messaging\\AutoRender.Messaging.csproj",
         "projectName": "AutoRender.Messaging",
         "projectPath": "C:\\projects\\MLT.AutoRender\\src\\AutoRender.Messaging\\AutoRender.Messaging.csproj",
+        "packagesPath": "C:\\Users\\crazy\\.nuget\\packages\\",
+        "outputPath": "C:\\projects\\MLT.AutoRender\\src\\AutoRender.Messaging\\obj\\",
+        "projectStyle": "PackageReference",
+        "skipContentFileWrite": true,
+        "fallbackFolders": [
+          "C:\\ProgramData\\Xamarin\\NuGet\\"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\crazy\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net46"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
         "frameworks": {
           "net46": {
             "projectReferences": {
@@ -44,7 +116,25 @@
         }
       },
       "frameworks": {
-        "net46": {}
+        "net46": {
+          "dependencies": {
+            "log4net": {
+              "target": "Package",
+              "version": "[2.0.8, )"
+            }
+          }
+        }
+      },
+      "runtimes": {
+        "win": {
+          "#import": []
+        },
+        "win-x64": {
+          "#import": []
+        },
+        "win-x86": {
+          "#import": []
+        }
       }
     },
     "C:\\projects\\MLT.AutoRender\\src\\AutoRender.MLT\\AutoRender.MLT.csproj": {
@@ -53,11 +143,33 @@
         "projectUniqueName": "C:\\projects\\MLT.AutoRender\\src\\AutoRender.MLT\\AutoRender.MLT.csproj",
         "projectName": "AutoRender.MLT",
         "projectPath": "C:\\projects\\MLT.AutoRender\\src\\AutoRender.MLT\\AutoRender.MLT.csproj",
+        "packagesPath": "C:\\Users\\crazy\\.nuget\\packages\\",
+        "outputPath": "C:\\projects\\MLT.AutoRender\\src\\AutoRender.MLT\\obj\\",
+        "projectStyle": "PackageReference",
+        "skipContentFileWrite": true,
+        "fallbackFolders": [
+          "C:\\ProgramData\\Xamarin\\NuGet\\"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\crazy\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net46"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
         "frameworks": {
           "net46": {
             "projectReferences": {
               "C:\\projects\\MLT.AutoRender\\src\\AutoRender.Data\\AutoRender.Data.csproj": {
                 "projectPath": "C:\\projects\\MLT.AutoRender\\src\\AutoRender.Data\\AutoRender.Data.csproj"
+              },
+              "C:\\projects\\MLT.AutoRender\\src\\AutoRender.Logging\\AutoRender.Logging.csproj": {
+                "projectPath": "C:\\projects\\MLT.AutoRender\\src\\AutoRender.Logging\\AutoRender.Logging.csproj"
               },
               "C:\\projects\\MLT.AutoRender\\src\\AutoRender.Video\\AutoRender.Video.csproj": {
                 "projectPath": "C:\\projects\\MLT.AutoRender\\src\\AutoRender.Video\\AutoRender.Video.csproj"
@@ -70,7 +182,25 @@
         }
       },
       "frameworks": {
-        "net46": {}
+        "net46": {
+          "dependencies": {
+            "log4net": {
+              "target": "Package",
+              "version": "[2.0.8, )"
+            }
+          }
+        }
+      },
+      "runtimes": {
+        "win": {
+          "#import": []
+        },
+        "win-x64": {
+          "#import": []
+        },
+        "win-x86": {
+          "#import": []
+        }
       }
     },
     "C:\\projects\\MLT.AutoRender\\src\\AutoRender.Server\\AutoRender.Server.csproj": {
@@ -79,11 +209,33 @@
         "projectUniqueName": "C:\\projects\\MLT.AutoRender\\src\\AutoRender.Server\\AutoRender.Server.csproj",
         "projectName": "AutoRender.Server",
         "projectPath": "C:\\projects\\MLT.AutoRender\\src\\AutoRender.Server\\AutoRender.Server.csproj",
+        "packagesPath": "C:\\Users\\crazy\\.nuget\\packages\\",
+        "outputPath": "C:\\projects\\MLT.AutoRender\\src\\AutoRender.Server\\obj\\",
+        "projectStyle": "PackageReference",
+        "skipContentFileWrite": true,
+        "fallbackFolders": [
+          "C:\\ProgramData\\Xamarin\\NuGet\\"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\crazy\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net46"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
         "frameworks": {
           "net46": {
             "projectReferences": {
               "C:\\projects\\MLT.AutoRender\\src\\AutoRender.Data\\AutoRender.Data.csproj": {
                 "projectPath": "C:\\projects\\MLT.AutoRender\\src\\AutoRender.Data\\AutoRender.Data.csproj"
+              },
+              "C:\\projects\\MLT.AutoRender\\src\\AutoRender.Logging\\AutoRender.Logging.csproj": {
+                "projectPath": "C:\\projects\\MLT.AutoRender\\src\\AutoRender.Logging\\AutoRender.Logging.csproj"
               },
               "C:\\projects\\MLT.AutoRender\\src\\AutoRender.Messaging\\AutoRender.Messaging.csproj": {
                 "projectPath": "C:\\projects\\MLT.AutoRender\\src\\AutoRender.Messaging\\AutoRender.Messaging.csproj"
@@ -102,7 +254,25 @@
         }
       },
       "frameworks": {
-        "net46": {}
+        "net46": {
+          "dependencies": {
+            "log4net": {
+              "target": "Package",
+              "version": "[2.0.8, )"
+            }
+          }
+        }
+      },
+      "runtimes": {
+        "win": {
+          "#import": []
+        },
+        "win-x64": {
+          "#import": []
+        },
+        "win-x86": {
+          "#import": []
+        }
       }
     },
     "C:\\projects\\MLT.AutoRender\\src\\AutoRender.Service\\AutoRender.Service.csproj": {
@@ -133,6 +303,9 @@
         "frameworks": {
           "net46": {
             "projectReferences": {
+              "C:\\projects\\MLT.AutoRender\\src\\AutoRender.Logging\\AutoRender.Logging.csproj": {
+                "projectPath": "C:\\projects\\MLT.AutoRender\\src\\AutoRender.Logging\\AutoRender.Logging.csproj"
+              },
               "C:\\projects\\MLT.AutoRender\\src\\AutoRender.Server\\AutoRender.Server.csproj": {
                 "projectPath": "C:\\projects\\MLT.AutoRender\\src\\AutoRender.Server\\AutoRender.Server.csproj"
               }
@@ -168,6 +341,25 @@
         "projectUniqueName": "C:\\projects\\MLT.AutoRender\\src\\AutoRender.Subscription.Messaging\\AutoRender.Subscription.Messaging.csproj",
         "projectName": "AutoRender.Subscription.Messaging",
         "projectPath": "C:\\projects\\MLT.AutoRender\\src\\AutoRender.Subscription.Messaging\\AutoRender.Subscription.Messaging.csproj",
+        "packagesPath": "C:\\Users\\crazy\\.nuget\\packages\\",
+        "outputPath": "C:\\projects\\MLT.AutoRender\\src\\AutoRender.Subscription.Messaging\\obj\\",
+        "projectStyle": "PackageReference",
+        "skipContentFileWrite": true,
+        "fallbackFolders": [
+          "C:\\ProgramData\\Xamarin\\NuGet\\"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\crazy\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net46"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
         "frameworks": {
           "net46": {
             "projectReferences": {
@@ -182,7 +374,25 @@
         }
       },
       "frameworks": {
-        "net46": {}
+        "net46": {
+          "dependencies": {
+            "log4net": {
+              "target": "Package",
+              "version": "[2.0.8, )"
+            }
+          }
+        }
+      },
+      "runtimes": {
+        "win": {
+          "#import": []
+        },
+        "win-x64": {
+          "#import": []
+        },
+        "win-x86": {
+          "#import": []
+        }
       }
     },
     "C:\\projects\\MLT.AutoRender\\src\\AutoRender.Video\\AutoRender.Video.csproj": {
@@ -215,6 +425,9 @@
             "projectReferences": {
               "C:\\projects\\MLT.AutoRender\\src\\AutoRender.Data\\AutoRender.Data.csproj": {
                 "projectPath": "C:\\projects\\MLT.AutoRender\\src\\AutoRender.Data\\AutoRender.Data.csproj"
+              },
+              "C:\\projects\\MLT.AutoRender\\src\\AutoRender.Logging\\AutoRender.Logging.csproj": {
+                "projectPath": "C:\\projects\\MLT.AutoRender\\src\\AutoRender.Logging\\AutoRender.Logging.csproj"
               },
               "C:\\projects\\MLT.AutoRender\\src\\CrazyUtils\\CrazyUtils.csproj": {
                 "projectPath": "C:\\projects\\MLT.AutoRender\\src\\CrazyUtils\\CrazyUtils.csproj"

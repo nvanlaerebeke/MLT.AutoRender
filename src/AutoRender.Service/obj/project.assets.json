@@ -20,6 +20,15 @@
           "lib/net20/INIFileParser.dll": {}
         }
       },
+      "log4net/2.0.8": {
+        "type": "package",
+        "compile": {
+          "lib/net45-full/log4net.dll": {}
+        },
+        "runtime": {
+          "lib/net45-full/log4net.dll": {}
+        }
+      },
       "MediaToolkit/1.1.0.1": {
         "type": "package",
         "compile": {
@@ -41,11 +50,26 @@
           "bin/placeholder/AutoRender.Data.dll": {}
         }
       },
+      "AutoRender.Logging/1.0.0": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.6",
+        "dependencies": {
+          "log4net": "2.0.8"
+        },
+        "compile": {
+          "bin/placeholder/AutoRender.Logging.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/AutoRender.Logging.dll": {}
+        }
+      },
       "AutoRender.Messaging/1.0.0": {
         "type": "project",
+        "framework": ".NETFramework,Version=v4.6",
         "dependencies": {
           "AutoRender.Data": "1.0.0",
-          "CrazyUtils": "1.0.0"
+          "CrazyUtils": "1.0.0",
+          "log4net": "2.0.8"
         },
         "compile": {
           "bin/placeholder/AutoRender.Messaging.dll": {}
@@ -56,10 +80,13 @@
       },
       "AutoRender.MLT/1.0.0": {
         "type": "project",
+        "framework": ".NETFramework,Version=v4.6",
         "dependencies": {
           "AutoRender.Data": "1.0.0",
+          "AutoRender.Logging": "1.0.0",
           "AutoRender.Video": "1.0.0",
-          "CrazyUtils": "1.0.0"
+          "CrazyUtils": "1.0.0",
+          "log4net": "2.0.8"
         },
         "compile": {
           "bin/placeholder/AutoRender.MLT.dll": {}
@@ -70,12 +97,15 @@
       },
       "AutoRender.Server/1.0.0": {
         "type": "project",
+        "framework": ".NETFramework,Version=v4.6",
         "dependencies": {
           "AutoRender.Data": "1.0.0",
+          "AutoRender.Logging": "1.0.0",
           "AutoRender.Messaging": "1.0.0",
           "AutoRender.Subscription.Messaging": "1.0.0",
           "AutoRender.Workspace": "1.0.0",
-          "CrazyUtils": "1.0.0"
+          "CrazyUtils": "1.0.0",
+          "log4net": "2.0.8"
         },
         "compile": {
           "bin/placeholder/AutoRender.Server.dll": {}
@@ -86,9 +116,11 @@
       },
       "AutoRender.Subscription.Messaging/1.0.0": {
         "type": "project",
+        "framework": ".NETFramework,Version=v4.6",
         "dependencies": {
           "AutoRender.Data": "1.0.0",
-          "AutoRender.Messaging": "1.0.0"
+          "AutoRender.Messaging": "1.0.0",
+          "log4net": "2.0.8"
         },
         "compile": {
           "bin/placeholder/AutoRender.Subscription.Messaging.dll": {}
@@ -102,6 +134,7 @@
         "framework": ".NETFramework,Version=v4.6",
         "dependencies": {
           "AutoRender.Data": "1.0.0",
+          "AutoRender.Logging": "1.0.0",
           "CrazyUtils": "1.0.0",
           "DirectShowLib": "1.0.0",
           "MediaToolkit": "1.1.0.1"
@@ -160,6 +193,15 @@
           "lib/net20/INIFileParser.dll": {}
         }
       },
+      "log4net/2.0.8": {
+        "type": "package",
+        "compile": {
+          "lib/net45-full/log4net.dll": {}
+        },
+        "runtime": {
+          "lib/net45-full/log4net.dll": {}
+        }
+      },
       "MediaToolkit/1.1.0.1": {
         "type": "package",
         "compile": {
@@ -181,11 +223,26 @@
           "bin/placeholder/AutoRender.Data.dll": {}
         }
       },
+      "AutoRender.Logging/1.0.0": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.6",
+        "dependencies": {
+          "log4net": "2.0.8"
+        },
+        "compile": {
+          "bin/placeholder/AutoRender.Logging.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/AutoRender.Logging.dll": {}
+        }
+      },
       "AutoRender.Messaging/1.0.0": {
         "type": "project",
+        "framework": ".NETFramework,Version=v4.6",
         "dependencies": {
           "AutoRender.Data": "1.0.0",
-          "CrazyUtils": "1.0.0"
+          "CrazyUtils": "1.0.0",
+          "log4net": "2.0.8"
         },
         "compile": {
           "bin/placeholder/AutoRender.Messaging.dll": {}
@@ -196,10 +253,13 @@
       },
       "AutoRender.MLT/1.0.0": {
         "type": "project",
+        "framework": ".NETFramework,Version=v4.6",
         "dependencies": {
           "AutoRender.Data": "1.0.0",
+          "AutoRender.Logging": "1.0.0",
           "AutoRender.Video": "1.0.0",
-          "CrazyUtils": "1.0.0"
+          "CrazyUtils": "1.0.0",
+          "log4net": "2.0.8"
         },
         "compile": {
           "bin/placeholder/AutoRender.MLT.dll": {}
@@ -210,12 +270,15 @@
       },
       "AutoRender.Server/1.0.0": {
         "type": "project",
+        "framework": ".NETFramework,Version=v4.6",
         "dependencies": {
           "AutoRender.Data": "1.0.0",
+          "AutoRender.Logging": "1.0.0",
           "AutoRender.Messaging": "1.0.0",
           "AutoRender.Subscription.Messaging": "1.0.0",
           "AutoRender.Workspace": "1.0.0",
-          "CrazyUtils": "1.0.0"
+          "CrazyUtils": "1.0.0",
+          "log4net": "2.0.8"
         },
         "compile": {
           "bin/placeholder/AutoRender.Server.dll": {}
@@ -226,9 +289,11 @@
       },
       "AutoRender.Subscription.Messaging/1.0.0": {
         "type": "project",
+        "framework": ".NETFramework,Version=v4.6",
         "dependencies": {
           "AutoRender.Data": "1.0.0",
-          "AutoRender.Messaging": "1.0.0"
+          "AutoRender.Messaging": "1.0.0",
+          "log4net": "2.0.8"
         },
         "compile": {
           "bin/placeholder/AutoRender.Subscription.Messaging.dll": {}
@@ -242,6 +307,7 @@
         "framework": ".NETFramework,Version=v4.6",
         "dependencies": {
           "AutoRender.Data": "1.0.0",
+          "AutoRender.Logging": "1.0.0",
           "CrazyUtils": "1.0.0",
           "DirectShowLib": "1.0.0",
           "MediaToolkit": "1.1.0.1"
@@ -300,6 +366,15 @@
           "lib/net20/INIFileParser.dll": {}
         }
       },
+      "log4net/2.0.8": {
+        "type": "package",
+        "compile": {
+          "lib/net45-full/log4net.dll": {}
+        },
+        "runtime": {
+          "lib/net45-full/log4net.dll": {}
+        }
+      },
       "MediaToolkit/1.1.0.1": {
         "type": "package",
         "compile": {
@@ -321,11 +396,26 @@
           "bin/placeholder/AutoRender.Data.dll": {}
         }
       },
+      "AutoRender.Logging/1.0.0": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.6",
+        "dependencies": {
+          "log4net": "2.0.8"
+        },
+        "compile": {
+          "bin/placeholder/AutoRender.Logging.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/AutoRender.Logging.dll": {}
+        }
+      },
       "AutoRender.Messaging/1.0.0": {
         "type": "project",
+        "framework": ".NETFramework,Version=v4.6",
         "dependencies": {
           "AutoRender.Data": "1.0.0",
-          "CrazyUtils": "1.0.0"
+          "CrazyUtils": "1.0.0",
+          "log4net": "2.0.8"
         },
         "compile": {
           "bin/placeholder/AutoRender.Messaging.dll": {}
@@ -336,10 +426,13 @@
       },
       "AutoRender.MLT/1.0.0": {
         "type": "project",
+        "framework": ".NETFramework,Version=v4.6",
         "dependencies": {
           "AutoRender.Data": "1.0.0",
+          "AutoRender.Logging": "1.0.0",
           "AutoRender.Video": "1.0.0",
-          "CrazyUtils": "1.0.0"
+          "CrazyUtils": "1.0.0",
+          "log4net": "2.0.8"
         },
         "compile": {
           "bin/placeholder/AutoRender.MLT.dll": {}
@@ -350,12 +443,15 @@
       },
       "AutoRender.Server/1.0.0": {
         "type": "project",
+        "framework": ".NETFramework,Version=v4.6",
         "dependencies": {
           "AutoRender.Data": "1.0.0",
+          "AutoRender.Logging": "1.0.0",
           "AutoRender.Messaging": "1.0.0",
           "AutoRender.Subscription.Messaging": "1.0.0",
           "AutoRender.Workspace": "1.0.0",
-          "CrazyUtils": "1.0.0"
+          "CrazyUtils": "1.0.0",
+          "log4net": "2.0.8"
         },
         "compile": {
           "bin/placeholder/AutoRender.Server.dll": {}
@@ -366,9 +462,11 @@
       },
       "AutoRender.Subscription.Messaging/1.0.0": {
         "type": "project",
+        "framework": ".NETFramework,Version=v4.6",
         "dependencies": {
           "AutoRender.Data": "1.0.0",
-          "AutoRender.Messaging": "1.0.0"
+          "AutoRender.Messaging": "1.0.0",
+          "log4net": "2.0.8"
         },
         "compile": {
           "bin/placeholder/AutoRender.Subscription.Messaging.dll": {}
@@ -382,6 +480,7 @@
         "framework": ".NETFramework,Version=v4.6",
         "dependencies": {
           "AutoRender.Data": "1.0.0",
+          "AutoRender.Logging": "1.0.0",
           "CrazyUtils": "1.0.0",
           "DirectShowLib": "1.0.0",
           "MediaToolkit": "1.1.0.1"
@@ -440,6 +539,15 @@
           "lib/net20/INIFileParser.dll": {}
         }
       },
+      "log4net/2.0.8": {
+        "type": "package",
+        "compile": {
+          "lib/net45-full/log4net.dll": {}
+        },
+        "runtime": {
+          "lib/net45-full/log4net.dll": {}
+        }
+      },
       "MediaToolkit/1.1.0.1": {
         "type": "package",
         "compile": {
@@ -461,11 +569,26 @@
           "bin/placeholder/AutoRender.Data.dll": {}
         }
       },
+      "AutoRender.Logging/1.0.0": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.6",
+        "dependencies": {
+          "log4net": "2.0.8"
+        },
+        "compile": {
+          "bin/placeholder/AutoRender.Logging.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/AutoRender.Logging.dll": {}
+        }
+      },
       "AutoRender.Messaging/1.0.0": {
         "type": "project",
+        "framework": ".NETFramework,Version=v4.6",
         "dependencies": {
           "AutoRender.Data": "1.0.0",
-          "CrazyUtils": "1.0.0"
+          "CrazyUtils": "1.0.0",
+          "log4net": "2.0.8"
         },
         "compile": {
           "bin/placeholder/AutoRender.Messaging.dll": {}
@@ -476,10 +599,13 @@
       },
       "AutoRender.MLT/1.0.0": {
         "type": "project",
+        "framework": ".NETFramework,Version=v4.6",
         "dependencies": {
           "AutoRender.Data": "1.0.0",
+          "AutoRender.Logging": "1.0.0",
           "AutoRender.Video": "1.0.0",
-          "CrazyUtils": "1.0.0"
+          "CrazyUtils": "1.0.0",
+          "log4net": "2.0.8"
         },
         "compile": {
           "bin/placeholder/AutoRender.MLT.dll": {}
@@ -490,12 +616,15 @@
       },
       "AutoRender.Server/1.0.0": {
         "type": "project",
+        "framework": ".NETFramework,Version=v4.6",
         "dependencies": {
           "AutoRender.Data": "1.0.0",
+          "AutoRender.Logging": "1.0.0",
           "AutoRender.Messaging": "1.0.0",
           "AutoRender.Subscription.Messaging": "1.0.0",
           "AutoRender.Workspace": "1.0.0",
-          "CrazyUtils": "1.0.0"
+          "CrazyUtils": "1.0.0",
+          "log4net": "2.0.8"
         },
         "compile": {
           "bin/placeholder/AutoRender.Server.dll": {}
@@ -506,9 +635,11 @@
       },
       "AutoRender.Subscription.Messaging/1.0.0": {
         "type": "project",
+        "framework": ".NETFramework,Version=v4.6",
         "dependencies": {
           "AutoRender.Data": "1.0.0",
-          "AutoRender.Messaging": "1.0.0"
+          "AutoRender.Messaging": "1.0.0",
+          "log4net": "2.0.8"
         },
         "compile": {
           "bin/placeholder/AutoRender.Subscription.Messaging.dll": {}
@@ -522,6 +653,7 @@
         "framework": ".NETFramework,Version=v4.6",
         "dependencies": {
           "AutoRender.Data": "1.0.0",
+          "AutoRender.Logging": "1.0.0",
           "CrazyUtils": "1.0.0",
           "DirectShowLib": "1.0.0",
           "MediaToolkit": "1.1.0.1"
@@ -590,6 +722,30 @@
         "lib/net20/INIFileParser.xml"
       ]
     },
+    "log4net/2.0.8": {
+      "sha512": "N41MQGHZImiCfn0cUuSBjZxrcNfIQCuCgQP0rpgB3J/NWponEh3lc1LxJEuIsPAR9Oc1jVvfkNNFCY1C5hf9LA==",
+      "type": "package",
+      "path": "log4net/2.0.8",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net20-full/log4net.dll",
+        "lib/net20-full/log4net.xml",
+        "lib/net35-client/log4net.dll",
+        "lib/net35-client/log4net.xml",
+        "lib/net35-full/log4net.dll",
+        "lib/net35-full/log4net.xml",
+        "lib/net40-client/log4net.dll",
+        "lib/net40-client/log4net.xml",
+        "lib/net40-full/log4net.dll",
+        "lib/net40-full/log4net.xml",
+        "lib/net45-full/log4net.dll",
+        "lib/net45-full/log4net.xml",
+        "lib/netstandard1.3/log4net.dll",
+        "log4net.2.0.8.nupkg.sha512",
+        "log4net.nuspec"
+      ]
+    },
     "MediaToolkit/1.1.0.1": {
       "sha512": "R3u+udQOUDBGUzx4wOHsp6yiSLMdJle7a9E7JK4/btL4w/pdXAmNHP2JMe2Fpt35kLjKNE74oNKUM1hc6RceIA==",
       "type": "package",
@@ -608,6 +764,11 @@
       "type": "project",
       "path": "../AutoRender.Data/AutoRender.Data.csproj",
       "msbuildProject": "../AutoRender.Data/AutoRender.Data.csproj"
+    },
+    "AutoRender.Logging/1.0.0": {
+      "type": "project",
+      "path": "../AutoRender.Logging/AutoRender.Logging.csproj",
+      "msbuildProject": "../AutoRender.Logging/AutoRender.Logging.csproj"
     },
     "AutoRender.Messaging/1.0.0": {
       "type": "project",
@@ -647,6 +808,7 @@
   },
   "projectFileDependencyGroups": {
     ".NETFramework,Version=v4.6": [
+      "AutoRender.Logging >= 1.0.0",
       "AutoRender.Server >= 1.0.0",
       "ini-parser >= 2.5.2"
     ]
@@ -683,6 +845,9 @@
       "frameworks": {
         "net46": {
           "projectReferences": {
+            "C:\\projects\\MLT.AutoRender\\src\\AutoRender.Logging\\AutoRender.Logging.csproj": {
+              "projectPath": "C:\\projects\\MLT.AutoRender\\src\\AutoRender.Logging\\AutoRender.Logging.csproj"
+            },
             "C:\\projects\\MLT.AutoRender\\src\\AutoRender.Server\\AutoRender.Server.csproj": {
               "projectPath": "C:\\projects\\MLT.AutoRender\\src\\AutoRender.Server\\AutoRender.Server.csproj"
             }
