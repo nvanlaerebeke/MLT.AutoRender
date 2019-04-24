@@ -2,7 +2,3 @@
 	path = src/Lib/mitto
 	url = https://github.com/nvanlaerebeke/mitto.git
 	branch = master
-[submodule "src/Lib/Logging"]
-	path = src/Lib/Logging
-	url = https://github.com/nvanlaerebeke/Logging.git
-	branch = master
