@@ -70,6 +70,18 @@
       <Project>{C29037E3-9C2F-4996-8434-36600735D465}</Project>
       <Name>Mitto.Messaging</Name>
     </ProjectReference>
+    <ProjectReference Include="..\AutoRender.Subscription.Messaging\AutoRender.Subscription.Messaging.csproj">
+      <Project>{F973DBC2-F3BA-4160-839B-8491E6827E3B}</Project>
+      <Name>AutoRender.Subscription.Messaging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Lib\mitto\src\Mitto.Subscription.Messaging\Mitto.Subscription.Messaging.csproj">
+      <Project>{5D420F78-C169-4615-ACB2-A039BF8ACBD6}</Project>
+      <Name>Mitto.Subscription.Messaging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Lib\mitto\src\Mitto.Subscription.IMessaging\Mitto.Subscription.IMessaging.csproj">
+      <Project>{9FF69878-E3D3-459D-A779-A6CB0091DE75}</Project>
+      <Name>Mitto.Subscription.IMessaging</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

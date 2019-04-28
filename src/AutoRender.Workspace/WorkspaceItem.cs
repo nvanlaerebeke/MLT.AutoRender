@@ -74,6 +74,14 @@ namespace AutoRender.Workspace {
             return false;
         }
 
+        public Data.WorkspaceItem GetWorkspaceItem() {
+            return new Data.WorkspaceItem() {
+                Project = Project.GetProject(),
+                Final = Final,
+                New = New,
+                ID = ID
+            };
+        }
         #endregion Update Methods
 
         #region Compare/Equality Methods
