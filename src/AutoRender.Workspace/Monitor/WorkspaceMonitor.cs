@@ -27,6 +27,8 @@ namespace AutoRender.Workspace.Monitor {
         #endregion private Fields
 
         public WorkspaceMonitor() {
+            VideoCache = new VideoInfoCache();
+
             WorkspaceItems = new List<WorkspaceItem>();
 
             _objProjectMonitor = new ProjectMonitor();

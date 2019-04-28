@@ -19,10 +19,7 @@ namespace AutoRender.Workspace {
             get { return _objWorkspaceMonitor.WorkspaceItems; }
         }
 
-        internal WorkspaceContainer(string pPath) {
-        }
-
-        public void Initialize() {
+        internal WorkspaceContainer() {
             Cleanup();
 
             if (!Directory.Exists(Settings.NewDirectory)) { Directory.CreateDirectory(Settings.NewDirectory); }

@@ -80,13 +80,8 @@ namespace AutoRender.MLT {
                 if (TargetExists) {
                     var objJob = MeltJobScheduler.GetAll().Where(c => c.Project.Name.Equals(this.Name)).FirstOrDefault();
                     if (objJob == null || objJob.Status != JobStatus.Running) {
-                        //calculate it again
-                        if (_objTargetInfo == null) {
-                            _objTargetInfo = VideoInfoCache.Get(TargetPath);
-                        }
-                        return _objTargetInfo.IsValid;
+                        return (_objTargetInfo != null) ? _objTargetInfo.IsValid : false;
                     } else {
-                        _objTargetInfo = null;// -- it's invalid, we're busy with it
                         return false; // -- we're busy with it, just return false
                     }
                 }

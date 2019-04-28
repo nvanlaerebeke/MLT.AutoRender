@@ -7,16 +7,16 @@ using System.Collections.Generic;
 
 namespace AutoRender.Messaging.Action.Request {
 
-    public class Reload : RequestAction<ReloadRequest, GetStatusResponse> {
+    public class ReloadRequestAction : RequestAction<ReloadRequest, GetStatusResponse> {
 
-        public Reload(IClient pClient, ReloadRequest pRequest) : base(pClient, pRequest) {
+        public ReloadRequestAction(IClient pClient, ReloadRequest pRequest) : base(pClient, pRequest) {
         }
 
         public override GetStatusResponse Start() {
-            Workspace.WorkspaceFactory.Get("").Reload();
+            Workspace.WorkspaceFactory.Get().Reload();
 
             List<WorkspaceItem> lstItems = new List<WorkspaceItem>();
-            Workspace.WorkspaceFactory.Get("").WorkspaceItems.ForEach(i =>
+            Workspace.WorkspaceFactory.Get().WorkspaceItems.ForEach(i =>
                 lstItems.Add(new WorkspaceItem() {
                     ID = i.ID,
                     Project = new Project() {

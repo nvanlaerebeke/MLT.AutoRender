@@ -76,13 +76,13 @@
       <Project>{232647d8-8ca8-4f02-91b9-72ee17e99dd1}</Project>
       <Name>CrazyUtils</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Lib\mitto\src\Mitto.IMessaging\Mitto.IMessaging.csproj">
-      <Project>{3bb1c211-9006-4fee-9f40-7556717431b0}</Project>
-      <Name>Mitto.IMessaging</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Lib\mitto\src\Mitto.Messaging\Mitto.Messaging.csproj">
-      <Project>{c29037e3-9c2f-4996-8434-36600735d465}</Project>
+      <Project>{C29037E3-9C2F-4996-8434-36600735D465}</Project>
       <Name>Mitto.Messaging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Lib\mitto\src\Mitto.IMessaging\Mitto.IMessaging.csproj">
+      <Project>{3BB1C211-9006-4FEE-9F40-7556717431B0}</Project>
+      <Name>Mitto.IMessaging</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

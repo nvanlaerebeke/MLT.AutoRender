@@ -55,7 +55,7 @@ namespace AutoRender.Video {
 
                 //Audio
                 AudioBitRate = GetAudioBitrate(),
-                AudioSampleRate = (AudioSettings.ContainsKey("sample_rate")) ? VideoSettings["sample_rate"] : "",
+                AudioSampleRate = (AudioSettings.ContainsKey("sample_rate")) ? AudioSettings["sample_rate"] : "",
                 AudioCodec = GetAudioCodec()
             };
         }
@@ -196,7 +196,7 @@ namespace AutoRender.Video {
         }
 
         private string GetVideoCodec() {
-            if (!string.IsNullOrEmpty(VideoSettings["codec_name"])) {
+            if (VideoSettings.ContainsKey("codec_name")) {
                 switch (VideoSettings["codec_name"]) {
                     case "h264":
                         return "libx264";
@@ -206,8 +206,8 @@ namespace AutoRender.Video {
         }
 
         private string GetAudioCodec() {
-            if (!string.IsNullOrEmpty(VideoSettings["codec_name"])) {
-                switch (VideoSettings["codec_name"]) {
+            if (AudioSettings.ContainsKey("codec_name")) {
+                switch (AudioSettings["codec_name"]) {
                     case "aac":
                         return "aac";
                 }
@@ -216,7 +216,7 @@ namespace AutoRender.Video {
         }
 
         private string GetAudioBitrate() {
-            var intBitrate = Math.Round((double)(int.Parse(AudioSettings["bit_rate"]) / 1000));
+            var intBitrate = (AudioSettings.ContainsKey("bit_rate")) ? Math.Round((double)(int.Parse(AudioSettings["bit_rate"]) / 1000)) : 384;
             if (intBitrate <= 16) {
             } else if (intBitrate <= 32) {
                 return "32k";

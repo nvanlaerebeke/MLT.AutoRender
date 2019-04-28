@@ -4,6 +4,7 @@ using log4net;
 using Mitto.IMessaging;
 using Mitto.IRouting;
 using Mitto.Messaging.Response;
+using System;
 using System.Collections.Concurrent;
 using System.Linq;
 using System.Reflection;
@@ -31,7 +32,9 @@ namespace AutoRender.Subscription.Messaging.Handlers {
                         MessagingFactory.Processor.Request<ACKResponse>(r, pNotifyMessage, (a => {
                             Log.Debug($"Notified {r.ConnectionID} about WorkspaceUpdated");
                         }));
-                    } catch { }
+                    } catch(Exception ex) {
+                        Log.Error($"Failed to send SendWorkspaceUpdatedRequest to {r.ConnectionID}: {ex.Message}");
+                    }
                 }
             });
             return true;

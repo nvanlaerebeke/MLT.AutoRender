@@ -8,13 +8,13 @@ using System.IO;
 
 namespace AutoRender.Messaging.Action.Request {
 
-    public class UpdateProjectSource : RequestAction<UpdateProjectSourceRequest, ACKResponse> {
+    public class UpdateProjectSourceRequestAction : RequestAction<UpdateProjectSourceRequest, ACKResponse> {
 
-        public UpdateProjectSource(IClient pClient, UpdateProjectSourceRequest pRequest) : base(pClient, pRequest) {
+        public UpdateProjectSourceRequestAction(IClient pClient, UpdateProjectSourceRequest pRequest) : base(pClient, pRequest) {
         }
 
         public override ACKResponse Start() {
-            var objItem = WorkspaceFactory.Get("").Get(Request.ProjectID);
+            var objItem = WorkspaceFactory.Get().Get(Request.ProjectID);
             if (objItem != null) {
                 string strNewPath = Path.Combine(Settings.NewDirectory, Request.ProjectSourceName);
                 if (File.Exists(strNewPath)) {

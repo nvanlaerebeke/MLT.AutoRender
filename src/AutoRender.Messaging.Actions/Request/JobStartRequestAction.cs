@@ -6,13 +6,13 @@ using Mitto.Messaging.Response;
 
 namespace AutoRender.Messaging.Action.Request {
 
-    public class JobStart : RequestAction<JobStartRequest, ACKResponse> {
+    public class JobStartRequestAction : RequestAction<JobStartRequest, ACKResponse> {
 
-        public JobStart(IClient pClient, JobStartRequest pRequest) : base(pClient, pRequest) {
+        public JobStartRequestAction(IClient pClient, JobStartRequest pRequest) : base(pClient, pRequest) {
         }
 
         public override ACKResponse Start() {
-            var objWsItem = WorkspaceFactory.Get("").Get(Request.ProjectID);
+            var objWsItem = WorkspaceFactory.Get().Get(Request.ProjectID);
             if (objWsItem != null) {
                 if (objWsItem.Project != null) {
                     objWsItem.Project.Start();

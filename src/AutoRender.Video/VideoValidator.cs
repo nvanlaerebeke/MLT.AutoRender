@@ -29,6 +29,9 @@ namespace AutoRender.Video {
             Task.Run(() => {
                 _objProcess = new Process();
                 string strParams = "-i \"" + Path + "\"";
+
+                Log.Info($"Running {Settings.FfmpegPath} {strParams}");
+
                 ProcessStartInfo objStartInfo = new ProcessStartInfo(Settings.FfmpegPath, strParams);
                 objStartInfo.UseShellExecute = false;
                 objStartInfo.ErrorDialog = false;
@@ -155,6 +158,9 @@ namespace AutoRender.Video {
             if (!string.IsNullOrEmpty(pLine)) {
                 Log.Debug(pLine);
                 if (pLine.Contains("Invalid data found when processing input")) {
+                    Valid = false;
+                }
+                if(pLine.Contains("At least one output file must be specified")) {
                     Valid = true;
                 }
             }

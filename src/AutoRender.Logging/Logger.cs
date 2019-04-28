@@ -34,13 +34,26 @@ namespace AutoRender.Logging {
                     };
                     roller.ActivateOptions();
                     hierarchy.Root.AddAppender(roller);
-                } else {
+
+
+#if DEBUG
+                    var debugAppender = new ConsoleAppender
+                    {
+                        Layout = patternLayout
+                    };
+                    debugAppender.ActivateOptions();
+                    hierarchy.Root.AddAppender(debugAppender);
+#endif
+                }
+                else {
                     var consoleappender = new ConsoleAppender {
                         Layout = patternLayout
                     };
                     consoleappender.ActivateOptions();
                     hierarchy.Root.AddAppender(consoleappender);
                 }
+
+
                 hierarchy.Configured = true;
             }
         }

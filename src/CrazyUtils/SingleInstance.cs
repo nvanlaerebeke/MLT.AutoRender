@@ -13,9 +13,9 @@ namespace CrazyUtils {
         private Mutex _mutex;
 
         private void InitMutex() {
-            string appGuid = Assembly.GetExecutingAssembly().FullName;
+            string appGuid = GetStringSha256Hash(Assembly.GetExecutingAssembly().FullName);
             try {
-                appGuid = ((GuidAttribute)Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(GuidAttribute), false).GetValue(0)).Value;
+            //    appGuid = ((GuidAttribute)Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(GuidAttribute), false).GetValue(0)).Value;
             } catch { }
             string mutexId = string.Format("Global\\{{{0}}}", appGuid);
             _mutex = new Mutex(false, mutexId);
@@ -47,6 +47,19 @@ namespace CrazyUtils {
                 if (_hasHandle)
                     _mutex.ReleaseMutex();
                 _mutex.Close();
+            }
+        }
+
+        internal string GetStringSha256Hash(string text)
+        {
+            if (String.IsNullOrEmpty(text))
+                return String.Empty;
+
+            using (var sha = new System.Security.Cryptography.SHA256Managed())
+            {
+                byte[] textData = System.Text.Encoding.UTF8.GetBytes(text);
+                byte[] hash = sha.ComputeHash(textData);
+                return BitConverter.ToString(hash).Replace("-", String.Empty);
             }
         }
     }

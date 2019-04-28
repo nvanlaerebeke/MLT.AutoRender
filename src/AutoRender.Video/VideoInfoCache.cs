@@ -1,5 +1,6 @@
 ﻿using AutoRender.Data;
 using log4net;
+using System;
 using System.Collections.Concurrent;
 using System.IO;
 using System.Reflection;
@@ -23,15 +24,20 @@ namespace AutoRender.Video {
                     }
                 }
             }
+            try {
 
-            var objNewVideoInfo = new VideoInfoWrapper(objFileInfo, new VideoInfoReader(pPath).Read());
-            if (_dicVideoCache.ContainsKey(pPath)) {
-                _dicVideoCache[pPath] = objNewVideoInfo;
-            } else {
-                _dicVideoCache.TryAdd(pPath, objNewVideoInfo);
+                var objNewVideoInfo = new VideoInfoWrapper(objFileInfo, new VideoInfoReader(pPath).Read());
+                if (_dicVideoCache.ContainsKey(pPath)) {
+                    _dicVideoCache[pPath] = objNewVideoInfo;
+                } else {
+                    _dicVideoCache.TryAdd(pPath, objNewVideoInfo);
+                }
+
+                return _dicVideoCache[pPath].VideoInfo;
+            } catch(Exception ex) {
+                Log.Error($"Unable to fetch info for {objFileInfo.FullName}: {ex.Message}");
             }
-
-            return _dicVideoCache[pPath].VideoInfo;
+            return null;
         }
 
         public void Remove(string pPath) {

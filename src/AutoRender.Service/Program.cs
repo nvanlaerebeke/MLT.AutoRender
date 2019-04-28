@@ -12,7 +12,7 @@ namespace AutoRender.Service {
         private static AutoRenderServer AutoRender;
 
         private static void Main() {
-            //LogFactory.Initialize(new LogProvider());
+           Environment.SetEnvironmentVariable("MONO_REGISTRY_PATH", Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "registry"));
             Logger.init(
                 log4net.Core.Level.Debug,
                 Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "AutoRender.log")
