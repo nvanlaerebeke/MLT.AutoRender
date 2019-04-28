@@ -16,15 +16,15 @@
         MinHeight="300"
         MaxHeight="600"
         Width="1300"
-        BorderThickness="0"       
+        BorderThickness="0"
         Title="Melt AutoRender" Icon="/AutoRender;component/AutoRender.png">
     <l:BaseWindow.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVis" />
         <!-- General style for the  column headers -->
         <Style TargetType="{x:Type DataGridColumnHeader}">
-            <Setter Property="VerticalContentAlignment" Value="Center"/>
-            <Setter Property="BorderThickness" Value="0, 0, 1, 0"/>
-            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="BorderThickness" Value="0, 0, 1, 0" />
+            <Setter Property="HorizontalContentAlignment" Value="Left" />
         </Style>
         <!-- Context menu for the WorkspaceItems -->
         <ContextMenu x:Key="WorkspaceItemContextMenu">
@@ -37,7 +37,7 @@
         </ContextMenu>
         <!-- Style to center the status column check box -->
         <Style x:Key="CenterGridHeaderStyle" TargetType="DataGridColumnHeader">
-            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
         </Style>
     </l:BaseWindow.Resources>
 
@@ -59,19 +59,19 @@
 
             <Label Grid.Column="0" Grid.Row="0" Content="Project Overview" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top" Height="25" />
 
-            <DataGrid 
-                Grid.Column="0" 
-                Grid.Row="1" 
+            <DataGrid
+                Grid.Column="0"
+                Grid.Row="1"
                 BorderThickness="1"
 
                 HorizontalAlignment="Stretch"
                 HorizontalContentAlignment="Stretch"
                 VerticalAlignment="Stretch"
                 VerticalContentAlignment="Stretch"
-            
-                Margin="10, 0, 0,0" 
+
+                Margin="10, 0, 0,0"
                 Name="grdItems"
-            
+
                 ItemsSource="{Binding WorkspaceItems}"
                 AutoGenerateColumns="False">
                 <DataGrid.Resources>
@@ -143,7 +143,7 @@
                     <DataGridTemplateColumn Header="Source Name">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <uc:EditableListField IsEditing="{Binding SourceNameIsEditing, Mode=TwoWay}" SelectedItem="{Binding SourceName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  ItemsSource="{Binding Path=DataContext.SourceNames, ElementName=myMainWindow}" AllowEditing="{Binding SourceNameAllowEditing}" SelectionChanged="SourceNameChanged"/>
+                                <uc:EditableListField IsEditing="{Binding SourceNameIsEditing, Mode=TwoWay}" SelectedItem="{Binding SourceName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  ItemsSource="{Binding Path=DataContext.SourceNames, ElementName=myMainWindow}" AllowEditing="{Binding SourceNameAllowEditing}" SelectionChanged="SourceNameChanged" />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
@@ -156,7 +156,6 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-
 
                     <!-- Comments -->
                     <DataGridTemplateColumn Header="">
@@ -171,7 +170,7 @@
 
             <UniformGrid  Grid.Column="1" Grid.Row="1" Rows="2" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="5,0,5,0">
                 <Button Grid.Row="1" x:Name="btnRefresh" Content="Refresh" Margin="0,5,0,0" Click="Refresh_Click" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
-                <Button Grid.Row="0" x:Name="btnStart" Content="Start Selected" Margin="0,5,0,0" Click="Start_Click" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+                <Button Grid.Row="0" x:Name="btnStart" Content="Start Selected" Margin="0,5,0,0" Click="StartAll_Click" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
             </UniformGrid>
         </Grid>
     </DockPanel>
