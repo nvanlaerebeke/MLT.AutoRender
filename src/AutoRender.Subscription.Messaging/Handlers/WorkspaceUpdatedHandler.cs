@@ -10,7 +10,9 @@ using System.Linq;
 using System.Reflection;
 
 namespace AutoRender.Subscription.Messaging.Handlers {
-
+    /// <summary>
+    /// ToDo: Add disconnected event so the Router list can be cleaned up
+    /// </summary>
     public class WorkspaceUpdatedHandler :
         ISubscriptionHandler<
             WorkspaceUpdatedSubscribe,
@@ -21,7 +23,7 @@ namespace AutoRender.Subscription.Messaging.Handlers {
 
         private ConcurrentDictionary<string, IRouter> _dicClients = new ConcurrentDictionary<string, IRouter>();
 
-        public bool Notify(SendWorkspaceUpdatedRequest pNotifyMessage) {
+        public bool NotifyAll(SendWorkspaceUpdatedRequest pNotifyMessage) {
             return Notify(null, pNotifyMessage);
         }
 
