@@ -12,9 +12,9 @@ REVISION=$(shell svn info | awk -F " " '/^Revision:/{print $$2}')
 rpm: clean tar rpmbuild
 
 bin: clean
-	cd ./scripts/ && ./build-mlt.sh
+	./scripts/build-mlt.sh
 
-build: clean app
+build: clean app bin
 
 clean:
 	echo $(ROOT)

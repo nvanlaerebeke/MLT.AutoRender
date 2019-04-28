@@ -26,7 +26,7 @@ namespace AutoRender.Data {
         public static string SourcePath {
             get {
                 if (Environment.OSVersion.Platform == PlatformID.Unix) {
-                    return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "../../", "melt/source-me");
+                    return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "bin", "setenv");
                 }
                 return "";
             }
@@ -35,7 +35,7 @@ namespace AutoRender.Data {
         public static string MeltPath {
             get {
                 if (Environment.OSVersion.Platform == PlatformID.Unix) {
-                    return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "../../", "melt/bin/melt");
+                    return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "bin", "melt");
                 } else {
                     return ConfigManager.Get<string>(Section.Global.ToString(), "MeltPath", Path.Combine(AppPath, "qmelt.exe"));
                 }
@@ -45,7 +45,7 @@ namespace AutoRender.Data {
         public static string FfprobePath {
             get {
                 if (Environment.OSVersion.Platform == PlatformID.Unix) {
-                    return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "../../", "melt/bin/ffprobe");
+                    return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "bin", "ffprobe");
                 } else {
                     return ConfigManager.Get<string>(Section.Global.ToString(), "FfprobePath", Path.Combine(AppPath), "ffprobe.exe");
                 }
@@ -55,7 +55,7 @@ namespace AutoRender.Data {
         public static string FfmpegPath {
             get {
                 if (Environment.OSVersion.Platform == PlatformID.Unix) {
-                    return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "../../", "melt/bin/ffmpeg");
+                    return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "bin", "ffmpeg");
                 } else {
                     return ConfigManager.Get<string>(Section.Global.ToString(), "FfmpegPath", Path.Combine(AppPath, @"ffmpeg.exe"));
                 }
