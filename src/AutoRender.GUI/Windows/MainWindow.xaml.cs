@@ -1,19 +1,19 @@
-﻿using System;
-using System.Linq;
-using System.Threading;
-using System.Windows;
-using System.Collections.Generic;
-using System.Windows.Controls;
-using System.IO;
-using System.Diagnostics;
-using System.Threading.Tasks;
+﻿using AutoRender.Data;
+using AutoRender.Messaging.Request;
 using AutoRender.Messaging.Response;
-using AutoRender.Data;
+using AutoRender.Subscription.Messaging;
+using AutoRender.Subscription.Messaging.Action.Request;
 using Mitto.IMessaging;
 using Mitto.Messaging.Response;
-using AutoRender.Messaging.Request;
-using AutoRender.Subscription.Messaging.Action.Request;
-using AutoRender.Subscription.Messaging;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
 
 namespace AutoRender {
 
@@ -21,27 +21,45 @@ namespace AutoRender {
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : BaseWindow {
-        private MainViewModel _objViewModel = new MainViewModel();
-        private Connection _objConnection;
+        private readonly MainViewModel _objViewModel = new MainViewModel();
+        private readonly ConnectionManager ConnectionManager = new ConnectionManager();
 
         public MainWindow() : base() {
-            this.DataContext = _objViewModel;
+            DataContext = _objViewModel;
             InitializeComponent();
 
-            base.StatusChanged += delegate (WindowStatus pStatus, string pMessage) {
+            StatusChanged += delegate (WindowStatus pStatus, string pMessage) {
                 _objViewModel.SetStatus(pStatus, pMessage);
             };
-            Connect();
-        }
 
-        private void Connect() {
-            SetLoading("Loading Projects...");
-            _objConnection = new Connection();
-            _objConnection.Ready += _objConnection_Ready;
-            _objConnection.Disconnected += _objConnection_Disconnected;
-            _objConnection.Start();
+            ConnectionManager.StatusChanged += ConnectionManager_StatusChanged;
+            ConnectionManager.WorkspaceUpdated += ConnectionManager_WorkspaceUpdated;
+            ConnectionManager.Connect();
 
             SendWorkspaceUpdatedRequestAction.WorkspaceUpdated += SendWorkspaceUpdatedRequestAction_WorkspaceUpdated;
+        }
+
+        private void ConnectionManager_WorkspaceUpdated(object sender, List<WorkspaceItem> pWorkspaceItems) {
+            if (pWorkspaceItems != null) {
+                _objViewModel.Clear();
+                _objViewModel.Update(pWorkspaceItems);
+            }
+        }
+
+        private void ConnectionManager_StatusChanged(object sender, string e) {
+            switch (e) {
+                case "Connecting":
+                    SetLoading("Connecting...");
+                    break;
+
+                case "Loading":
+                    SetLoading("Loading...");
+                    break;
+
+                case "Ready":
+                    EndLoading();
+                    break;
+            }
         }
 
         private void SendWorkspaceUpdatedRequestAction_WorkspaceUpdated(IClient pClient, List<WorkspaceUpdatedEventArgs> pUpdates) {
@@ -59,64 +77,17 @@ namespace AutoRender {
             });
         }
 
-        /// <summary>
-        /// When the connection has been set up, subscribe and get the status
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void _objConnection_Ready(object sender, EventArgs e) {
-            Reload();
-        }
-
-        private void _objConnection_Disconnected(object sender, EventArgs e) {
-            this.SetLoading("Connection lost, reconnecting...");
-        }
-
-        private void UpdateStatus() {
-            Task.Run(() => {
-                var blnSuccess = false;
-                while (!blnSuccess && _objConnection.IsConnected) {
-                    ManualResetEvent objBlock = new ManualResetEvent(false);
-                    _objConnection.Request<GetStatusResponse>(new GetStatusRequest(), (r) => {
-                        if (r.Status.State == ResponseState.Success) {
-                            blnSuccess = true;
-                            _objViewModel.Clear();
-                            _objViewModel.Update(r.WorkspaceItems);
-                        } else {
-                            Thread.Sleep(2000);
-                        }
-                        objBlock.Set();
-                    });
-                    objBlock.WaitOne();
-                }
-            });
-        }
-
-        private void btnStart_Click(object sender, RoutedEventArgs e) {
-            var lstWsItems = _objViewModel.WorkspaceItems.Where(i => i.SelectedForHandling);
-            if (lstWsItems.Count() > 0) {
-                foreach (var objWsItem in lstWsItems) {
-                    _objConnection.Request<ACKResponse>(new JobStartRequest(objWsItem.ID), (r) => {
-                        //deselect when we were able to queue the job
-                        if (r.Status.State == ResponseState.Success) {
-                            objWsItem.SelectedForHandling = false;
-                        }
-                    });
-                }
-            }
-        }
-
         private void TargetNameChanged(object sender, RoutedEventArgs e) {
-            var objViewModel = ((sender as Button).BindingGroup.Owner as DataGridRow).DataContext as WorkspaceItemViewModel;
+            WorkspaceItemViewModel objViewModel = ((sender as Button).BindingGroup.Owner as DataGridRow).DataContext as WorkspaceItemViewModel;
             if (!string.IsNullOrEmpty(objViewModel.TargetName)) {
                 objViewModel.IsUpdating = true;
 
-                _objConnection.Request<ACKResponse>(new UpdateProjectTargetRequest(objViewModel.ID, objViewModel.TargetName), (r) => {
+                ConnectionManager.Connection.Request<ACKResponse>(new UpdateProjectTargetRequest(objViewModel.ID, objViewModel.TargetName), (r) => {
                     if (r.Status.State != ResponseState.Success) {
                         MessageBox.Show("Failed updating name, please try again or contact Nico the almighty");
                         objViewModel.IsUpdating = false;
                     } else {
-                        _objConnection.Request<GetStatusResponse>(new GetStatusRequest(objViewModel.ID.ToString()), (s) => {
+                        ConnectionManager.Connection.Request<GetStatusResponse>(new GetStatusRequest(objViewModel.ID.ToString()), (s) => {
                             if (s.Status.State == ResponseState.Success) {
                                 s.WorkspaceItems.ForEach(i => objViewModel.Update(i));
                             } else {
@@ -130,16 +101,16 @@ namespace AutoRender {
         }
 
         private void SourceNameChanged(object sender, RoutedEventArgs e) {
-            var objViewModel = ((sender as System.Windows.Controls.Button).BindingGroup.Owner as System.Windows.Controls.DataGridRow).DataContext as WorkspaceItemViewModel;
-            if (!String.IsNullOrEmpty(objViewModel.SourceName)) {
+            WorkspaceItemViewModel objViewModel = ((sender as System.Windows.Controls.Button).BindingGroup.Owner as System.Windows.Controls.DataGridRow).DataContext as WorkspaceItemViewModel;
+            if (!string.IsNullOrEmpty(objViewModel.SourceName)) {
                 objViewModel.IsUpdating = true;
 
-                _objConnection.Request<ACKResponse>(new UpdateProjectSourceRequest(objViewModel.ID, objViewModel.SourceName), (r) => {
+                ConnectionManager.Connection.Request<ACKResponse>(new UpdateProjectSourceRequest(objViewModel.ID, objViewModel.SourceName), (r) => {
                     if (r.Status.State != ResponseState.Success) {
                         MessageBox.Show("Failed updating name, please try again or contact Nico the almighty");
                         objViewModel.IsUpdating = false;
                     } else {
-                        _objConnection.Request<GetStatusResponse>(new GetStatusRequest(objViewModel.ID.ToString()), (s) => {
+                        ConnectionManager.Connection.Request<GetStatusResponse>(new GetStatusRequest(objViewModel.ID.ToString()), (s) => {
                             if (s.Status.State == ResponseState.Success) {
                                 s.WorkspaceItems.ForEach(i => _objViewModel.Update(i));
                             } else {
@@ -152,49 +123,17 @@ namespace AutoRender {
             }
         }
 
-        private void btnRefresh_Click(object sender, RoutedEventArgs e) {
-            UpdateStatus();
-            SetLoading("Reloading server data...");
-
-            _objConnection.Request<GetStatusResponse>(new ReloadRequest(), (r) => {
-                if (r.Status.State == ResponseState.Success) {
-                    _objViewModel.Update(r.WorkspaceItems);
-                } else {
-                    MessageBox.Show("Failed reloading item, please try again or contact Nico the almighty");
-                }
-                EndLoading();
-            });
+        private void Refresh_Click(object sender, RoutedEventArgs e) {
+            ConnectionManager.Reload();
         }
 
-        private void Reload() {
-            Task.Run(() => {
-                SetLoading("Connection ready, fetching status from server...");
-                UpdateStatus();
-
-                var blnSuccess = false;
-                SetLoading("Subscribing to workspace update event");
-                do {
-                    ManualResetEvent objBlock = new ManualResetEvent(false);
-                    _objConnection.Request<ACKResponse>(new WorkspaceUpdatedSubscribe(), (r) => {
-                        if (r.Status.State == ResponseState.Success) {
-                            blnSuccess = true;
-                        } else {
-                            Thread.Sleep(2000);
-                        }
-                    });
-                    objBlock.WaitOne();
-                } while (!blnSuccess && _objConnection.IsConnected);
-                EndLoading();
-            });
-        }
-
-        private void mnuStart_Click(object sender, RoutedEventArgs e) {
-            var objWorkspaceItemViewModel = (sender as MenuItem).DataContext as WorkspaceItemViewModel;
+        private void Start_Click(object sender, RoutedEventArgs e) {
+            WorkspaceItemViewModel objWorkspaceItemViewModel = (sender as MenuItem).DataContext as WorkspaceItemViewModel;
             if (objWorkspaceItemViewModel != null && objWorkspaceItemViewModel.Status == Status.Processable || objWorkspaceItemViewModel.Status == Status.Paused) {
                 objWorkspaceItemViewModel.IsUpdating = true;
                 objWorkspaceItemViewModel.SelectedForHandling = true;
 
-                _objConnection.Request<ACKResponse>(new JobStartRequest(objWorkspaceItemViewModel.ID), (r) => {
+                ConnectionManager.Connection.Request<ACKResponse>(new JobStartRequest(objWorkspaceItemViewModel.ID), (r) => {
                     //deselect when we were able to queue the job
                     if (r.Status.State == ResponseState.Success) {
                         objWorkspaceItemViewModel.SelectedForHandling = false;
@@ -206,13 +145,13 @@ namespace AutoRender {
             }
         }
 
-        private void mnuStop_Click(object sender, RoutedEventArgs e) {
+        private void Stop_Click(object sender, RoutedEventArgs e) {
             var objWorkspaceItemViewModel = (sender as MenuItem).DataContext as WorkspaceItemViewModel;
             if (objWorkspaceItemViewModel != null && objWorkspaceItemViewModel.Status == Status.Busy) {
                 objWorkspaceItemViewModel.IsUpdating = true;
                 objWorkspaceItemViewModel.SelectedForHandling = false;
 
-                _objConnection.Request<ACKResponse>(new JobStopRequest(objWorkspaceItemViewModel.ID), (r) => {
+                ConnectionManager.Connection.Request<ACKResponse>(new JobStopRequest(objWorkspaceItemViewModel.ID), (r) => {
                     if (r.Status.State == ResponseState.Success) {
                         objWorkspaceItemViewModel.SelectedForHandling = true;
                     } else {
@@ -223,12 +162,12 @@ namespace AutoRender {
             }
         }
 
-        private void mnuPause_Click(object sender, RoutedEventArgs e) {
-            var objWorkspaceItemViewModel = (sender as MenuItem).DataContext as WorkspaceItemViewModel;
+        private void Pause_Click(object sender, RoutedEventArgs e) {
+            WorkspaceItemViewModel objWorkspaceItemViewModel = (sender as MenuItem).DataContext as WorkspaceItemViewModel;
             if (objWorkspaceItemViewModel != null && objWorkspaceItemViewModel.Status == Status.Busy) {
                 objWorkspaceItemViewModel.IsUpdating = true;
 
-                _objConnection.Request<ACKResponse>(new JobPauseRequest(objWorkspaceItemViewModel.ID), (r) => {
+                ConnectionManager.Connection.Request<ACKResponse>(new JobPauseRequest(objWorkspaceItemViewModel.ID), (r) => {
                     if (r.Status.State != ResponseState.Success) {
                         MessageBox.Show("Failed pausing item, please try again or contact Nico the almighty");
                     }
@@ -237,19 +176,19 @@ namespace AutoRender {
             }
         }
 
-        private void mnuEditTargetName_Click(object sender, RoutedEventArgs e) {
-            var objWorkspaceItemViewModel = (sender as MenuItem).DataContext as WorkspaceItemViewModel;
+        private void EditTargetName_Click(object sender, RoutedEventArgs e) {
+            WorkspaceItemViewModel objWorkspaceItemViewModel = (sender as MenuItem).DataContext as WorkspaceItemViewModel;
             objWorkspaceItemViewModel.TargetNameIsEditing = true;
         }
 
-        private void mnuEditSourceName_Click(object sender, RoutedEventArgs e) {
-            var objWorkspaceItemViewModel = (sender as MenuItem).DataContext as WorkspaceItemViewModel;
+        private void EditSourceName_Click(object sender, RoutedEventArgs e) {
+            WorkspaceItemViewModel objWorkspaceItemViewModel = (sender as MenuItem).DataContext as WorkspaceItemViewModel;
             objWorkspaceItemViewModel.SourceNameIsEditing = true;
         }
 
         private void ProjectField_CreateProjectClicked(object sender, RoutedEventArgs e) {
             try {
-                if (!File.Exists(Settings.ShotcutExecutable)) { throw new Exception("Shotcut executable not found"); }
+                if (!File.Exists(Settings.ShotcutExecutable)) { throw new Exception("Shot-cut executable not found"); }
 
                 var objWorkspaceItemViewModel = (sender as System.Windows.Documents.Hyperlink).DataContext as WorkspaceItemViewModel;
                 Task.Run(() => {
@@ -271,8 +210,8 @@ namespace AutoRender {
             }
         }
 
-        private void mnuOpenShotcut_Click(object sender, RoutedEventArgs e) {
-            var objWorkspaceItemViewModel = (sender as MenuItem).DataContext as WorkspaceItemViewModel;
+        private void OpenShotcut_Click(object sender, RoutedEventArgs e) {
+            WorkspaceItemViewModel objWorkspaceItemViewModel = (sender as MenuItem).DataContext as WorkspaceItemViewModel;
             string strPath = Path.Combine(Settings.ProjectPath, objWorkspaceItemViewModel.ProjectName);
             if (File.Exists(strPath) && File.Exists(Settings.ShotcutExecutable)) {
                 new Process {

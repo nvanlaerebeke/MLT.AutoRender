@@ -28,12 +28,12 @@
         </Style>
         <!-- Context menu for the WorkspaceItems -->
         <ContextMenu x:Key="WorkspaceItemContextMenu">
-            <MenuItem Header="Start" IsEnabled="{Binding Path=CanStart}" Click="mnuStart_Click" />
-            <MenuItem Header="Stop" IsEnabled="{Binding Path=CanStop}" Click="mnuStop_Click" />
-            <MenuItem Header="Pause" IsEnabled="{Binding Path=CanPause}" Click="mnuPause_Click" />
-            <MenuItem Header="Edit Target Name" IsEnabled="{Binding Path=CanEditTargetName}" Click="mnuEditTargetName_Click" />
-            <MenuItem Header="Edit Source File" IsEnabled="{Binding Path=CanEditSourceName}" Click="mnuEditSourceName_Click" />
-            <MenuItem Header="Open Shotcut" IsEnabled="{Binding Path=CanOpenShotcut}" Click="mnuOpenShotcut_Click" />
+            <MenuItem Header="Start" IsEnabled="{Binding Path=CanStart}" Click="Start_Click" />
+            <MenuItem Header="Stop" IsEnabled="{Binding Path=CanStop}" Click="Stop_Click" />
+            <MenuItem Header="Pause" IsEnabled="{Binding Path=CanPause}" Click="Pause_Click" />
+            <MenuItem Header="Edit Target Name" IsEnabled="{Binding Path=CanEditTargetName}" Click="EditTargetName_Click" />
+            <MenuItem Header="Edit Source File" IsEnabled="{Binding Path=CanEditSourceName}" Click="EditSourceName_Click" />
+            <MenuItem Header="Open Shotcut" IsEnabled="{Binding Path=CanOpenShotcut}" Click="OpenShotcut_Click" />
         </ContextMenu>
         <!-- Style to center the status column check box -->
         <Style x:Key="CenterGridHeaderStyle" TargetType="DataGridColumnHeader">
@@ -170,8 +170,8 @@
             </DataGrid>
 
             <UniformGrid  Grid.Column="1" Grid.Row="1" Rows="2" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="5,0,5,0">
-                <Button Grid.Row="1" x:Name="btnRefresh" Content="Refresh" Margin="0,5,0,0" Click="btnRefresh_Click" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
-                <Button Grid.Row="0" x:Name="btnStart" Content="Start Selected" Margin="0,5,0,0" Click="btnStart_Click" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+                <Button Grid.Row="1" x:Name="btnRefresh" Content="Refresh" Margin="0,5,0,0" Click="Refresh_Click" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+                <Button Grid.Row="0" x:Name="btnStart" Content="Start Selected" Margin="0,5,0,0" Click="Start_Click" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
             </UniformGrid>
         </Grid>
     </DockPanel>

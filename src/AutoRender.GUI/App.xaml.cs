@@ -2,6 +2,7 @@
 using CrazyUtils;
 using log4net;
 using Mitto;
+using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Windows;
@@ -24,7 +25,11 @@ namespace AutoRender {
 
                 Config.Initialize(
                     new Config.ConfigParams() {
-                        Logger = new MittoLogger(LogManager.GetLogger(typeof(Client)))
+                        Logger = new MittoLogger(LogManager.GetLogger(typeof(Client))),
+                        Assemblies = new List<string>() {
+                            "AutoRender.Messaging",
+                            "AutoRender.Subscription.Messaging"
+                        }
                     }
                 );
 

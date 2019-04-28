@@ -17,6 +17,8 @@ namespace AutoRender {
 
         public Connection() {
             Client = new Mitto.Client();
+            Client.Connected += Connected;
+            Client.Disconnected += ClientDisconnected;
         }
 
         public void Request<T>(RequestMessage pMessage, Action<T> pCallBack) where T : ResponseMessage {
@@ -30,16 +32,11 @@ namespace AutoRender {
         }
 
         private void Connect() {
-            Client.Disconnect();
-
             var objParams = new ClientParams() {
-                Hostname = "test.crazyzone.be",
+                Hostname = "192.168.0.126",
                 Port = 6666,
                 Secure = false
             };
-
-            Client.Connected += Connected;
-            Client.Disconnected += ClientDisconnected;
             Client.ConnectAsync(objParams);
         }
 
@@ -65,12 +62,14 @@ namespace AutoRender {
         }
 
         private void ClearTimer() {
-            if (_objReconnectTimer != null) {
-                _objReconnectTimer.Elapsed -= _objReconnectTimer_Elapsed;
-                _objReconnectTimer.Stop();
-                _objReconnectTimer.Dispose();
-                _objReconnectTimer = null;
-            }
+            try {
+                if (_objReconnectTimer != null) {
+                    _objReconnectTimer.Elapsed -= _objReconnectTimer_Elapsed;
+                    _objReconnectTimer.Stop();
+                    _objReconnectTimer.Dispose();
+                    _objReconnectTimer = null;
+                }
+            } catch { }
         }
 
         private void _objReconnectTimer_Elapsed(object sender, ElapsedEventArgs e) {
