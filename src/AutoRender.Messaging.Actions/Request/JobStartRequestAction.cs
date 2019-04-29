@@ -17,8 +17,8 @@ namespace AutoRender.Messaging.Action.Request {
         }
 
         public override ACKResponse Start() {
-            var objWsItem = WorkspaceFactory.Get().Get(Request.ProjectID);
-            if (objWsItem != null) {
+            var objWsItem = WorkspaceFactory.Get().Get(Request.ItemID);
+            if (objWsItem != null && objWsItem.Project != null) {
                 if (objWsItem.Project != null) {
                     objWsItem.Project.Start();
 

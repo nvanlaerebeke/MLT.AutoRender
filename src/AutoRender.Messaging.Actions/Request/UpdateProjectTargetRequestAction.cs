@@ -17,8 +17,8 @@ namespace AutoRender.Messaging.Action.Request {
         }
 
         public override ACKResponse Start() {
-            var objWsItem = WorkspaceFactory.Get().Get(Request.ProjectID);
-            if (objWsItem != null) {
+            var objWsItem = WorkspaceFactory.Get().Get(Request.ItemID);
+            if (objWsItem != null && objWsItem.Project != null) {
                 objWsItem.Project.TargetName = Request.ProjectTargetName;
 
                 new SubscriptionClient<WorkspaceUpdatedHandler>(Client).Notify(new SendWorkspaceUpdatedRequest(
@@ -32,7 +32,7 @@ namespace AutoRender.Messaging.Action.Request {
 
                 return new ACKResponse(Request);
             }
-            return new ACKResponse(Request, new ResponseStatus(ResponseState.Error, $"Project {Request.ProjectID} not found"));
+            return new ACKResponse(Request, new ResponseStatus(ResponseState.Error, $"Project {Request.ItemID} not found"));
         }
     }
 }

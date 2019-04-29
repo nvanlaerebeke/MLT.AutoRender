@@ -19,7 +19,7 @@ namespace AutoRender.Messaging.Action.Request {
                 Workspace.WorkspaceFactory.Get().WorkspaceItems.ForEach(i =>
                     lstItems.Add(new WorkspaceItem() {
                         ID = i.ID,
-                        Project = i.Project.GetProject(),
+                        Project = i.Project?.GetProject(),
                         New = i.New,
                         Final = i.Final
                     })

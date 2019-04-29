@@ -7,7 +7,7 @@ namespace AutoRender.Workspace {
 
     public class WorkspaceItem {
 
-        public static event WorkspaceItemUpdated Updated;
+        public static event EventHandler<List<WorkspaceUpdatedEventArgs>> Updated;
 
         public Guid ID { get; private set; }
         public MLTProject Project { get; private set; }

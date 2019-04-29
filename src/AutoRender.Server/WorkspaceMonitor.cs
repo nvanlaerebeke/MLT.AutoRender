@@ -11,9 +11,9 @@ namespace AutoRender.Server {
 
     internal class WorkspaceMonitor {
         private readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
-        private readonly WorkspaceContainer Workspace;
+        private readonly Workspace.Workspace Workspace;
 
-        public WorkspaceMonitor(WorkspaceContainer pWorkspace) {
+        public WorkspaceMonitor(Workspace.Workspace pWorkspace) {
             Workspace = pWorkspace;
         }
 

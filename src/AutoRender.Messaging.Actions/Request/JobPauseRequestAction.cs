@@ -13,18 +13,18 @@ namespace AutoRender.Messaging.Action.Request {
 
     public class JobPauseRequestAction : RequestAction<JobPauseRequest, ACKResponse> {
 
-        public JobPauseRequestAction(IClient pClient, Messaging.Request.JobPauseRequest pRequest) : base(pClient, pRequest) {
+        public JobPauseRequestAction(IClient pClient, JobPauseRequest pRequest) : base(pClient, pRequest) {
         }
 
         public override ACKResponse Start() {
-            var objWSItem = WorkspaceFactory.Get().Get(Request.ProjectID);
-            if (objWSItem != null && objWSItem.Project != null) {
-                objWSItem.Project.Pause();
+            var objWsItem = WorkspaceFactory.Get().Get(Request.ItemID);
+            if (objWsItem != null && objWsItem.Project != null) {
+                objWsItem.Project.Pause();
 
                 new SubscriptionClient<WorkspaceUpdatedHandler>(Client).Notify(new SendWorkspaceUpdatedRequest(
-                    new List<Data.WorkspaceUpdatedEventArgs>() {
-                        new Data.WorkspaceUpdatedEventArgs(
-                            objWSItem.GetWorkspaceItem(),
+                    new List<WorkspaceUpdatedEventArgs>() {
+                        new WorkspaceUpdatedEventArgs(
+                            objWsItem.GetWorkspaceItem(),
                             WorkspaceAction.Updated
                         )
                     }

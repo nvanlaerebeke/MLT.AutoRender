@@ -18,16 +18,16 @@ namespace AutoRender.Messaging.Action.Request {
         }
 
         public override ACKResponse Start() {
-            var objItem = WorkspaceFactory.Get().Get(Request.ProjectID);
-            if (objItem != null) {
+            var objWsItem = WorkspaceFactory.Get().Get(Request.ItemID);
+            if (objWsItem != null && objWsItem.Project != null) {
                 string strNewPath = Path.Combine(Settings.NewDirectory, Request.ProjectSourceName);
                 if (File.Exists(strNewPath)) {
-                    objItem.Project.SourcePath = strNewPath;
+                    objWsItem.Project.SourcePath = strNewPath;
 
                     new SubscriptionClient<WorkspaceUpdatedHandler>(Client).Notify(new SendWorkspaceUpdatedRequest(
                         new List<WorkspaceUpdatedEventArgs>() {
                             new WorkspaceUpdatedEventArgs(
-                                objItem.GetWorkspaceItem(),
+                                objWsItem.GetWorkspaceItem(),
                                 WorkspaceAction.Updated
                             )
                         }
@@ -37,7 +37,7 @@ namespace AutoRender.Messaging.Action.Request {
                 }
                 return new ACKResponse(Request, new ResponseStatus(ResponseState.Error, $"File {strNewPath} not found"));
             }
-            return new ACKResponse(Request, new ResponseStatus(ResponseState.Error, $"Project {Request.ProjectID} not found"));
+            return new ACKResponse(Request, new ResponseStatus(ResponseState.Error, $"Project {Request.ItemID} not found"));
         }
     }
 }

@@ -13,11 +13,11 @@ namespace AutoRender.Messaging.Action.Request {
 
     public class JobStopRequestAction : RequestAction<JobStopRequest, ACKResponse> {
 
-        public JobStopRequestAction(IClient pClient, Messaging.Request.JobStopRequest pRequest) : base(pClient, pRequest) {
+        public JobStopRequestAction(IClient pClient, JobStopRequest pRequest) : base(pClient, pRequest) {
         }
 
         public override ACKResponse Start() {
-            var objWsItem = WorkspaceFactory.Get().Get(Request.ProjectID);
+            var objWsItem = WorkspaceFactory.Get().Get(Request.ItemID);
             if (objWsItem != null && objWsItem.Project != null) {
                 objWsItem.Project.Stop();
 

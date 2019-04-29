@@ -4,6 +4,7 @@ using System;
 using System.Collections.Concurrent;
 using System.IO;
 using System.Reflection;
+using System.Threading.Tasks;
 
 namespace AutoRender.Video {
 
@@ -38,6 +39,12 @@ namespace AutoRender.Video {
                 Log.Error($"Unable to fetch info for {objFileInfo.FullName}: {ex.Message}");
             }
             return null;
+        }
+
+        public Task<VideoInfo> GetAsync(string strPath) {
+            return Task.Run<VideoInfo>(() => {
+                return Get(strPath);
+            });
         }
 
         public void Remove(string pPath) {

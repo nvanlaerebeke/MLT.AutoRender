@@ -1,12 +1,14 @@
-﻿using System.Collections.Concurrent;
-
-namespace AutoRender.Workspace {
+﻿namespace AutoRender.Workspace {
 
     public static class WorkspaceFactory {
-        private static readonly WorkspaceContainer WorkspaceContainer = new WorkspaceContainer();
+        private static Workspace Workspace;
 
-        public static WorkspaceContainer Get() {
-            return WorkspaceContainer;
+        public static Workspace Get() {
+            if(Workspace == null) {
+                Workspace = new Workspace();
+                Workspace.ReLoad();
+            }
+            return Workspace;
         }
     }
 }

@@ -47,6 +47,7 @@ namespace AutoRender.Subscription.Messaging.Handlers {
                 if (!_dicClients.TryAdd(pClient.ConnectionID, pClient)) {
                     return false;
                 }
+                pClient.Disconnected += Client_Disconnected;
             }
             return true;
         }
@@ -55,9 +56,15 @@ namespace AutoRender.Subscription.Messaging.Handlers {
             if (_dicClients.ContainsKey(pClient.ConnectionID)) {
                 if (!_dicClients.TryRemove(pClient.ConnectionID, out _)) {
                     Log.Error($"Failed to remove {pClient.ConnectionID}, leaking memory");
+                } else {
+                    pClient.Disconnected -= Client_Disconnected;
                 }
             }
             return true;
+        }
+
+        void Client_Disconnected(object sender, IRouter e) {
+            UnSub(e, new WorkspaceUpdatedUnSubscribe());
         }
     }
 }
