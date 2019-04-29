@@ -26,9 +26,9 @@ namespace AutoRender {
                 Config.Initialize(
                     new Config.ConfigParams() {
                         Logger = new MittoLogger(LogManager.GetLogger(typeof(Client))),
-                        Assemblies = new List<string>() {
-                            "AutoRender.Messaging",
-                            "AutoRender.Subscription.Messaging"
+                        Assemblies = new List<AssemblyName>() {
+                            new AssemblyName("AutoRender.Messaging"),
+                            new AssemblyName("AutoRender.Subscription.Messaging")
                         }
                     }
                 );

@@ -8,18 +8,20 @@ namespace AutoRender {
         private readonly Connection Connection;
         private readonly Action<bool> Action;
         private readonly Action<ACKResponse> Callback;
-        private readonly Guid ProjectID;
+        private readonly Guid ItemID;
 
-        public WorkspaceItemAction(Connection pConnection, Guid pProjectID, Action<bool> pAction) {
+        public WorkspaceItemAction(Connection pConnection, Guid pItemID, Action<bool> pAction) {
             Connection = pConnection;
-            ProjectID = pProjectID;
+            ItemID = pItemID;
             Action = pAction;
-            Callback = (r) => { Action.Invoke(r.Status.State == Mitto.IMessaging.ResponseState.Success); };
+            Callback = (r) => {
+                Action.Invoke(r.Status.State == Mitto.IMessaging.ResponseState.Success);
+            };
         }
 
         public void ChangeTargetName(string pName) {
             try {
-                Connection.Request(new UpdateProjectTargetRequest(ProjectID, pName), Callback);
+                Connection.Request(new UpdateProjectTargetRequest(ItemID, pName), Callback);
             } catch (Exception) {
                 Action.Invoke(false);
             }
@@ -27,7 +29,7 @@ namespace AutoRender {
 
         public void ChangeSourceName(string pName) {
             try {
-                Connection.Request(new UpdateProjectSourceRequest(ProjectID, pName), Callback);
+                Connection.Request(new UpdateProjectSourceRequest(ItemID, pName), Callback);
             } catch (Exception) {
                 Action.Invoke(false);
             }
@@ -35,7 +37,7 @@ namespace AutoRender {
 
         public void StartJob() {
             try {
-                Connection.Request(new JobStartRequest(ProjectID), Callback);
+                Connection.Request(new JobStartRequest(ItemID), Callback);
             } catch (Exception) {
                 Action.Invoke(false);
             }
@@ -43,7 +45,7 @@ namespace AutoRender {
 
         public void StopJob() {
             try {
-                Connection.Request(new JobStopRequest(ProjectID), Callback);
+                Connection.Request(new JobStopRequest(ItemID), Callback);
             } catch (Exception) {
                 Action.Invoke(false);
             }
@@ -51,7 +53,7 @@ namespace AutoRender {
 
         public void PauseJob() {
             try {
-                Connection.Request(new JobPauseRequest(ProjectID), Callback);
+                Connection.Request(new JobPauseRequest(ItemID), Callback);
             } catch (Exception) {
                 Action.Invoke(false);
             }
