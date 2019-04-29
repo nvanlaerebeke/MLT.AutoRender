@@ -10,7 +10,7 @@ namespace CrazyUtils {
 
     public delegate void ProcessStatusChanged(ProcessStatus pStatus);
 
-    public class ProcessWrapper {
+    public class ProcessRunner {
         private Process _objProcess;
         private Thread _thdStdOut;
         private Thread _thdStdErr;
@@ -36,7 +36,7 @@ namespace CrazyUtils {
         private string _strExecutable;
         private string _strParams;
 
-        public ProcessWrapper(string pExecutable, string pParams) {
+        public ProcessRunner(string pExecutable, string pParams) {
             pExecutable = "sleep";
             pParams = "10";
             //var strCommand = "-progress " + "\"" + Regex.Replace("/mnt/nas/Video/TestInbox/Temp/test1.xml", @"(\\+)$", @"$1$1") + "\"";

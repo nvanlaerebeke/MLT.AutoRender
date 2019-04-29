@@ -74,36 +74,36 @@ namespace AutoRender.MLT {
 
         private void StartEncoding() {
             Status = JobStatus.Running;
-
-            var strCommand = "-progress " + "\"" + Regex.Replace(Config.ConfigFile, @"(\\+)$", @"$1$1") + "\"";
-            _objProcess = new Process();
-
-            ProcessStartInfo objStartInfo = new ProcessStartInfo(Settings.MeltPath, strCommand) {
-                UseShellExecute = false,
-                ErrorDialog = false,
-                CreateNoWindow = true,
-                StandardOutputEncoding = Encoding.UTF8,
-                StandardErrorEncoding = Encoding.UTF8,
-                RedirectStandardOutput = true,
-                RedirectStandardError = true,
-                WorkingDirectory = Settings.TempDirectory
-            };
-
-            _objProcess.EnableRaisingEvents = true;
-            _objProcess.Exited += _objProcess_Exited;
-            _objProcess.StartInfo = objStartInfo;
-
-            int intIdentifier = new Random().Next(1, 9999);
-
-            _thdStdErr = new Thread(readStdError) {
-                IsBackground = true
-            };
-
-            _thdStdOut = new Thread(readStdOut) {
-                IsBackground = true
-            };
-
             try {
+                var strCommand = "-progress " + "\"" + Regex.Replace(Config.ConfigFile, @"(\\+)$", @"$1$1") + "\"";
+                _objProcess = new Process();
+
+                ProcessStartInfo objStartInfo = new ProcessStartInfo(Settings.MeltPath, strCommand) {
+                    UseShellExecute = false,
+                    ErrorDialog = false,
+                    CreateNoWindow = true,
+                    StandardOutputEncoding = Encoding.UTF8,
+                    StandardErrorEncoding = Encoding.UTF8,
+                    RedirectStandardOutput = true,
+                    RedirectStandardError = true,
+                    WorkingDirectory = Settings.TempDirectory
+                };
+
+                _objProcess.EnableRaisingEvents = true;
+                _objProcess.Exited += _objProcess_Exited;
+                _objProcess.StartInfo = objStartInfo;
+
+                int intIdentifier = new Random().Next(1, 9999);
+
+                _thdStdErr = new Thread(readStdError) {
+                    IsBackground = true
+                };
+
+                _thdStdOut = new Thread(readStdOut) {
+                    IsBackground = true
+                };
+
+
                 if (File.Exists(Config.TempSourcePath)) { File.Delete(Config.TempSourcePath); }
                 if (File.Exists(Config.TempTargetPath)) { File.Delete(Config.TempTargetPath); }
                 File.Copy(Config.SourceFile, Config.TempSourcePath);
@@ -124,7 +124,11 @@ namespace AutoRender.MLT {
         private void StopEncoding() {
             _objJobCancelationSource.Cancel();
             if (_objProcess != null) {
-                _objProcess.Kill();
+                try {
+                    _objProcess.Kill();
+                } catch(Exception ex) {
+                    Log.Error($"Failed to stop process for {Config.SourceFile}: {ex.Message}");
+                }
                 Status = JobStatus.UnScheduled;
             }
         }

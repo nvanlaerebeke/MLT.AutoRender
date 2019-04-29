@@ -16,14 +16,9 @@ namespace AutoRender.Messaging.Action.Request {
         public override GetStatusResponse Start() {
             List<WorkspaceItem> lstItems = new List<WorkspaceItem>();
             try {
-                Workspace.WorkspaceFactory.Get().WorkspaceItems.ForEach(i =>
-                    lstItems.Add(new WorkspaceItem() {
-                        ID = i.ID,
-                        Project = i.Project?.GetProject(),
-                        New = i.New,
-                        Final = i.Final
-                    })
-                );
+                foreach (var objKvp in Workspace.WorkspaceFactory.Get().WorkspaceItems) {
+                    lstItems.Add(objKvp.Value.GetWorkspaceItem());
+                }
                 return new GetStatusResponse(Request, lstItems);
             } catch(Exception ex) {
                 return new GetStatusResponse(Request, new ResponseStatus(ResponseState.Error, ex.Message));

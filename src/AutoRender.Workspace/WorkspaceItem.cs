@@ -7,7 +7,7 @@ namespace AutoRender.Workspace {
 
     public class WorkspaceItem {
 
-        public static event EventHandler<List<WorkspaceUpdatedEventArgs>> Updated;
+        public event EventHandler<List<WorkspaceUpdatedEventArgs>> Updated;
 
         public Guid ID { get; private set; }
         public MLTProject Project { get; private set; }
@@ -25,12 +25,9 @@ namespace AutoRender.Workspace {
         }
 
         private void Project_ProjectChanged(object sender, EventArgs e) {
-            Updated?.Invoke(this, new List<WorkspaceUpdatedEventArgs> { new WorkspaceUpdatedEventArgs(new Data.WorkspaceItem() {
-                Final = Final,
-                ID = ID,
-                New = New,
-                Project = Project.GetProject()
-            }, WorkspaceAction.Updated) });
+            Updated?.Invoke(this, new List<WorkspaceUpdatedEventArgs> {
+                { new WorkspaceUpdatedEventArgs(GetWorkspaceItem(), WorkspaceAction.Updated) }
+            });
         }
 
         #region Update Methods

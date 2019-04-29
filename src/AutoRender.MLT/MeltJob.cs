@@ -59,6 +59,7 @@ namespace AutoRender.MLT {
 
         internal void Start() {
             if (_objMeltProcess != null) { Stop(); }
+            Project.Config.WriteConfig();
 
             StartTime = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
             _objMeltProcess = new MeltRunner(Project.Config);

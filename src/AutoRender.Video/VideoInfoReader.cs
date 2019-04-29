@@ -35,7 +35,8 @@ namespace AutoRender.Video {
 
         public VideoInfo Read() {
             if (!new VideoValidator(Path).IsValid()) {
-                throw new Exception("Invalid Video File");
+                Log.Error($"Invalid Video File: {Path}");
+                return null;
             }
 
             RunParser();

@@ -60,7 +60,7 @@
     <Compile Include="Config\ConfigManager.cs" />
     <Compile Include="Helpers\PathHelper.cs" />
     <Compile Include="SingleInstance.cs" />
-    <Compile Include="ProcessWrapper.cs" />
+    <Compile Include="ProcessRunner.cs" />
     <Compile Include="StringWriterWithEncoding.cs" />
   </ItemGroup>
   <ItemGroup>

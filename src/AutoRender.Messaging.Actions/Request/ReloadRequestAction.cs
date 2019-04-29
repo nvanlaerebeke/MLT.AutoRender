@@ -16,9 +16,9 @@ namespace AutoRender.Messaging.Action.Request {
             Workspace.WorkspaceFactory.Get().ReLoad();
 
             List<WorkspaceItem> lstItems = new List<WorkspaceItem>();
-            Workspace.WorkspaceFactory.Get().WorkspaceItems.ForEach(i =>
-                lstItems.Add(i.GetWorkspaceItem())
-            );
+            foreach(var objKvp in Workspace.WorkspaceFactory.Get().WorkspaceItems) {
+                lstItems.Add(objKvp.Value.GetWorkspaceItem());
+            }
             return new GetStatusResponse(Request, lstItems);
         }
     }

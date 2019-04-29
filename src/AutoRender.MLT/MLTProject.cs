@@ -122,7 +122,6 @@ namespace AutoRender.MLT {
             if (Status == ProjectStatus.Paused) {
                 Job.Resume();
             } else if (!TargetExists && SourceExists && Status != ProjectStatus.Busy) {
-                Config.WriteConfig();
                 Job.Schedule();
             }
         }

@@ -19,20 +19,8 @@ namespace AutoRender.Messaging.Action.Request {
         public override ACKResponse Start() {
             var objWsItem = WorkspaceFactory.Get().Get(Request.ItemID);
             if (objWsItem != null && objWsItem.Project != null) {
-                if (objWsItem.Project != null) {
-                    objWsItem.Project.Start();
-
-                    new SubscriptionClient<WorkspaceUpdatedHandler>(Client).Notify(new SendWorkspaceUpdatedRequest(
-                        new List<Data.WorkspaceUpdatedEventArgs>() {
-                            new WorkspaceUpdatedEventArgs(
-                                objWsItem.GetWorkspaceItem(),
-                                WorkspaceAction.Updated
-                            )
-                        }
-                    ));
-
-                    return new ACKResponse(Request);
-                }
+                objWsItem.Project.Start();
+                return new ACKResponse(Request);
             }
             return new ACKResponse(Request, new ResponseStatus(ResponseState.Error, "Project not found"));
         }
