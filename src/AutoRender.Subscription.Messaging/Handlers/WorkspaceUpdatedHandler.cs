@@ -10,9 +10,6 @@ using System.Linq;
 using System.Reflection;
 
 namespace AutoRender.Subscription.Messaging.Handlers {
-    /// <summary>
-    /// ToDo: Add disconnected event so the Router list can be cleaned up
-    /// </summary>
     public class WorkspaceUpdatedHandler :
         ISubscriptionHandler<
             WorkspaceUpdatedSubscribe,
@@ -21,30 +18,34 @@ namespace AutoRender.Subscription.Messaging.Handlers {
         > {
         private readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
-        private ConcurrentDictionary<string, IRouter> _dicClients = new ConcurrentDictionary<string, IRouter>();
+        private ConcurrentDictionary<string, IClient> _dicClients = new ConcurrentDictionary<string, IClient>();
 
         public bool NotifyAll(SendWorkspaceUpdatedRequest pNotifyMessage) {
             return Notify(null, pNotifyMessage);
         }
 
-        public bool Notify(IRouter pSender, SendWorkspaceUpdatedRequest pNotifyMessage) {
-            _dicClients.Select(r => r.Value).ToList().ForEach((r) => {
-                if (pSender == null || !r.ConnectionID.Equals(pSender.ConnectionID)) {
+        public bool Notify(IClient pSender, SendWorkspaceUpdatedRequest pNotifyMessage) {
+            _dicClients.Select(c => c.Value).ToList().ForEach((c) => {
+                if (pSender == null || !c.ID.Equals(pSender.ID)) {
                     try {
-                        MessagingFactory.Processor.Request<ACKResponse>(r, pNotifyMessage, (a => {
-                            Log.Debug($"Notified {r.ConnectionID} about WorkspaceUpdated");
-                        }));
+                        c.Request<ACKResponse>(pNotifyMessage, (r) => { 
+                            if(r.Status.State == ResponseState.Success) {
+                                Log.Info($"Client {c.ID} was notified");
+                            } else {
+                                Log.Error($"Unable to notify {c.ID}");
+                            }
+                        });
                     } catch(Exception ex) {
-                        Log.Error($"Failed to send SendWorkspaceUpdatedRequest to {r.ConnectionID}: {ex.Message}");
+                        Log.Error($"Failed to send SendWorkspaceUpdatedRequest to {c.ID}: {ex.Message}");
                     }
                 }
             });
             return true;
         }
 
-        public bool Sub(IRouter pClient, WorkspaceUpdatedSubscribe pMessage) {
-            if (!_dicClients.ContainsKey(pClient.ConnectionID)) {
-                if (!_dicClients.TryAdd(pClient.ConnectionID, pClient)) {
+        public bool Sub(IClient pClient, WorkspaceUpdatedSubscribe pMessage) {
+            if (!_dicClients.ContainsKey(pClient.ID)) {
+                if (!_dicClients.TryAdd(pClient.ID, pClient)) {
                     return false;
                 }
                 pClient.Disconnected += Client_Disconnected;
@@ -52,10 +53,10 @@ namespace AutoRender.Subscription.Messaging.Handlers {
             return true;
         }
 
-        public bool UnSub(IRouter pClient, WorkspaceUpdatedUnSubscribe pMessage) {
-            if (_dicClients.ContainsKey(pClient.ConnectionID)) {
-                if (!_dicClients.TryRemove(pClient.ConnectionID, out _)) {
-                    Log.Error($"Failed to remove {pClient.ConnectionID}, leaking memory");
+        public bool UnSub(IClient pClient, WorkspaceUpdatedUnSubscribe pMessage) {
+            if (_dicClients.ContainsKey(pClient.ID)) {
+                if (!_dicClients.TryRemove(pClient.ID, out _)) {
+                    Log.Error($"Failed to remove {pClient.ID}, leaking memory");
                 } else {
                     pClient.Disconnected -= Client_Disconnected;
                 }
@@ -63,7 +64,7 @@ namespace AutoRender.Subscription.Messaging.Handlers {
             return true;
         }
 
-        void Client_Disconnected(object sender, IRouter e) {
+        void Client_Disconnected(object sender, IClient e) {
             UnSub(e, new WorkspaceUpdatedUnSubscribe());
         }
     }
