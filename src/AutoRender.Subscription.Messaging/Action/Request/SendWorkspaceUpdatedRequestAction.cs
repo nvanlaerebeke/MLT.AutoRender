@@ -3,7 +3,6 @@ using AutoRender.Subscription.Messaging.Request;
 using Mitto.IMessaging;
 using Mitto.Messaging.Action;
 using Mitto.Messaging.Response;
-using System;
 using System.Collections.Generic;
 
 namespace AutoRender.Subscription.Messaging.Action.Request {
@@ -22,7 +21,7 @@ namespace AutoRender.Subscription.Messaging.Action.Request {
 
         public override ACKResponse Start() {
             WorkspaceUpdated?.Invoke(Client, Request.Updates);
-            return new ACKResponse();
+            return new ACKResponse(Request);
         }
     }
 }

@@ -24,12 +24,11 @@ namespace AutoRender {
             Connection.Disconnected += Connection_Disconnected;
         }
 
-        public void Connect() {
-            StatusChanged?.Invoke(this, "Connecting");
+        public void Start() {
             Connection.Start();
         }
 
-        public void Reload() {
+        public void Refesh() {
             Load();
         }
 
@@ -40,7 +39,7 @@ namespace AutoRender {
         }
 
         private void Connection_Disconnected(object sender, EventArgs e) {
-            Connect();
+            StatusChanged?.Invoke(this, "Connecting");
         }
 
         #endregion EventHandlers
@@ -49,15 +48,14 @@ namespace AutoRender {
 
         private void Load() {
             Task.Run(() => {
-                StatusChanged?.Invoke(this, "Loading");
                 while (!Setup()) {
                     if (Connection.IsConnected) {
-                        Setup();
+                        Thread.Sleep(2000);
                     } else {
-                        Connect();
+                        StatusChanged?.Invoke(this, "Connecting");
+                        return;
                     }
                 }
-                StatusChanged?.Invoke(this, "Ready");
             });
         }
 
@@ -70,10 +68,10 @@ namespace AutoRender {
             objSubTask.Wait();
             objGetStatusTask.Wait();
 
-            return (
-                objSubTask.Result &&
-                objGetStatusTask.Result
-            );
+            if (objSubTask.Result && objGetStatusTask.Result) {
+                StatusChanged?.Invoke(this, "Ready");
+            }
+            return objSubTask.Result && objGetStatusTask.Result;
         }
 
         private async Task<bool> Subscribe() {
@@ -92,6 +90,27 @@ namespace AutoRender {
                     objBlock.WaitOne();
                 } while (!blnSuccess && Connection.IsConnected);
                 return blnSuccess;
+            });
+        }
+
+        internal async Task<List<WorkspaceItem>> ReLoad() {
+            return await Task.Run(() => {
+                List<WorkspaceItem> lstItems = new List<WorkspaceItem>();
+                bool blnSuccess = false;
+                do {
+                    ManualResetEvent objBlock = new ManualResetEvent(false);
+                    Connection.Request<GetStatusResponse>(new ReloadRequest(), (r) => {
+                        if (r.Status.State == ResponseState.Success) {
+                            lstItems.AddRange(r.WorkspaceItems);
+                            blnSuccess = true;
+                        } else {
+                            Thread.Sleep(2000);
+                        }
+                        objBlock.Set();
+                    });
+                    objBlock.WaitOne();
+                } while (!blnSuccess && Connection.IsConnected);
+                return lstItems;
             });
         }
 

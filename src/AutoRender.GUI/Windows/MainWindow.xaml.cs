@@ -29,7 +29,7 @@ namespace AutoRender {
 
             ConnectionManager.StatusChanged += ConnectionManager_StatusChanged;
             ConnectionManager.WorkspaceUpdated += ConnectionManager_WorkspaceUpdated;
-            ConnectionManager.Connect();
+            ConnectionManager.Start();
 
             SendWorkspaceUpdatedRequestAction.WorkspaceUpdated += SendWorkspaceUpdatedRequestAction_WorkspaceUpdated;
         }
@@ -76,17 +76,28 @@ namespace AutoRender {
 
         #region Global
 
+        private void ReLoad_Click(object sender, RoutedEventArgs e) {
+            SetLoading("ReLoading Workspace...");
+            _objViewModel.WorkspaceItems.Clear();
+            Task.Run(() => {
+                var objResult = ConnectionManager.ReLoad().Result;
+                _objViewModel.Update(objResult);
+                EndLoading();
+            });
+        }
+
         private void Refresh_Click(object sender, RoutedEventArgs e) {
-            ConnectionManager.Reload();
+            ConnectionManager.Refesh();
         }
 
         private void StartAll_Click(object sender, RoutedEventArgs e) {
             _objViewModel.WorkspaceItems.Where(i => i.SelectedForHandling).ToList().ForEach(i => {
                 i.IsUpdating = true;
-                new WorkspaceItemAction(ConnectionManager.Connection, i.ID, (r) => {
+                new WorkspaceItemAction(ConnectionManager.Connection, i.ID, (r, wsis) => {
                     if (!r) {
                         MessageBox.Show($"Failed starting {i.ProjectName}, please try again or contact Nico the almighty");
                     } else {
+                        wsis.ForEach(_objViewModel.Update);
                         i.SelectedForHandling = false;
                     }
                     i.IsUpdating = false;
@@ -102,10 +113,12 @@ namespace AutoRender {
             WorkspaceItemViewModel objViewModel = ((sender as Button).BindingGroup.Owner as DataGridRow).DataContext as WorkspaceItemViewModel;
             if (!string.IsNullOrEmpty(objViewModel.TargetName)) {
                 objViewModel.IsUpdating = true;
-                new WorkspaceItemAction(ConnectionManager.Connection, objViewModel.ID, (r) => {
+                new WorkspaceItemAction(ConnectionManager.Connection, objViewModel.ID, (r, wsis) => {
                     if (!r) {
-                        ConnectionManager.Reload();
+                        ConnectionManager.Refesh();
                         MessageBox.Show($"Failed target name to {objViewModel.TargetName}, please try again or contact Nico the almighty");
+                    } else {
+                        wsis.ForEach(_objViewModel.Update);
                     }
                     objViewModel.IsUpdating = false;
                 }).ChangeTargetName(objViewModel.TargetName);
@@ -116,10 +129,12 @@ namespace AutoRender {
             WorkspaceItemViewModel objViewModel = ((sender as Button).BindingGroup.Owner as DataGridRow).DataContext as WorkspaceItemViewModel;
             if (!string.IsNullOrEmpty(objViewModel.SourceName)) {
                 objViewModel.IsUpdating = true;
-                new WorkspaceItemAction(ConnectionManager.Connection, objViewModel.ID, (r) => {
+                new WorkspaceItemAction(ConnectionManager.Connection, objViewModel.ID, (r, wsis) => {
                     if (!r) {
-                        ConnectionManager.Reload();
+                        ConnectionManager.Refesh();
                         MessageBox.Show($"Failed updating name to {objViewModel.SourceName}, please try again or contact Nico the almighty");
+                    } else {
+                        wsis.ForEach(_objViewModel.Update);
                     }
                     objViewModel.IsUpdating = false;
                 }).ChangeSourceName(objViewModel.SourceName);
@@ -136,10 +151,11 @@ namespace AutoRender {
                 objViewModel.IsUpdating = true;
                 objViewModel.SelectedForHandling = true;
 
-                new WorkspaceItemAction(ConnectionManager.Connection, objViewModel.ID, (r) => {
+                new WorkspaceItemAction(ConnectionManager.Connection, objViewModel.ID, (r, wsis) => {
                     if (!r) {
                         MessageBox.Show($"Failed to start {objViewModel.ProjectName}, please try again or contact Nico the almighty");
                     } else {
+                        wsis.ForEach(_objViewModel.Update);
                         objViewModel.SelectedForHandling = false;
                     }
                     objViewModel.IsUpdating = false;
@@ -153,10 +169,11 @@ namespace AutoRender {
                 objViewModel.IsUpdating = true;
                 objViewModel.SelectedForHandling = false;
 
-                new WorkspaceItemAction(ConnectionManager.Connection, objViewModel.ID, (r) => {
+                new WorkspaceItemAction(ConnectionManager.Connection, objViewModel.ID, (r, wsis) => {
                     if (!r) {
                         MessageBox.Show($"Failed to stop {objViewModel.ProjectName}, please try again or contact Nico the almighty");
                     } else {
+                        wsis.ForEach(_objViewModel.Update);
                         objViewModel.SelectedForHandling = true;
                     }
                     objViewModel.IsUpdating = false;
@@ -168,9 +185,11 @@ namespace AutoRender {
             WorkspaceItemViewModel objViewModel = (sender as MenuItem).DataContext as WorkspaceItemViewModel;
             if (objViewModel != null && objViewModel.Status == Status.Busy) {
                 objViewModel.IsUpdating = true;
-                new WorkspaceItemAction(ConnectionManager.Connection, objViewModel.ID, (r) => {
+                new WorkspaceItemAction(ConnectionManager.Connection, objViewModel.ID, (r, wsis) => {
                     if (!r) {
                         MessageBox.Show($"Failed to pause {objViewModel.ProjectName}, please try again or contact Nico the almighty");
+                    } else {
+                        wsis.ForEach(_objViewModel.Update);
                     }
                     objViewModel.IsUpdating = false;
                 }).PauseJob();

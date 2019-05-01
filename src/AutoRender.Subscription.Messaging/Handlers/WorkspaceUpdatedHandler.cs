@@ -2,7 +2,6 @@
 using AutoRender.Subscription.Messaging.UnSubscribe;
 using log4net;
 using Mitto.IMessaging;
-using Mitto.IRouting;
 using Mitto.Messaging.Response;
 using System;
 using System.Collections.Concurrent;
@@ -10,6 +9,7 @@ using System.Linq;
 using System.Reflection;
 
 namespace AutoRender.Subscription.Messaging.Handlers {
+
     public class WorkspaceUpdatedHandler :
         ISubscriptionHandler<
             WorkspaceUpdatedSubscribe,
@@ -18,7 +18,7 @@ namespace AutoRender.Subscription.Messaging.Handlers {
         > {
         private readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
-        private ConcurrentDictionary<string, IClient> _dicClients = new ConcurrentDictionary<string, IClient>();
+        private readonly ConcurrentDictionary<string, IClient> _dicClients = new ConcurrentDictionary<string, IClient>();
 
         public bool NotifyAll(SendWorkspaceUpdatedRequest pNotifyMessage) {
             return Notify(null, pNotifyMessage);
@@ -28,14 +28,14 @@ namespace AutoRender.Subscription.Messaging.Handlers {
             _dicClients.Select(c => c.Value).ToList().ForEach((c) => {
                 if (pSender == null || !c.ID.Equals(pSender.ID)) {
                     try {
-                        c.Request<ACKResponse>(pNotifyMessage, (r) => { 
-                            if(r.Status.State == ResponseState.Success) {
+                        c.Request<ACKResponse>(pNotifyMessage, (r) => {
+                            if (r.Status.State == ResponseState.Success) {
                                 Log.Info($"Client {c.ID} was notified");
                             } else {
                                 Log.Error($"Unable to notify {c.ID}");
                             }
                         });
-                    } catch(Exception ex) {
+                    } catch (Exception ex) {
                         Log.Error($"Failed to send SendWorkspaceUpdatedRequest to {c.ID}: {ex.Message}");
                     }
                 }
@@ -64,7 +64,7 @@ namespace AutoRender.Subscription.Messaging.Handlers {
             return true;
         }
 
-        void Client_Disconnected(object sender, IClient e) {
+        private void Client_Disconnected(object sender, IClient e) {
             UnSub(e, new WorkspaceUpdatedUnSubscribe());
         }
     }

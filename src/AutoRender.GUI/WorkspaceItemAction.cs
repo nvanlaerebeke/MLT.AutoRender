@@ -1,21 +1,23 @@
-﻿using AutoRender.Messaging.Request;
-using Mitto.Messaging.Response;
+﻿using AutoRender.Data;
+using AutoRender.Messaging.Request;
+using AutoRender.Messaging.Response;
 using System;
+using System.Collections.Generic;
 
 namespace AutoRender {
 
     internal class WorkspaceItemAction {
         private readonly Connection Connection;
-        private readonly Action<bool> Action;
-        private readonly Action<ACKResponse> Callback;
+        private readonly Action<bool, List<WorkspaceItem>> Action;
+        private readonly Action<GetStatusResponse> Callback;
         private readonly Guid ItemID;
 
-        public WorkspaceItemAction(Connection pConnection, Guid pItemID, Action<bool> pAction) {
+        public WorkspaceItemAction(Connection pConnection, Guid pItemID, Action<bool, List<WorkspaceItem>> pAction) {
             Connection = pConnection;
             ItemID = pItemID;
             Action = pAction;
             Callback = (r) => {
-                Action.Invoke(r.Status.State == Mitto.IMessaging.ResponseState.Success);
+                Action.Invoke(r.Status.State == Mitto.IMessaging.ResponseState.Success, r.WorkspaceItems);
             };
         }
 
@@ -23,7 +25,7 @@ namespace AutoRender {
             try {
                 Connection.Request(new UpdateProjectTargetRequest(ItemID, pName), Callback);
             } catch (Exception) {
-                Action.Invoke(false);
+                Action.Invoke(false, null);
             }
         }
 
@@ -31,7 +33,7 @@ namespace AutoRender {
             try {
                 Connection.Request(new UpdateProjectSourceRequest(ItemID, pName), Callback);
             } catch (Exception) {
-                Action.Invoke(false);
+                Action.Invoke(false, null);
             }
         }
 
@@ -39,7 +41,7 @@ namespace AutoRender {
             try {
                 Connection.Request(new JobStartRequest(ItemID), Callback);
             } catch (Exception) {
-                Action.Invoke(false);
+                Action.Invoke(false, null);
             }
         }
 
@@ -47,7 +49,7 @@ namespace AutoRender {
             try {
                 Connection.Request(new JobStopRequest(ItemID), Callback);
             } catch (Exception) {
-                Action.Invoke(false);
+                Action.Invoke(false, null);
             }
         }
 
@@ -55,7 +57,7 @@ namespace AutoRender {
             try {
                 Connection.Request(new JobPauseRequest(ItemID), Callback);
             } catch (Exception) {
-                Action.Invoke(false);
+                Action.Invoke(false, null);
             }
         }
     }

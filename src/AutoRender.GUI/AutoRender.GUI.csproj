@@ -258,6 +258,10 @@
       <Project>{5d420f78-c169-4615-acb2-a039bf8acbd6}</Project>
       <Name>Mitto.Subscription.Messaging</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Lib\mitto\src\Mitto.Utilities\Mitto.Utilities.csproj">
+      <Project>{d184bf09-fd6d-4f36-bc6e-bf05e763e3ac}</Project>
+      <Name>Mitto.Utilities</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="DirectShowLib">

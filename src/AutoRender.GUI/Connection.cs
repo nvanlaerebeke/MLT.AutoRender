@@ -1,21 +1,24 @@
 ﻿using Mitto.Connection.Websocket;
 using Mitto.Messaging;
+using Mitto.Utilities;
 using System;
-using System.Timers;
 
 namespace AutoRender {
 
     internal class Connection {
-        public readonly Mitto.Client Client;
-        public bool IsConnected { get; private set; } = false;
-
-        private Timer _objReconnectTimer;
+        private readonly Timer ReconnectTimer;
+        private readonly Mitto.Client Client;
 
         public event EventHandler Ready;
 
         public event EventHandler Disconnected;
 
+        public bool IsConnected { get; private set; } = false;
+
         public Connection() {
+            ReconnectTimer = new Timer(5);
+            ReconnectTimer.Elapsed += ReconnectTimer_Elapsed;
+
             Client = new Mitto.Client();
             Client.Connected += Connected;
             Client.Disconnected += ClientDisconnected;
@@ -28,12 +31,12 @@ namespace AutoRender {
         }
 
         public void Start() {
-            StartTimer();
+            Connect();
         }
 
         private void Connect() {
             var objParams = new ClientParams() {
-                Hostname = "192.168.0.141",
+                Hostname = "192.168.0.167",
                 Port = 6666,
                 Secure = false
             };
@@ -41,7 +44,7 @@ namespace AutoRender {
         }
 
         private void Connected(object sender, Mitto.Client e) {
-            ClearTimer();
+            ReconnectTimer.Stop();
             IsConnected = true;
             Ready?.Invoke(this, new EventArgs());
         }
@@ -49,30 +52,10 @@ namespace AutoRender {
         private void ClientDisconnected(object sender, Mitto.Client e) {
             IsConnected = false;
             Disconnected?.Invoke(this, new EventArgs());
-            StartTimer();
+            ReconnectTimer.Start();
         }
 
-        private void StartTimer() {
-            ClearTimer();
-
-            _objReconnectTimer = new Timer(5 * 1000);
-            _objReconnectTimer.Elapsed += _objReconnectTimer_Elapsed;
-            _objReconnectTimer.Enabled = true;
-            _objReconnectTimer.Start();
-        }
-
-        private void ClearTimer() {
-            try {
-                if (_objReconnectTimer != null) {
-                    _objReconnectTimer.Elapsed -= _objReconnectTimer_Elapsed;
-                    _objReconnectTimer.Stop();
-                    _objReconnectTimer.Dispose();
-                    _objReconnectTimer = null;
-                }
-            } catch { }
-        }
-
-        private void _objReconnectTimer_Elapsed(object sender, ElapsedEventArgs e) {
+        private void ReconnectTimer_Elapsed(object sender, EventArgs e) {
             Connect();
         }
     }
