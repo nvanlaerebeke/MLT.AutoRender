@@ -2,7 +2,6 @@
 using AutoRender.Subscription.Messaging.UnSubscribe;
 using log4net;
 using Mitto.IMessaging;
-using Mitto.IRouting;
 using Mitto.Messaging.Response;
 using System;
 using System.Collections.Concurrent;
@@ -16,7 +15,7 @@ namespace AutoRender.Subscription.Messaging.Handlers {
             WorkspaceUpdatedUnSubscribe,
             SendWorkspaceUpdatedRequest
         > {
-        private readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+        private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
         private ConcurrentDictionary<string, IClient> _dicClients = new ConcurrentDictionary<string, IClient>();
 
@@ -28,13 +27,7 @@ namespace AutoRender.Subscription.Messaging.Handlers {
             _dicClients.Select(c => c.Value).ToList().ForEach((c) => {
                 if (pSender == null || !c.ID.Equals(pSender.ID)) {
                     try {
-                        c.Request<ACKResponse>(pNotifyMessage, (r) => { 
-                            if(r.Status.State == ResponseState.Success) {
-                                Log.Info($"Client {c.ID} was notified");
-                            } else {
-                                Log.Error($"Unable to notify {c.ID}");
-                            }
-                        });
+                        c.Request<ACKResponse>(pNotifyMessage, (r) => { });
                     } catch(Exception ex) {
                         Log.Error($"Failed to send SendWorkspaceUpdatedRequest to {c.ID}: {ex.Message}");
                     }

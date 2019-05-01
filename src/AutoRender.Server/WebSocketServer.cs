@@ -6,7 +6,7 @@ using log4net;
 namespace AutoRender.Server {
 
     internal class WebSocketServer {
-        private readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+        private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         public WebSocketServer() {
         }
 

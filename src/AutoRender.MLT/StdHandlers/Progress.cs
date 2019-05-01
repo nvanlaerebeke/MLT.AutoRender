@@ -6,7 +6,7 @@ namespace AutoRender.MLT.StdHandlers {
         public int _intPrevPercentage = 0;
 
         public override void Handle(string pLine) {
-            if (pLine.StartsWith("Current Frame:")) {
+            if (pLine.StartsWith("Current Frame:", StringComparison.CurrentCulture)) {
                 var arrParts = pLine.Split(',');
                 if (arrParts.Length > 0) {
                     int? intFrame = null;

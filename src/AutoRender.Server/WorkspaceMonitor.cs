@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace AutoRender.Server {
 
     internal class WorkspaceMonitor {
-        private readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+        private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         private readonly Workspace.Workspace Workspace;
 
         public WorkspaceMonitor(Workspace.Workspace pWorkspace) {

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace AutoRender.Video {
 
     public class VideoInfoCache {
-        private readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+        private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
         private ConcurrentDictionary<string, VideoInfoWrapper> _dicVideoCache = new ConcurrentDictionary<string, VideoInfoWrapper>();
 
@@ -27,7 +27,7 @@ namespace AutoRender.Video {
             }
             try {
 
-                var objNewVideoInfo = new VideoInfoWrapper(objFileInfo, new VideoInfoReader(pPath).Read());
+                var objNewVideoInfo = new VideoInfoWrapper(objFileInfo, new VideoInfoReader(pPath).Read().Result);
                 if (_dicVideoCache.ContainsKey(pPath)) {
                     _dicVideoCache[pPath] = objNewVideoInfo;
                 } else {
@@ -42,7 +42,7 @@ namespace AutoRender.Video {
         }
 
         public Task<VideoInfo> GetAsync(string strPath) {
-            return Task.Run<VideoInfo>(() => {
+            return Task.Run(() => {
                 return Get(strPath);
             });
         }

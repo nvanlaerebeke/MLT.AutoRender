@@ -7,7 +7,7 @@ using log4net;
 namespace AutoRender.Lib.Helpers {
 
     public class ErrorHandler {
-        private readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+        private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
         public void Start() {
             // Add the event handler for handling non-UI thread exceptions to the event.

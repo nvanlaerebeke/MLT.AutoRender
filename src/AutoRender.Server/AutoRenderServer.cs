@@ -1,20 +1,22 @@
-﻿using CrazyUtils;
-using Mitto;
+﻿using Mitto;
 using AutoRender.Workspace;
 using AutoRender.Logging;
 using log4net;
+using System.IO;
 using System.Collections.Generic;
 using System.Reflection;
+using AutoRender.Data;
+using System;
 
 namespace AutoRender.Server {
 
     public class AutoRenderServer {
+        private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+
         private readonly WorkspaceMonitor WorkspaceMonitor;
         private readonly WebSocketServer Server;
 
         public AutoRenderServer() {
-            /*var tmp = typeof(AutoRender.Messaging.Request.ReloadRequest);*/
-            var tmp2 = typeof(AutoRender.Messaging.Action.Request.GetStatusRequestAction);
             Config.Initialize(
                 new Config.ConfigParams() {
                     Logger = new MittoLogger(LogManager.GetLogger(typeof(Mitto.Server))),
@@ -24,6 +26,7 @@ namespace AutoRender.Server {
                     }
                 }
             );
+            Cleanup();
             Server = new WebSocketServer();
             WorkspaceMonitor = new WorkspaceMonitor(WorkspaceFactory.Get());
         }
@@ -33,6 +36,16 @@ namespace AutoRender.Server {
                 WorkspaceMonitor.Start();
                 Server.Start();
             //}
+        }
+
+        private void Cleanup() {
+            try {
+                if (Directory.Exists(Settings.TempDirectory)) {
+                    Directory.Delete(Settings.TempDirectory, true);
+                }
+            } catch(Exception ex) {
+                Log.Error($"Failed to clean up {Settings.TempDirectory}: {ex.Message}");
+            }
         }
     }
 }

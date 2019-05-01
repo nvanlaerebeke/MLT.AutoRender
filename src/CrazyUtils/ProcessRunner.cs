@@ -1,172 +1,138 @@
 ﻿using System;
 using System.Diagnostics;
-using System.IO;
 using System.Text;
-using System.Threading;
 
 namespace CrazyUtils {
-
-    public delegate void Output(string pOutput);
-
-    public delegate void ProcessStatusChanged(ProcessStatus pStatus);
+    public enum ProcessStatus { 
+        Stopped,
+        Paused,
+        Running,
+        Failed,
+        Done
+    }
 
     public class ProcessRunner {
+        public event EventHandler<string> StdOut;
+        public event EventHandler<ProcessStatus> StatusChanged;
+
+        private readonly string Command;
+        private readonly string Parameters;
+
         private Process _objProcess;
-        private Thread _thdStdOut;
-        private Thread _thdStdErr;
-        private ProcessStatus _objStatus = ProcessStatus.Pending;
-
-        private CancellationTokenSource _objJobCancelationSource = new CancellationTokenSource();
-        private CancellationToken _objJobCancelationToken;
-
-        public event ProcessStatusChanged StatusChanged;
-
-        public event Output Output;
+        private ProcessStatus _objStatus = ProcessStatus.Stopped;
 
         public ProcessStatus Status {
-            get { return _objStatus; }
+            get {
+                return _objStatus;
+            }
             private set {
                 if (_objStatus != value) {
                     _objStatus = value;
-                    StatusChanged?.Invoke(_objStatus);
+                    StatusChanged?.Invoke(this, value);
                 }
             }
         }
+        public double TimeTaken { get; private set; } = 0;
 
-        private string _strExecutable;
-        private string _strParams;
-
-        public ProcessRunner(string pExecutable, string pParams) {
-            pExecutable = "sleep";
-            pParams = "10";
-            //var strCommand = "-progress " + "\"" + Regex.Replace("/mnt/nas/Video/TestInbox/Temp/test1.xml", @"(\\+)$", @"$1$1") + "\"";
-            //pExecutable = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "melt/bin/melt");
-            _strExecutable = pExecutable;
-            _strParams = pParams;
-
-            Status = ProcessStatus.Pending;
+        public ProcessRunner(string pCommand, string pParameters) {
+            Command = pCommand;
+            Parameters = pParameters;
         }
 
         public void Start() {
-            _objProcess = new Process();
-            ProcessStartInfo objStartInfo = new ProcessStartInfo(_strExecutable, _strParams) {
-                UseShellExecute = false,
-                ErrorDialog = false,
-                CreateNoWindow = true,
-                StandardOutputEncoding = Encoding.UTF8,
-                StandardErrorEncoding = Encoding.UTF8,
-                RedirectStandardOutput = true,
-                RedirectStandardError = true,
-                WorkingDirectory = System.Reflection.Assembly.GetExecutingAssembly().CodeBase
-            };
-            _objProcess.EnableRaisingEvents = true;
-            _objProcess.Exited += _objProcess_Exited;
-            _objProcess.StartInfo = objStartInfo;
-
-            int intIdentifier = new Random().Next(1, 9999);
-
-            _thdStdErr = new Thread(readStdErr);
-            _thdStdErr.Name = "CMD_ERR-" + intIdentifier;
-            _thdStdErr.IsBackground = true;
-
-            _thdStdOut = new Thread(readStdOut);
-            _thdStdOut.Name = "CMD_OUT-" + intIdentifier;
-            _thdStdOut.IsBackground = true;
-            try {
-                _objProcess.Start();
-                _thdStdOut.Start();
-                _thdStdErr.Start();
-
+            if (Status == ProcessStatus.Paused) {
+                Kill("CONT");
                 Status = ProcessStatus.Running;
-            } catch (Exception ex) {
-                //Log.Error(ex);
-                Status = ProcessStatus.Failed;
+            } else {
+                StartProcess();
             }
         }
 
         public void Stop() {
-            if (!_objProcess.HasExited) {
-                _objProcess.Kill();
+            if (_objProcess != null && !_objProcess.HasExited) {
+                try {
+                    _objProcess.Kill();
+                } catch { }
+                Status = ProcessStatus.Stopped;
             }
         }
 
         public void Pause() {
-            if (Status == ProcessStatus.Running && !_objProcess.HasExited) {
-                DoKill("STOP");
-                Status = ProcessStatus.Paused;
-            }
+            Kill("STOP");
+            Status = ProcessStatus.Paused;
         }
 
-        public void Resume() {
-            if (Status == ProcessStatus.Paused && !_objProcess.HasExited) {
-                DoKill("CONT");
-                Status = ProcessStatus.Running;
-            }
-        }
-
-        private void readStdOut() {
-            StreamReader srStdOut = null;
-
+        private void StartProcess() {
+            Status = ProcessStatus.Running;
             try {
-                srStdOut = _objProcess.StandardOutput;
-                string strLine = String.Empty;
-                do {
-                    strLine = srStdOut.ReadLine();
-                    Console.WriteLine(strLine);
-                    if (!String.IsNullOrEmpty(strLine)) {
-                        Output?.Invoke(strLine.Trim());
-                    }
-                } while (strLine != null && _objProcess != null && !_objProcess.HasExited);
-            } catch (Exception ex) {
-                //Log.Error(ex);
-            }
-        }
-
-        private void readStdErr() {
-            StreamReader srStdOut = null;
-
-            try {
-                srStdOut = _objProcess.StandardOutput;
-                string strLine = String.Empty;
-                do {
-                    strLine = srStdOut.ReadLine();
-                    Console.WriteLine(strLine);
-                    if (!String.IsNullOrEmpty(strLine)) {
-                        Output?.Invoke(strLine.Trim());
-                    }
-                } while (strLine != null && _objProcess != null && !_objProcess.HasExited);
-            } catch (Exception ex) {
-                //Log.Error(ex);
-            }
-        }
-
-        private void _objProcess_Exited(object sender, EventArgs e) {
-            Status = (_objProcess.ExitCode == 0) ? ProcessStatus.Success : ProcessStatus.Failed;
-        }
-
-        private void DoKill(string pCommand) {
-            if (_objProcess != null && !_objProcess.HasExited) {
-                var objPause = new Process();
-                ProcessStartInfo objStartInfo = new ProcessStartInfo("kill", " -" + pCommand + " " + _objProcess.Id) {
-                    UseShellExecute = false,
-                    ErrorDialog = false,
-                    CreateNoWindow = true,
+                _objProcess = new Process() {
+                    StartInfo = new ProcessStartInfo(Command, Parameters) {
+                        UseShellExecute = false,
+                        ErrorDialog = false,
+                        CreateNoWindow = true,
+                        StandardOutputEncoding = Encoding.UTF8,
+                        StandardErrorEncoding = Encoding.UTF8,
+                        RedirectStandardOutput = true,
+                        RedirectStandardError = true,
+                        RedirectStandardInput = true
+                    },
+                    EnableRaisingEvents = true
                 };
 
+                _objProcess.OutputDataReceived += DataReceived;
+                _objProcess.ErrorDataReceived += DataReceived_Error;
+                _objProcess.Exited += _objProcess_Exited;
+
+                _objProcess.Start();
+
                 try {
-                    objPause.Start();
-                } catch (Exception ex) {
-                    //Log.Error(ex);
-                }
+                    _objProcess.BeginErrorReadLine();
+                } catch { }
+                try {
+                    _objProcess.BeginOutputReadLine();
+                } catch { }
+                try {
+                    _objProcess.PriorityClass = ProcessPriorityClass.BelowNormal;
+                } catch { }
+
+                _objProcess.WaitForExit();
+            } catch (Exception) {
+               Status = ProcessStatus.Failed;
             }
         }
-    }
 
-    public enum ProcessStatus {
-        Pending,
-        Running,
-        Success,
-        Failed,
-        Paused
+        private void Kill(string pAction) {
+            if (_objProcess != null && !_objProcess.HasExited) {
+                try {
+                    new Process() {
+                        StartInfo = new ProcessStartInfo("kill", "-" + pAction.ToUpper() + " " + _objProcess.Id) {
+                            UseShellExecute = false,
+                            ErrorDialog = false,
+                            CreateNoWindow = true,
+                        }
+                    }.Start(); 
+                } catch (Exception) { }
+            }
+        }
+
+        void DataReceived(object sender, DataReceivedEventArgs e) {
+            if (!String.IsNullOrEmpty(e.Data)) {
+                StdOut?.Invoke(this, e.Data.Trim());
+            }
+        }
+        void DataReceived_Error(object sender, DataReceivedEventArgs e) {
+            if (!String.IsNullOrEmpty(e.Data)) {
+                StdOut?.Invoke(this, e.Data.Trim());
+            }
+        }
+
+        void _objProcess_Exited(object sender, EventArgs e) {
+            _objProcess.OutputDataReceived -= DataReceived;
+            _objProcess.ErrorDataReceived -= DataReceived;
+            _objProcess.Exited -= _objProcess_Exited;
+
+            Status = (_objProcess.ExitCode != 0) ? ProcessStatus.Failed : ProcessStatus.Done;
+            TimeTaken = _objProcess.ExitTime.Subtract(_objProcess.StartTime).TotalSeconds;
+        }
     }
 }

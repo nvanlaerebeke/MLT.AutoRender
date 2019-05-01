@@ -14,7 +14,7 @@ namespace AutoRender.MLT {
     /// ToDo: Cleanup
     /// </summary>
     public class MeltConfig {
-        private readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+        private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
         private Dictionary<string, string> _dicConsumerProperties = null;
         private string _strSourceFile;
@@ -111,11 +111,10 @@ namespace AutoRender.MLT {
         private void AddConsumer() {
             //working
             //  <consumer  target="../Final/testing.mp4" preset="ultrafast" f="mp4" vcodec="libx264" real_time="-1" threads="0" height="720" width="1280" crf="40" deinterlace_method="yadif" rescale="bilinear" top_field_first="2" r="25" mbd="rd" progressive="1" subcmp="satd" bf="2"  ab="384k" ac="2" acodec="acc" g="15"  ar="48000" trellis="1" mlt_service="avformat" b_strategy="1" channels="2" cmp="satd" />
+            if (string.IsNullOrEmpty(SourceFile)) { return; }
 
             VideoInfo objInfo = VideoInfoCache.Get(SourceFile);
-            if (string.IsNullOrEmpty(SourceFile)) {
-                return;
-            }
+            if( objInfo == null ) { return;  }
 
             _dicConsumerProperties = Settings.ConsumerProperties; //get settings from configuration
             _dicConsumerProperties["target"] = TempTargetPath;//Path.Combine(Settings.FinalDirectory, TargetPath);
