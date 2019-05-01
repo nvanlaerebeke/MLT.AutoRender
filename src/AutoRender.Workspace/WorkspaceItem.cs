@@ -1,13 +1,12 @@
 ﻿using AutoRender.Data;
 using AutoRender.MLT;
 using System;
-using System.Collections.Generic;
 
 namespace AutoRender.Workspace {
 
     public class WorkspaceItem {
 
-        public event EventHandler<List<WorkspaceUpdatedEventArgs>> Updated;
+        public event EventHandler<WorkspaceItem> Updated;
 
         public Guid ID { get; private set; }
         public MLTProject Project { get; private set; }
@@ -20,29 +19,32 @@ namespace AutoRender.Workspace {
             New = pNew;
             Final = pFinal;
             if (Project != null) {
-                Project.ProjectChanged += Project_ProjectChanged;
+                Project.ProjectChanged += (sender, e) => {
+                    switch (Project.Status) {
+                        case ProjectStatus.Error:
+                        case ProjectStatus.Finished:
+                        case ProjectStatus.SourceInvalid:
+                        case ProjectStatus.SourceMissing:
+                        case ProjectStatus.TargetExists:
+                        case ProjectStatus.TargetInvalid:
+                            if (Project.TargetExists) {
+                                Final = Project.VideoInfoCache.Get(Project.TargetPath);
+                            }
+                            break;
+                    }
+                    Updated?.Invoke(this, this);
+                };
             }
         }
 
-        private void Project_ProjectChanged(object sender, EventArgs e) {
-            Updated?.Invoke(this, new List<WorkspaceUpdatedEventArgs> {
-                { new WorkspaceUpdatedEventArgs(GetWorkspaceItem(), WorkspaceAction.Updated) }
-            });
-        }
 
         #region Update Methods
 
         public bool UpdateProject(MLTProject pProject) {
             if (pProject == null) {
-                if (Project != null) {
-                    Project.ProjectChanged -= Project_ProjectChanged;
-                    Project = null; return true;
-                }
+                Project = null; return true;
             } else if (Project == null || !this.Project.Equals(pProject)) {
                 Project = pProject;
-                if (Project != null) {
-                    Project.ProjectChanged += Project_ProjectChanged;
-                }
                 return true;
             }
             return false;
@@ -54,7 +56,7 @@ namespace AutoRender.Workspace {
                 if (Final != null) {
                     Final = null; return true;
                 }
-            } else if (Final == null || !this.Final.Equals(pInfo)) {
+            } else if (Final == null || !Final.Equals(pInfo)) {
                 Final = pInfo;
                 return true;
             }
@@ -65,7 +67,8 @@ namespace AutoRender.Workspace {
             if (Project != null) { Project.Reload(); }
             if (pInfo == null && New != null) {
                 New = null; return true;
-            } else if (New != null && !this.New.Equals(pInfo)) {
+            }
+            if (New != null && !New.Equals(pInfo)) {
                 New = pInfo; return true;
             }
             return false;
@@ -73,7 +76,7 @@ namespace AutoRender.Workspace {
 
         public Data.WorkspaceItem GetWorkspaceItem() {
             return new Data.WorkspaceItem() {
-                Project = Project.GetProject(),
+                Project = Project?.GetProject(),
                 Final = Final,
                 New = New,
                 ID = ID
@@ -88,26 +91,26 @@ namespace AutoRender.Workspace {
 
             //check for null first
             if (
-                this.Final == null && pItem.Final != null ||
-                this.New == null && pItem.New != null ||
-                this.Project == null && pItem.Project != null
+                Final == null && pItem.Final != null ||
+                New == null && pItem.New != null ||
+                Project == null && pItem.Project != null
             ) {
                 return false;
             }
             return (
-                this.ID.Equals(pItem.ID) &&
-                MLTProject.Equals(this.Project, pItem.Project) &&
-                VideoInfo.Equals(this.New, pItem.New) &&
-                VideoInfo.Equals(this.Final, pItem.Final)
+                ID.Equals(pItem.ID) &&
+                Equals(Project, pItem.Project) &&
+                Equals(New, pItem.New) &&
+                Equals(Final, pItem.Final)
              );
         }
 
         public override int GetHashCode() {
-            return this.GetHashCodeFromFields(this.Final, this.ID, this.New, this.Project);
+            return this.GetHashCodeFromFields(Final, ID, New, Project);
         }
 
         public override bool Equals(object obj) {
-            return this.Equals(obj as WorkspaceItem);
+            return Equals(obj as WorkspaceItem);
         }
 
         #endregion Compare/Equality Methods

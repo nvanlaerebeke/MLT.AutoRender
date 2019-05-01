@@ -23,15 +23,6 @@ namespace AutoRender.Data {
             }
         }
 
-        public static string SourcePath {
-            get {
-                if (Environment.OSVersion.Platform == PlatformID.Unix) {
-                    return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "bin", "setenv");
-                }
-                return "";
-            }
-        }
-
         public static string MeltPath {
             get {
                 if (Environment.OSVersion.Platform == PlatformID.Unix) {

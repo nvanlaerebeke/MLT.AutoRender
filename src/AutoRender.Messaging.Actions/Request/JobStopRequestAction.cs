@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using AutoRender.Data;
 using AutoRender.Messaging.Request;
+using AutoRender.Messaging.Response;
 using AutoRender.Subscription.Messaging.Handlers;
 using AutoRender.Subscription.Messaging.Request;
 using AutoRender.Workspace;
@@ -11,28 +12,18 @@ using Mitto.Subscription.Messaging;
 
 namespace AutoRender.Messaging.Action.Request {
 
-    public class JobStopRequestAction : RequestAction<JobStopRequest, ACKResponse> {
+    public class JobStopRequestAction : RequestAction<JobStopRequest, GetStatusResponse> {
 
         public JobStopRequestAction(IClient pClient, JobStopRequest pRequest) : base(pClient, pRequest) {
         }
 
-        public override ACKResponse Start() {
+        public override GetStatusResponse Start() {
             var objWsItem = WorkspaceFactory.Get().Get(Request.ItemID);
             if (objWsItem != null && objWsItem.Project != null) {
                 objWsItem.Project.Stop();
-
-                new SubscriptionClient<WorkspaceUpdatedHandler>(Client).Notify(new SendWorkspaceUpdatedRequest(
-                    new List<WorkspaceUpdatedEventArgs>() {
-                        new WorkspaceUpdatedEventArgs(
-                            objWsItem.GetWorkspaceItem(),
-                            WorkspaceAction.Updated
-                        )
-                    }
-                ));
-
-                return new ACKResponse(Request);
+                return new GetStatusResponse(Request, new List<Data.WorkspaceItem>() { objWsItem.GetWorkspaceItem() });
             }
-            return new ACKResponse(Request, new ResponseStatus(ResponseState.Error, "Project not found"));
+            return new GetStatusResponse(Request, new ResponseStatus(ResponseState.Error, "Project not found"));
         }
     }
 }

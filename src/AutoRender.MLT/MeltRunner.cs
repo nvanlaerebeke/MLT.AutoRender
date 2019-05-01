@@ -1,249 +1,164 @@
 ﻿using AutoRender.Data;
+using CrazyUtils;
 using log4net;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading;
+using System.Threading.Tasks;
 
 namespace AutoRender.MLT {
 
     public class MeltRunner {
-        private readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+        private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
-        private Process _objProcess;
-        private Thread _thdStdOut;
-        private Thread _thdStdErr;
-        private JobStatus _objStatus;
-        private MeltConfig Config;
-        private CancellationTokenSource _objJobCancelationSource = new CancellationTokenSource();
-        private CancellationToken _objJobCancelationToken;
+        private readonly MeltConfig Config;
+        private readonly List<StdHandlers.StdHandler> Handlers;
+        private JobStatus _objStatus = JobStatus.UnScheduled;
+        private ProcessRunner Process;
 
         public event EventHandler ProgressChanged;
-
-        public event EventHandler StatusChanged;
-
-        internal double TimeTaken { get; private set; }
-
-        private List<StdHandlers.StdHandler> _lstHandlers;
+        public event EventHandler<JobStatus> StatusChanged;
 
         public JobStatus Status {
             get { return _objStatus; }
             private set {
                 if (value != _objStatus) {
                     _objStatus = value;
-                    StatusChanged?.Invoke(this, new System.EventArgs());
+                    StatusChanged?.Invoke(this, _objStatus);
                 }
+            }
+        } 
+
+        public double TimeTaken { 
+            get {
+                return (Process == null) ? 0 : Process.TimeTaken;
             }
         }
 
         internal MeltRunner(MeltConfig pConfig) {
             Config = pConfig;
-            Status = JobStatus.UnScheduled;
-            _lstHandlers = MeltHelper.GetHandlers();
-
-            _objJobCancelationToken = _objJobCancelationSource.Token;
+            Handlers = MeltHelper.GetHandlers();
 
             //attach events
-            var objProgress = _lstHandlers.First(h => h.GetType() == typeof(StdHandlers.Progress)) as StdHandlers.Progress;
+            var objProgress = Handlers.First(h => h.GetType() == typeof(StdHandlers.Progress)) as StdHandlers.Progress;
             objProgress.progressUpdated += delegate (object sender, System.EventArgs e) {
                 ProgressChanged?.Invoke(sender, e);
             };
         }
 
-        public void Start() {
-            if (Status == JobStatus.Paused) {
-                ResumeEncoding();
-            } else {
-                _objJobCancelationToken.Register(StopEncoding);
-                StartEncoding();
+        internal void Scheduled() {
+            if (
+                Status != JobStatus.Paused &&
+                Status != JobStatus.Running
+            ) {
+                Status = JobStatus.Scheduled;
             }
         }
 
-        public void Stop() {
-            StopEncoding();
-        }
-
-        public void Pause() {
-            PauseEncoding();
-        }
-
-        private void StartEncoding() {
-            Status = JobStatus.Running;
-            try {
-                var strCommand = "-progress " + "\"" + Regex.Replace(Config.ConfigFile, @"(\\+)$", @"$1$1") + "\"";
-                _objProcess = new Process();
-
-                ProcessStartInfo objStartInfo = new ProcessStartInfo(Settings.MeltPath, strCommand) {
-                    UseShellExecute = false,
-                    ErrorDialog = false,
-                    CreateNoWindow = true,
-                    StandardOutputEncoding = Encoding.UTF8,
-                    StandardErrorEncoding = Encoding.UTF8,
-                    RedirectStandardOutput = true,
-                    RedirectStandardError = true,
-                    WorkingDirectory = Settings.TempDirectory
-                };
-
-                _objProcess.EnableRaisingEvents = true;
-                _objProcess.Exited += _objProcess_Exited;
-                _objProcess.StartInfo = objStartInfo;
-
-                int intIdentifier = new Random().Next(1, 9999);
-
-                _thdStdErr = new Thread(readStdError) {
-                    IsBackground = true
-                };
-
-                _thdStdOut = new Thread(readStdOut) {
-                    IsBackground = true
-                };
-
+        public void Start() {
+            Task.Run(() => {
+                if (Status == JobStatus.Paused && Process != null) {
+                    Process.Start();
+                    return;
+                }
 
                 if (File.Exists(Config.TempSourcePath)) { File.Delete(Config.TempSourcePath); }
                 if (File.Exists(Config.TempTargetPath)) { File.Delete(Config.TempTargetPath); }
+                Config.WriteConfig(); // -- ToDo: Pass target path for the config so that the file copy isn't needed
                 File.Copy(Config.SourceFile, Config.TempSourcePath);
 
-                _objProcess.Start();
-                _thdStdOut.Start();
-                _thdStdErr.Start();
-                try {
-                    _objProcess.PriorityClass = ProcessPriorityClass.BelowNormal;
-                } catch (Exception ex) {
-                    Log.Error(ex);
-                }
-            } catch (Exception ex) {
-                Log.Error(ex);
+                var strBasePath = Path.GetDirectoryName(Settings.MeltPath);
+                var strModulePath = Path.Combine(strBasePath, "modules");
+                var strProfilePath = Path.Combine(strBasePath, "profiles");
+                var strPresetPath = Path.Combine(strBasePath, "presets");
+                var strLibPath = $"{Path.Combine(strBasePath, "framework")}:{Path.Combine(strBasePath, "mlt++")}:{Environment.GetEnvironmentVariable("LD_LIBRARY_PATH")}";
+
+                Environment.SetEnvironmentVariable("MLT_REPOSITORY", strModulePath);
+                Environment.SetEnvironmentVariable("MLT_DATA", strModulePath);
+                Environment.SetEnvironmentVariable("MLT_PROFILES_PATH", strProfilePath);
+                Environment.SetEnvironmentVariable("MLT_PRESETS_PATH", strPresetPath);
+                Environment.SetEnvironmentVariable("LD_LIBRARY_PATH", strLibPath);
+
+                Process = new ProcessRunner(Settings.MeltPath, "-progress " + "\"" + Regex.Replace(Config.ConfigFile, @"(\\+)$", @"$1$1") + "\"");
+                Process.StatusChanged += _objProcess_StatusChanged;
+                Process.StdOut += Process_StdOut;
+                Process.Start();
+            });
+        }
+
+        public void Stop() {
+            Process.Stop();
+        }
+
+        public void Pause() {
+            if (Status == JobStatus.Running) {
+                Process.Pause();
             }
         }
 
-        private void StopEncoding() {
-            _objJobCancelationSource.Cancel();
-            if (_objProcess != null) {
-                try {
-                    _objProcess.Kill();
-                } catch(Exception ex) {
-                    Log.Error($"Failed to stop process for {Config.SourceFile}: {ex.Message}");
-                }
-                Status = JobStatus.UnScheduled;
+        /// <summary>
+        /// ToDo: is it needed to have 2 enums?
+        /// </summary>
+        /// <param name="pStatus">P status.</param>
+        void _objProcess_StatusChanged(object sender, ProcessStatus pStatus) {
+            switch(pStatus) {
+                case ProcessStatus.Done:
+                    Finish();
+                    Status = JobStatus.Success;
+                    Cleanup();
+                    break;
+                case ProcessStatus.Failed:
+                    Status = JobStatus.Failed;
+                    Cleanup();
+                    break;
+                case ProcessStatus.Paused:
+                    Status = JobStatus.Paused;
+                    break;
+                case ProcessStatus.Running:
+                    Status = JobStatus.Running;
+                    break;
+                case ProcessStatus.Stopped:
+                    Status = JobStatus.UnScheduled;
+                    Cleanup();
+                    break;                
             }
         }
 
-        private void readStdOut() {
-            StreamReader srStdOut = null;
-
-            try {
-                srStdOut = _objProcess.StandardOutput;
-                string strLine = String.Empty;
-
-                strLine = srStdOut.ReadLine();
-                while ((strLine != null) && (_objProcess != null)) {
-                    if (strLine.Trim().Length != 0) {
-                        HandleLine(strLine);
-                        Log.Info("[" + DateTime.Now.ToShortTimeString() + "] " + strLine);
-                    }
-                    strLine = _objProcess.StandardOutput.ReadLine();
-                }
-            } catch (Exception ex) {
-                Log.Error(ex);
-            } finally {
-                if (srStdOut != null) {
-                    srStdOut.Close();
-                    srStdOut.Dispose();
-                }
+        void Process_StdOut(object sender, string e) {
+            if (!String.IsNullOrEmpty(e)) {
+                Log.Info("[" + DateTime.Now.ToShortTimeString() + "] " + e.Trim());
+                Handlers.ForEach(h => h.Handle(e));
             }
         }
 
-        private void readStdError() {
-            StreamReader srStdErr = null;
-            try {
-                srStdErr = _objProcess.StandardError;
-                string strLine = String.Empty;
-
-                strLine = srStdErr.ReadLine();
-                while ((strLine != null) && (_objProcess != null)) {
-                    if (strLine.Trim().Length != 0) {
-                        HandleLine(strLine);
-                        Log.Info("[" + DateTime.Now.ToShortTimeString() + "] " + strLine);
-                    }
-                    strLine = srStdErr.ReadLine();
+        private void Finish() {
+            if (File.Exists(Config.TempTargetPath)) {
+                var strNewName = Config.TargetPath;
+                var i = 1;
+                while (File.Exists(strNewName)) {
+                    strNewName = Config.TargetPath.Replace("." + Path.GetExtension(strNewName), "") + "_" + i + Path.GetExtension(strNewName);
+                    i++;
+                };
+                if (!new FileInfo(strNewName).Directory.Exists) {
+                    Directory.CreateDirectory(new FileInfo(strNewName).Directory.FullName);
                 }
-            } catch (Exception ex) {
-                Log.Error(ex);
-            } finally {
-                if (srStdErr != null) {
-                    srStdErr.Close();
-                    srStdErr.Dispose();
-                }
+                File.Move(Config.TempTargetPath, strNewName);
             }
         }
 
-        private void _objProcess_Exited(object sender, System.EventArgs e) {
-            _objProcess.Exited -= _objProcess_Exited;
+        private void Cleanup() {
+            Process.StatusChanged -= _objProcess_StatusChanged;
+            Process.StdOut -= Process_StdOut;
 
             // -- clean up up env
             if (File.Exists(Config.TempSourcePath)) { File.Delete(Config.TempSourcePath); }
+            if (File.Exists(Config.TempTargetPath)) { File.Delete(Config.TempTargetPath); }
 
-            if (_objProcess.ExitCode != 0) { // -- when not success, remove the temp file
-                if (File.Exists(Config.TempTargetPath)) { File.Delete(Config.TempTargetPath); }
-            } else { // -- when success, move to final location
-                if (File.Exists(Config.TempTargetPath)) {
-                    var strNewName = Config.TargetPath;
-                    var i = 1;
-                    while (File.Exists(strNewName)) {
-                        strNewName = Config.TargetPath.Replace("." + Path.GetExtension(strNewName), "") + "_" + i + Path.GetExtension(strNewName);
-                        i++;
-                    };
-                    if (!new FileInfo(strNewName).Directory.Exists) {
-                        Directory.CreateDirectory(new FileInfo(strNewName).Directory.FullName);
-                    }
-                    File.Move(Config.TempTargetPath, strNewName);
-                    Status = JobStatus.Success;
-                }
-            }
-
-            TimeSpan ts = _objProcess.ExitTime.Subtract(_objProcess.StartTime);
-            TimeTaken = ts.TotalSeconds;
+            TimeSpan ts = new TimeSpan(0, 0, (int)TimeTaken);
             Log.Info(String.Format("Encoding completed after {0} Hours, {1} Minutes and {2} Seconds", ts.Hours, ts.Minutes, ts.Seconds));
-
-            if (Status == JobStatus.Running || Status == JobStatus.Paused) { Status = JobStatus.Failed; }
-        }
-
-        private void PauseEncoding() {
-            Kill("STOP");
-            Status = JobStatus.Paused;
-        }
-
-        private void ResumeEncoding() {
-            Kill("CONT");
-            Status = JobStatus.Running;
-        }
-
-        private void Kill(string pAction) {
-            if (_objProcess != null && !_objProcess.HasExited) {
-                var objKill = new Process() {
-                    StartInfo = new ProcessStartInfo("kill", "-" + pAction.ToUpper() + " " + _objProcess.Id) {
-                        UseShellExecute = false,
-                        ErrorDialog = false,
-                        CreateNoWindow = true,
-                    }
-                };
-                try {
-                    objKill.Start();
-                } catch (Exception ex) {
-                    Log.Error(ex);
-                }
-            }
-        }
-
-        private void HandleLine(string pLine) {
-            if (!String.IsNullOrEmpty(pLine)) {
-                _lstHandlers.ForEach(h => h.Handle(pLine));
-            }
         }
     }
 }

@@ -6,7 +6,6 @@
         Running,
         Success,
         Failed,
-        Exists,
         Paused
     }
 }

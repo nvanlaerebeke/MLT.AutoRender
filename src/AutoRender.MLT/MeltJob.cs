@@ -3,21 +3,16 @@
 namespace AutoRender.MLT {
 
     internal class MeltJob {
-        private MeltRunner _objMeltProcess;
+        private readonly MeltRunner MeltRunner;
 
-        //Events
         internal event EventHandler ProgressChanged;
-
-        internal event EventHandler StatusChanged;
-
-        //fields
-        private JobStatus _objStatus = JobStatus.UnScheduled;
+        internal event EventHandler<JobStatus> StatusChanged;
 
         internal MLTProject Project { get; private set; }
 
         internal double TimeTaken {
             get {
-                return (_objMeltProcess != null) ? _objMeltProcess.TimeTaken : 0;
+                return MeltRunner.TimeTaken;
             }
         }
 
@@ -38,75 +33,61 @@ namespace AutoRender.MLT {
 
         internal JobStatus Status {
             get {
-                return _objStatus;
-            }
-            private set {
-                if (value != _objStatus) {
-                    _objStatus = value;
-                    StatusChanged?.Invoke(this, new EventArgs.StatusChangedEventArgs(_objStatus));
-                }
+                return MeltRunner.Status;
             }
         }
 
         internal MeltJob(MLTProject pProject) {
             Project = pProject;
-        }
-
-        internal void Schedule() {
-            Status = JobStatus.Scheduled;
-            MeltJobScheduler.Schedule(this);
+            MeltRunner = new MeltRunner(Project.Config);
         }
 
         internal void Start() {
-            if (_objMeltProcess != null) { Stop(); }
-            Project.Config.WriteConfig();
+            if(Status == JobStatus.Running) { return; } // -- already running, ignore
 
-            StartTime = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
-            _objMeltProcess = new MeltRunner(Project.Config);
-            _objMeltProcess.StatusChanged += ObjRunner_complete;
-            _objMeltProcess.ProgressChanged += ObjRunner_progressChanged;
-            _objMeltProcess.Start();
-
-            Status = JobStatus.Running;
+            if (Status == JobStatus.Paused) {
+                MeltRunner.Start();
+            } else {
+                StartTime = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+                MeltRunner.ProgressChanged += ObjRunner_progressChanged;
+                MeltRunner.StatusChanged += MeltRunner_StatusChanged;
+                MeltRunner.Start();
+            }
         }
 
         internal void Stop() {
-            if (_objMeltProcess != null) {
-                StartTime = 0;
-                _objMeltProcess.StatusChanged -= ObjRunner_complete;
-                _objMeltProcess.ProgressChanged -= ObjRunner_progressChanged;
-                _objMeltProcess.Stop();
-                _objMeltProcess = null;
-
-                Status = JobStatus.UnScheduled;
-            }
+            MeltRunner.Stop();
         }
 
         internal void Pause() {
-            if (_objMeltProcess != null && _objMeltProcess.Status == JobStatus.Running) {
-                _objMeltProcess.Pause();
-            }
+            MeltRunner.Pause();
         }
 
-        internal void Resume() {
-            if (_objMeltProcess != null && _objMeltProcess.Status == JobStatus.Paused) {
-                _objMeltProcess.Start();
-            }
+        internal void Scheduled() {
+            MeltRunner.Scheduled();
         }
+
+        void MeltRunner_StatusChanged(object sender, JobStatus e) {
+            switch(e) {
+                case JobStatus.Failed:
+                case JobStatus.Success:
+                    MeltRunner.StatusChanged -= MeltRunner_StatusChanged;
+                    MeltRunner.ProgressChanged -= ObjRunner_progressChanged;
+                    Percentage = 0;
+                    StartTime = 0;
+                    break;
+                case JobStatus.Paused:
+                case JobStatus.Running:
+                case JobStatus.Scheduled:
+                case JobStatus.UnScheduled:
+                    break;
+            }
+            StatusChanged?.Invoke(this, e);
+        }
+
 
         private void ObjRunner_progressChanged(object sender, System.EventArgs e) {
             Percentage = (e as EventArgs.ProgressUpdatedEventArgs).Percentage;
-        }
-
-        private void ObjRunner_complete(object sender, System.EventArgs e) {
-            if (
-                _objMeltProcess.Status != JobStatus.Running &&
-                _objMeltProcess.Status != JobStatus.Paused
-            ) {
-                Percentage = 0;
-                StartTime = 0;
-            }
-            this.Status = _objMeltProcess.Status;
         }
 
         public static bool Equals(MeltJob obj1, MeltJob obj2) {
@@ -115,14 +96,14 @@ namespace AutoRender.MLT {
 
         public bool Equals(MeltJob pJob) {
             return
-                pJob != null
-                && this.Percentage.Equals(pJob.Percentage) &&
-                this.Status.Equals(pJob.Status) &&
-                this.TimeTaken.Equals(pJob.TimeTaken);
+                pJob != null && 
+                Percentage.Equals(pJob.Percentage) &&
+                Status.Equals(pJob.Status) &&
+                TimeTaken.Equals(pJob.TimeTaken);
         }
 
         public override bool Equals(object obj) {
-            return this.Equals(obj as MeltJob);
+            return Equals(obj as MeltJob);
         }
     }
 }

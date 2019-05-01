@@ -1,5 +1,6 @@
 ﻿using AutoRender.Data;
 using AutoRender.Messaging.Request;
+using AutoRender.Messaging.Response;
 using AutoRender.Subscription.Messaging.Handlers;
 using AutoRender.Subscription.Messaging.Request;
 using AutoRender.Workspace;
@@ -12,32 +13,22 @@ using System.IO;
 
 namespace AutoRender.Messaging.Action.Request {
 
-    public class UpdateProjectSourceRequestAction : RequestAction<UpdateProjectSourceRequest, ACKResponse> {
+    public class UpdateProjectSourceRequestAction : RequestAction<UpdateProjectSourceRequest, GetStatusResponse> {
 
         public UpdateProjectSourceRequestAction(IClient pClient, UpdateProjectSourceRequest pRequest) : base(pClient, pRequest) {
         }
 
-        public override ACKResponse Start() {
+        public override GetStatusResponse Start() {
             var objWsItem = WorkspaceFactory.Get().Get(Request.ItemID);
             if (objWsItem != null && objWsItem.Project != null) {
                 string strNewPath = Path.Combine(Settings.NewDirectory, Request.ProjectSourceName);
                 if (File.Exists(strNewPath)) {
                     objWsItem.Project.SourcePath = strNewPath;
-
-                    new SubscriptionClient<WorkspaceUpdatedHandler>(Client).Notify(new SendWorkspaceUpdatedRequest(
-                        new List<WorkspaceUpdatedEventArgs>() {
-                            new WorkspaceUpdatedEventArgs(
-                                objWsItem.GetWorkspaceItem(),
-                                WorkspaceAction.Updated
-                            )
-                        }
-                    ));
-
-                    return new ACKResponse(Request);
+                    return new GetStatusResponse(Request, new List<Data.WorkspaceItem>() { objWsItem.GetWorkspaceItem() });
                 }
-                return new ACKResponse(Request, new ResponseStatus(ResponseState.Error, $"File {strNewPath} not found"));
+                return new GetStatusResponse(Request, new ResponseStatus(ResponseState.Error, "File not found"));
             }
-            return new ACKResponse(Request, new ResponseStatus(ResponseState.Error, $"Project {Request.ItemID} not found"));
+            return new GetStatusResponse(Request, new ResponseStatus(ResponseState.Error, "Project not found"));
         }
     }
 }

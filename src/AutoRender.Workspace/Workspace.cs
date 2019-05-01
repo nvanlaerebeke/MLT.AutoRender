@@ -297,8 +297,23 @@ namespace AutoRender.Workspace {
             }
         }
 
-        void WorkspaceItemUpdated(object sender, List<WorkspaceUpdatedEventArgs> e) {
-            Updated?.Invoke(this, e);
+        void WorkspaceItemUpdated(object sender, WorkspaceItem e) {
+            /*switch (e.Project.Status) {
+                case ProjectStatus.Error:
+                case ProjectStatus.Finished:
+                case ProjectStatus.SourceInvalid:
+                case ProjectStatus.SourceMissing:
+                case ProjectStatus.TargetExists:
+                case ProjectStatus.TargetInvalid:
+                    if (e.Project.TargetExists) {
+                        var objWsItem = WorkspaceItems.Where(i => i.Value.Project != null && i.Value.Project.ID.ToString().Equals(e.Project.ID.ToString())).FirstOrDefault();
+
+                    }
+                    break;
+            }*/
+            Updated?.Invoke(this, new List<WorkspaceUpdatedEventArgs>()
+                { new WorkspaceUpdatedEventArgs(e.GetWorkspaceItem(), WorkspaceAction.Updated) }
+            );
         }
 
     }

@@ -2,22 +2,22 @@
 using AutoRender.Video;
 using System;
 using System.IO;
-using System.Linq;
 
 namespace AutoRender.MLT {
 
     /// <summary>
     /// ToDo: Cleanup and only use this in MLT
     ///       Anywhere else use the Project object
+    ///       Also this class does too much - should only describe the project
     /// </summary>
     public class MLTProject {
 
-        public event EventHandler ProjectChanged;
+        public event EventHandler<ProjectStatus> ProjectChanged;
 
         private FileInfo _objProjectFile;
         private VideoInfo _objTargetInfo;
         private VideoInfo _objSourceInfo;
-        private VideoInfoCache VideoInfoCache;
+        public VideoInfoCache VideoInfoCache;
 
         private MeltJob Job { get; set; }
 
@@ -78,12 +78,10 @@ namespace AutoRender.MLT {
         public bool TargetIsValid {
             get {
                 if (TargetExists) {
-                    var objJob = MeltJobScheduler.GetAll().Where(c => c.Project.Name.Equals(this.Name)).FirstOrDefault();
-                    if (objJob == null || objJob.Status != JobStatus.Running) {
-                        return (_objTargetInfo != null) ? _objTargetInfo.IsValid : false;
-                    } else {
-                        return false; // -- we're busy with it, just return false
+                    if (Job.Status != JobStatus.Running) {
+                        return (_objTargetInfo != null) && _objTargetInfo.IsValid;
                     }
+                    return false; // -- we're busy with it, just return false
                 }
                 return false;
             }
@@ -97,17 +95,27 @@ namespace AutoRender.MLT {
             Directory.CreateDirectory(Path.Combine(Settings.TempDirectory, ID.ToString()));
 
             _objProjectFile = new FileInfo(pFullPath);
+
             Config = new MeltConfig(this, VideoInfoCache);
-
-            Job = new MeltJob(this); // -- ToDo: pass null or the config for the job, not the project itself
-            Job.ProgressChanged += (object sender, System.EventArgs e) => { ProjectChanged?.Invoke(sender, e); };
-            Job.StatusChanged += (object sender, System.EventArgs e) => {
-                Reload();
-                ProjectChanged?.Invoke(sender, e);
-            };
-
             if (TargetExists) { _objTargetInfo = VideoInfoCache.Get(TargetPath); }
             if (SourceExists) { _objSourceInfo = VideoInfoCache.Get(SourcePath); }
+
+            Job = new MeltJob(this); // -- ToDo: pass null or the config for the job, not the project itself
+            Job.ProgressChanged += (object sender, System.EventArgs e) => { ProjectChanged?.Invoke(sender, Status); };
+            Job.StatusChanged += (object sender, JobStatus e) => {
+                switch (e) {
+                    case JobStatus.Failed:
+                    case JobStatus.Success:
+                        Reload();
+                        break;
+                    case JobStatus.Paused:
+                    case JobStatus.Running:
+                    case JobStatus.Scheduled:
+                    case JobStatus.UnScheduled:
+                        break;
+                }
+                ProjectChanged?.Invoke(sender, Status);
+            };
         }
 
         #region Methods
@@ -118,11 +126,11 @@ namespace AutoRender.MLT {
             if (SourceExists) { _objSourceInfo = VideoInfoCache.Get(SourcePath); }
         }
 
-        public void Start() {
+        public void Schedule() {
             if (Status == ProjectStatus.Paused) {
-                Job.Resume();
+                MeltJobScheduler.GetScheduler().Schedule(Job);
             } else if (!TargetExists && SourceExists && Status != ProjectStatus.Busy) {
-                Job.Schedule();
+                MeltJobScheduler.GetScheduler().Schedule(Job);
             }
         }
 
@@ -149,20 +157,20 @@ namespace AutoRender.MLT {
         public bool Equals(MLTProject pProject) {
             return (
                 pProject != null &&
-                this.SourceExists.Equals(pProject.SourceExists) &&
-                this.SourceIsValid.Equals(pProject.SourceIsValid) &&
-                this.TargetExists.Equals(pProject.TargetExists) &&
-                this.TargetIsValid.Equals(pProject.TargetIsValid) &&
-                this.TargetName.Equals(pProject.TargetName) &&
-                this.TargetPath.Equals(pProject.TargetPath) &&
-                this.FullPath.Equals(pProject.FullPath) &&
-                this.Job.Equals(pProject.Job) &&
-                this.Name.Equals(pProject.Name) &&
-                this.SourcePath.Equals(pProject.SourcePath));
+                SourceExists.Equals(pProject.SourceExists) &&
+                SourceIsValid.Equals(pProject.SourceIsValid) &&
+                TargetExists.Equals(pProject.TargetExists) &&
+                TargetIsValid.Equals(pProject.TargetIsValid) &&
+                TargetName.Equals(pProject.TargetName) &&
+                TargetPath.Equals(pProject.TargetPath) &&
+                FullPath.Equals(pProject.FullPath) &&
+                Job.Equals(pProject.Job) &&
+                Name.Equals(pProject.Name) &&
+                SourcePath.Equals(pProject.SourcePath));
         }
 
         public override bool Equals(object obj) {
-            return this.Equals(obj as Project);
+            return Equals(obj as Project);
         }
 
         #endregion Equals

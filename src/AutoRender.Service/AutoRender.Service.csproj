@@ -71,6 +71,14 @@
       <Project>{7ecc99b6-75a2-43aa-934a-f41ce749dac9}</Project>
       <Name>AutoRender.Server</Name>
     </ProjectReference>
+    <ProjectReference Include="..\AutoRender.Messaging\AutoRender.Messaging.csproj">
+      <Project>{35101FCE-D2B0-437B-B694-B0E04DD0BC3C}</Project>
+      <Name>AutoRender.Messaging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AutoRender.Messaging.Actions\AutoRender.Messaging.Actions.csproj">
+      <Project>{A35BCC76-8ECE-436F-8DF7-B7AA12DA13BB}</Project>
+      <Name>AutoRender.Messaging.Actions</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="ini-parser">
