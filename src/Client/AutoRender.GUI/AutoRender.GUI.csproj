@@ -1,0 +1,299 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{320EC635-86AD-4B80-9A53-4981B7569945}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>AutoRender</RootNamespace>
+    <AssemblyName>AutoRender</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>autorender.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="WorkspaceItemAction.cs" />
+    <Page Include="UserControls\ContextMenuButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\ProjectField.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\EditableListField.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\EditableTextField.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\EditableField.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\WorkspaceItemStatus.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="BaseWindow.cs" />
+    <Compile Include="Connection.cs" />
+    <Compile Include="ConnectionManager.cs" />
+    <Compile Include="Lib\MeltConfig.cs" />
+    <Compile Include="Settings.cs" />
+    <Compile Include="Status.cs" />
+    <Compile Include="UserControls\ContextMenuButton.xaml.cs">
+      <DependentUpon>ContextMenuButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\ProjectField.xaml.cs">
+      <DependentUpon>ProjectField.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\EditableListField.xaml.cs">
+      <DependentUpon>EditableListField.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\EditableTextField.xaml.cs">
+      <DependentUpon>EditableTextField.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\EditableField.xaml.cs">
+      <DependentUpon>EditableField.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\WorkspaceItemStatus.xaml.cs">
+      <DependentUpon>WorkspaceItemStatus.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\BaseViewModel.cs" />
+    <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="ViewModels\WorkspaceItemViewModel.cs" />
+    <Compile Include="ViewModels\WorkspaceItemViewModelSourceName.cs" />
+    <Compile Include="ViewModels\WorkspaceItemViewModelProject.cs" />
+    <Compile Include="ViewModels\WorkspaceItemViewModelTargetName.cs" />
+    <Compile Include="ViewModels\WorkspaceItemViewModelStatusProperties.cs" />
+    <Compile Include="ViewModels\WorkspaceItemViewModelTextProperties.cs" />
+    <Compile Include="ViewModels\WorkspaceItemViewModelContextMenu.cs" />
+    <Compile Include="Windows\MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="edit.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="done.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="error.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="apply.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="exists.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="AutoRender.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="autorender.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Common\AutoRender.Data\AutoRender.Data.csproj">
+      <Project>{59d58f7e-ec28-4e70-bbc3-5d02b577bd11}</Project>
+      <Name>AutoRender.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Common\AutoRender.Logging\AutoRender.Logging.csproj">
+      <Project>{d51c4ce3-0473-4ddf-9f0c-b3022e493dbd}</Project>
+      <Name>AutoRender.Logging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Common\AutoRender.Messaging\AutoRender.Messaging.csproj">
+      <Project>{35101fce-d2b0-437b-b694-b0e04dd0bc3c}</Project>
+      <Name>AutoRender.Messaging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Common\AutoRender.Subscription.Messaging\AutoRender.Subscription.Messaging.csproj">
+      <Project>{f973dbc2-f3ba-4160-839b-8491e6827e3b}</Project>
+      <Name>AutoRender.Subscription.Messaging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Common\CrazyUtils\CrazyUtils.csproj">
+      <Project>{232647d8-8ca8-4f02-91b9-72ee17e99dd1}</Project>
+      <Name>CrazyUtils</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Lib\mitto\src\Mitto.Config\Mitto.Config.csproj">
+      <Project>{e3e0d40d-99ac-4ed4-9e64-19cdc10813b0}</Project>
+      <Name>Mitto.Config</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Lib\mitto\src\Mitto.Connection.Websocket\Mitto.Connection.Websocket.csproj">
+      <Project>{cf99d3f2-2c06-4a9f-ba22-e2e0ca457b58}</Project>
+      <Name>Mitto.Connection.Websocket</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Lib\mitto\src\Mitto.IConnection\Mitto.IConnection.csproj">
+      <Project>{aaf65eba-e48d-491a-ad2e-525bde11ec6f}</Project>
+      <Name>Mitto.IConnection</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Lib\mitto\src\Mitto.IMessaging\Mitto.IMessaging.csproj">
+      <Project>{3bb1c211-9006-4fee-9f40-7556717431b0}</Project>
+      <Name>Mitto.IMessaging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Lib\mitto\src\Mitto.IRouting\Mitto.IRouting.csproj">
+      <Project>{7a80e47b-c82f-4a16-83f0-e0c65f22885a}</Project>
+      <Name>Mitto.IRouting</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Lib\mitto\src\Mitto.Logging\Mitto.Logging.csproj">
+      <Project>{b54de51c-a462-43a7-90c2-6a39e1865300}</Project>
+      <Name>Mitto.Logging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Lib\mitto\src\Mitto.Main\Mitto.Main.csproj">
+      <Project>{958222ed-4ba0-45dd-92e5-6b72ba62aba6}</Project>
+      <Name>Mitto.Main</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Lib\mitto\src\Mitto.Messaging\Mitto.Messaging.csproj">
+      <Project>{c29037e3-9c2f-4996-8434-36600735d465}</Project>
+      <Name>Mitto.Messaging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Lib\mitto\src\Mitto.Routing\Mitto.Routing.csproj">
+      <Project>{6ffefef0-8b67-45c8-9aba-a1e6d276b1c2}</Project>
+      <Name>Mitto.Routing</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Lib\mitto\src\Mitto.Subscription.IMessaging\Mitto.Subscription.IMessaging.csproj">
+      <Project>{9ff69878-e3d3-459d-a779-a6cb0091de75}</Project>
+      <Name>Mitto.Subscription.IMessaging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Lib\mitto\src\Mitto.Subscription.Messaging\Mitto.Subscription.Messaging.csproj">
+      <Project>{5d420f78-c169-4615-acb2-a039bf8acbd6}</Project>
+      <Name>Mitto.Subscription.Messaging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Lib\mitto\src\Mitto.Utilities\Mitto.Utilities.csproj">
+      <Project>{d184bf09-fd6d-4f36-bc6e-bf05e763e3ac}</Project>
+      <Name>Mitto.Utilities</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="DirectShowLib">
+      <Version>1.0.0</Version>
+    </PackageReference>
+    <PackageReference Include="FontAwesome.WPF">
+      <Version>4.7.0.9</Version>
+    </PackageReference>
+    <PackageReference Include="ini-parser">
+      <Version>2.5.2</Version>
+    </PackageReference>
+    <PackageReference Include="log4net">
+      <Version>2.0.8</Version>
+    </PackageReference>
+    <PackageReference Include="MahApps.Metro">
+      <Version>1.6.5</Version>
+    </PackageReference>
+    <PackageReference Include="MaterialDesignColors">
+      <Version>1.1.3</Version>
+    </PackageReference>
+    <PackageReference Include="MaterialDesignThemes">
+      <Version>2.5.1</Version>
+    </PackageReference>
+    <PackageReference Include="MaterialDesignThemes.MahApps">
+      <Version>0.0.12</Version>
+    </PackageReference>
+    <PackageReference Include="MediaToolkit">
+      <Version>1.1.0.1</Version>
+    </PackageReference>
+    <PackageReference Include="ShowMeTheXAML.MSBuild">
+      <Version>1.0.12</Version>
+    </PackageReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

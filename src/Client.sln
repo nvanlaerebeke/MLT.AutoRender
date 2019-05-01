@@ -3,19 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.28803.156
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoRender.GUI", "AutoRender.GUI\AutoRender.GUI.csproj", "{320EC635-86AD-4B80-9A53-4981B7569945}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoRender.GUI", "Client\AutoRender.GUI\AutoRender.GUI.csproj", "{320EC635-86AD-4B80-9A53-4981B7569945}"
 EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "AutoRender.WPFGUI.Installer", "AutoRender.Installer\Installer.vdproj", "{AECE95E5-260F-4B85-BF52-79225E36DD21}"
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "AutoRender.WPFGUI.Installer", "Client\AutoRender.Installer\Installer.vdproj", "{AECE95E5-260F-4B85-BF52-79225E36DD21}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoRender.Messaging", "AutoRender.Messaging\AutoRender.Messaging.csproj", "{35101FCE-D2B0-437B-B694-B0E04DD0BC3C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoRender.Messaging", "Common\AutoRender.Messaging\AutoRender.Messaging.csproj", "{35101FCE-D2B0-437B-B694-B0E04DD0BC3C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrazyUtils", "CrazyUtils\CrazyUtils.csproj", "{232647D8-8CA8-4F02-91B9-72EE17E99DD1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrazyUtils", "Common\CrazyUtils\CrazyUtils.csproj", "{232647D8-8CA8-4F02-91B9-72EE17E99DD1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoRender.Data", "AutoRender.Data\AutoRender.Data.csproj", "{59D58F7E-EC28-4E70-BBC3-5D02B577BD11}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoRender.Data", "Common\AutoRender.Data\AutoRender.Data.csproj", "{59D58F7E-EC28-4E70-BBC3-5D02B577BD11}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoRender.Subscription.Messaging", "AutoRender.Subscription.Messaging\AutoRender.Subscription.Messaging.csproj", "{F973DBC2-F3BA-4160-839B-8491E6827E3B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoRender.Subscription.Messaging", "Common\AutoRender.Subscription.Messaging\AutoRender.Subscription.Messaging.csproj", "{F973DBC2-F3BA-4160-839B-8491E6827E3B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoRender.Logging", "AutoRender.Logging\AutoRender.Logging.csproj", "{D51C4CE3-0473-4DDF-9F0C-B3022E493DBD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoRender.Logging", "Common\AutoRender.Logging\AutoRender.Logging.csproj", "{D51C4CE3-0473-4DDF-9F0C-B3022E493DBD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
