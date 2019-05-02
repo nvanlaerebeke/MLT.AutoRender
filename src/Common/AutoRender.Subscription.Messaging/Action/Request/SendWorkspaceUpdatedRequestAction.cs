@@ -9,19 +9,15 @@ namespace AutoRender.Subscription.Messaging.Action.Request {
 
     public delegate void WorkspaceUpdated(IClient pClient, List<WorkspaceUpdatedEventArgs> pUpdates);
 
-    public class SendWorkspaceUpdatedRequestAction : RequestAction<
-        SendWorkspaceUpdatedRequest,
-        ACKResponse
-    > {
+    public class SendWorkspaceUpdatedRequestAction : NotificationAction<SendWorkspaceUpdatedRequest> {
 
         public static event WorkspaceUpdated WorkspaceUpdated;
 
         public SendWorkspaceUpdatedRequestAction(IClient pClient, SendWorkspaceUpdatedRequest pMessage) : base(pClient, pMessage) {
         }
 
-        public override ACKResponse Start() {
+        public override void Start() {
             WorkspaceUpdated?.Invoke(Client, Request.Updates);
-            return new ACKResponse(Request);
         }
     }
 }

@@ -2,7 +2,6 @@
 using AutoRender.Subscription.Messaging.UnSubscribe;
 using log4net;
 using Mitto.IMessaging;
-using Mitto.Messaging.Response;
 using System;
 using System.Collections.Concurrent;
 using System.Linq;
@@ -29,7 +28,7 @@ namespace AutoRender.Subscription.Messaging.Handlers {
                 if (pSender == null || !c.ID.Equals(pSender.ID)) {
                     try {
                         c.Notify(pNotifyMessage);
-                    } catch(Exception ex) {
+                    } catch (Exception ex) {
                         Log.Error($"Failed to send SendWorkspaceUpdatedRequest to {c.ID}: {ex.Message}");
                     }
                 }
