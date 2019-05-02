@@ -1,10 +1,13 @@
 ﻿using AutoRender.Data;
 using AutoRender.MLT;
 using System;
+using System.Reflection;
+using log4net;
 
 namespace AutoRender.Workspace {
 
     public class WorkspaceItem {
+        private static readonly log4net.ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
         public event EventHandler<WorkspaceItem> Updated;
 
@@ -20,6 +23,7 @@ namespace AutoRender.Workspace {
             Final = pFinal;
             if (Project != null) {
                 Project.ProjectChanged += (sender, e) => {
+                    Log.Info("WorkspaceItem was change - notify workspace");
                     switch (Project.Status) {
                         case ProjectStatus.Error:
                         case ProjectStatus.Finished:

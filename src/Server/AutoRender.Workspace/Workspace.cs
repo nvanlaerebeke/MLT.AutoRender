@@ -8,9 +8,13 @@ using AutoRender.Data;
 using AutoRender.MLT;
 using AutoRender.Video;
 using AutoRender.Workspace.Monitor;
+using log4net;
+using System.Reflection;
 
 namespace AutoRender.Workspace {
     public class Workspace {
+        private static readonly log4net.ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+
         public event EventHandler<List<WorkspaceUpdatedEventArgs>> Updated;
 
         private readonly VideoInfoCache VideoCache;
@@ -311,6 +315,7 @@ namespace AutoRender.Workspace {
                     }
                     break;
             }*/
+            Log.Info("Workspace was updated, sending updated workspaceitem");
             Updated?.Invoke(this, new List<WorkspaceUpdatedEventArgs>()
                 { new WorkspaceUpdatedEventArgs(e.GetWorkspaceItem(), WorkspaceAction.Updated) }
             );

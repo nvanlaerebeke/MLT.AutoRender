@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Diagnostics;
+using System.IO;
+using System.Reflection;
 using System.Text;
-using System.Threading;
+using AutoRender.Data;
+using log4net;
 
-namespace CrazyUtils {
+namespace AutoRender.MLT {
     public enum ProcessStatus { 
         Stopped,
         Paused,
@@ -12,7 +15,9 @@ namespace CrazyUtils {
         Done
     }
 
-    public class ProcessRunner {
+    public class Runner {
+        private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+
         public event EventHandler<string> StdOut;
         public event EventHandler<ProcessStatus> StatusChanged;
 
@@ -35,9 +40,10 @@ namespace CrazyUtils {
         }
         public double TimeTaken { get; private set; } = 0;
 
-        public ProcessRunner(string pCommand, string pParameters) {
+        public Runner(string pCommand, string pParameters) {
             Command = pCommand;
             Parameters = pParameters;
+            _objProcess = new Process();
         }
 
         public void Start() {
@@ -66,19 +72,32 @@ namespace CrazyUtils {
         private void StartProcess() {
             Status = ProcessStatus.Running;
             try {
-                _objProcess = new Process() {
-                    StartInfo = new ProcessStartInfo(Command, Parameters) {
-                        UseShellExecute = false,
-                        ErrorDialog = false,
-                        CreateNoWindow = true,
-                        StandardOutputEncoding = Encoding.UTF8,
-                        StandardErrorEncoding = Encoding.UTF8,
-                        RedirectStandardOutput = true,
-                        RedirectStandardError = true,
-                        RedirectStandardInput = true
-                    },
-                    EnableRaisingEvents = true
+                var strBasePath = Path.GetDirectoryName(Settings.MeltPath);
+                var strModulePath = Path.Combine(strBasePath, "modules");
+                var strProfilePath = Path.Combine(strBasePath, "profiles");
+                var strPresetPath = Path.Combine(strBasePath, "presets");
+                var strLibPath = $"{Path.Combine(strBasePath, "framework")}:{Path.Combine(strBasePath, "mlt++")}:{Environment.GetEnvironmentVariable("LD_LIBRARY_PATH")}";
+
+                Environment.SetEnvironmentVariable("MLT_REPOSITORY", strModulePath);
+                Environment.SetEnvironmentVariable("MLT_DATA", strModulePath);
+                Environment.SetEnvironmentVariable("MLT_PROFILES_PATH", strProfilePath);
+                Environment.SetEnvironmentVariable("MLT_PRESETS_PATH", strPresetPath);
+                Environment.SetEnvironmentVariable("LD_LIBRARY_PATH", strLibPath);
+
+                Log.Debug($"Running {Command} {Parameters}");
+
+
+                _objProcess.StartInfo = new ProcessStartInfo(Command, Parameters) {
+                    UseShellExecute = false,
+                    ErrorDialog = false,
+                    CreateNoWindow = true,
+                    StandardOutputEncoding = Encoding.UTF8,
+                    StandardErrorEncoding = Encoding.UTF8,
+                    RedirectStandardOutput = true,
+                    RedirectStandardError = true,
+                    RedirectStandardInput = true
                 };
+                _objProcess.EnableRaisingEvents = true;
 
                 _objProcess.OutputDataReceived += DataReceived;
                 _objProcess.ErrorDataReceived += DataReceived_Error;
@@ -92,9 +111,9 @@ namespace CrazyUtils {
                 try {
                     _objProcess.BeginOutputReadLine();
                 } catch { }
-                try {
+                /*try {
                     _objProcess.PriorityClass = ProcessPriorityClass.BelowNormal;
-                } catch { }
+                } catch { }*/
 
                 _objProcess.WaitForExit();
             } catch (Exception) {
@@ -127,7 +146,7 @@ namespace CrazyUtils {
             }
         }
 
-        void _objProcess_Exited(object sender, EventArgs e) {
+        void _objProcess_Exited(object sender, System.EventArgs e) {
             _objProcess.OutputDataReceived -= DataReceived;
             _objProcess.ErrorDataReceived -= DataReceived;
             _objProcess.Exited -= _objProcess_Exited;

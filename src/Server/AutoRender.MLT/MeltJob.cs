@@ -1,8 +1,13 @@
 ﻿using System;
+using System.Reflection;
+using System.Threading.Tasks;
+using log4net;
 
 namespace AutoRender.MLT {
 
-    internal class MeltJob {
+    public class MeltJob {
+        private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+
         private readonly MeltRunner MeltRunner;
 
         internal event EventHandler ProgressChanged;
@@ -48,6 +53,7 @@ namespace AutoRender.MLT {
             if (Status == JobStatus.Paused) {
                 MeltRunner.Start();
             } else {
+
                 StartTime = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
                 MeltRunner.ProgressChanged += ObjRunner_progressChanged;
                 MeltRunner.StatusChanged += MeltRunner_StatusChanged;
@@ -87,7 +93,15 @@ namespace AutoRender.MLT {
 
 
         private void ObjRunner_progressChanged(object sender, System.EventArgs e) {
+            Log.Info("Job progress updated, forwarding as statusupdated");
             Percentage = (e as EventArgs.ProgressUpdatedEventArgs).Percentage;
+
+            Task.Run(() => {
+                StatusChanged?.Invoke(this, Status);
+                if(StatusChanged == null) {
+                    Log.Error("No one listening.....");
+                }
+            });
         }
 
         public static bool Equals(MeltJob obj1, MeltJob obj2) {

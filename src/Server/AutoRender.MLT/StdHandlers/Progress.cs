@@ -1,9 +1,13 @@
 ﻿using System;
+using System.Reflection;
+using log4net;
 
 namespace AutoRender.MLT.StdHandlers {
     public class Progress : StdHandler {
-        public event EventHandler progressUpdated;
-        public int _intPrevPercentage = 0;
+        private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+
+        public event EventHandler ProgressUpdated;
+        private int _intPrevPercentage = 0;
 
         public override void Handle(string pLine) {
             if (pLine.StartsWith("Current Frame:", StringComparison.CurrentCulture)) {
@@ -33,7 +37,9 @@ namespace AutoRender.MLT.StdHandlers {
                         }
                     }
                     if (intFrame != null && intPercentage != null && _intPrevPercentage != intPercentage) {
-                        progressUpdated?.Invoke(this, new EventArgs.ProgressUpdatedEventArgs((int)intFrame, (int)intPercentage));
+                        _intPrevPercentage = (int)intPercentage;
+                        Log.Info("Progress Changed, notify world");
+                        ProgressUpdated?.Invoke(this, new EventArgs.ProgressUpdatedEventArgs((int)intFrame, (int)intPercentage));
                     }
                 }
             }

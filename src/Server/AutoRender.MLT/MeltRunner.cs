@@ -17,7 +17,7 @@ namespace AutoRender.MLT {
         private readonly MeltConfig Config;
         private readonly List<StdHandlers.StdHandler> Handlers;
         private JobStatus _objStatus = JobStatus.UnScheduled;
-        private ProcessRunner Process;
+        private Runner Process;
 
         public event EventHandler ProgressChanged;
         public event EventHandler<JobStatus> StatusChanged;
@@ -41,12 +41,6 @@ namespace AutoRender.MLT {
         internal MeltRunner(MeltConfig pConfig) {
             Config = pConfig;
             Handlers = MeltHelper.GetHandlers();
-
-            //attach events
-            var objProgress = Handlers.First(h => h.GetType() == typeof(StdHandlers.Progress)) as StdHandlers.Progress;
-            objProgress.progressUpdated += delegate (object sender, System.EventArgs e) {
-                ProgressChanged?.Invoke(sender, e);
-            };
         }
 
         internal void Scheduled() {
@@ -64,6 +58,7 @@ namespace AutoRender.MLT {
                     Process.Start();
                     return;
                 }
+                Status = JobStatus.Running;
 
                 if (File.Exists(Config.TempSourcePath)) { File.Delete(Config.TempSourcePath); }
                 if (File.Exists(Config.TempTargetPath)) { File.Delete(Config.TempTargetPath); }
@@ -82,9 +77,12 @@ namespace AutoRender.MLT {
                 Environment.SetEnvironmentVariable("MLT_PRESETS_PATH", strPresetPath);
                 Environment.SetEnvironmentVariable("LD_LIBRARY_PATH", strLibPath);
 
-                Process = new ProcessRunner(Settings.MeltPath, "-progress " + "\"" + Regex.Replace(Config.ConfigFile, @"(\\+)$", @"$1$1") + "\"");
+                Process = new Runner(Settings.MeltPath, "-progress " + "\"" + Regex.Replace(Config.ConfigFile, @"(\\+)$", @"$1$1") + "\"");
                 Process.StatusChanged += _objProcess_StatusChanged;
                 Process.StdOut += Process_StdOut;
+
+                var objProgress = Handlers.First(h => h.GetType() == typeof(StdHandlers.Progress)) as StdHandlers.Progress;
+                objProgress.ProgressUpdated += ObjProgress_ProgressUpdated;
                 Process.Start();
             });
         }
@@ -129,7 +127,7 @@ namespace AutoRender.MLT {
 
         void Process_StdOut(object sender, string e) {
             if (!String.IsNullOrEmpty(e)) {
-                Log.Info("[" + DateTime.Now.ToShortTimeString() + "] " + e.Trim());
+                Log.Info(e.Trim());
                 Handlers.ForEach(h => h.Handle(e));
             }
         }
@@ -149,9 +147,18 @@ namespace AutoRender.MLT {
             }
         }
 
+        void ObjProgress_ProgressUpdated(object sender, System.EventArgs e) {
+            Log.Info("Progress was changed");
+            ProgressChanged?.Invoke(sender, e);
+        }
+
+
         private void Cleanup() {
             Process.StatusChanged -= _objProcess_StatusChanged;
             Process.StdOut -= Process_StdOut;
+
+            var objProgress = Handlers.First(h => h.GetType() == typeof(StdHandlers.Progress)) as StdHandlers.Progress;
+            objProgress.ProgressUpdated -= ObjProgress_ProgressUpdated;
 
             // -- clean up up env
             if (File.Exists(Config.TempSourcePath)) { File.Delete(Config.TempSourcePath); }

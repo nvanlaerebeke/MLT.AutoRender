@@ -28,7 +28,7 @@ namespace AutoRender.Subscription.Messaging.Handlers {
             _dicClients.Select(c => c.Value).ToList().ForEach((c) => {
                 if (pSender == null || !c.ID.Equals(pSender.ID)) {
                     try {
-                        c.Request<ACKResponse>(pNotifyMessage, (r) => { });
+                        c.Notify(pNotifyMessage);
                     } catch(Exception ex) {
                         Log.Error($"Failed to send SendWorkspaceUpdatedRequest to {c.ID}: {ex.Message}");
                     }

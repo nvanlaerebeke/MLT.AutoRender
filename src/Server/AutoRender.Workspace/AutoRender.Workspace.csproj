@@ -33,6 +33,9 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="log4net">
+      <HintPath>..\..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EqualExtension.cs" />
@@ -44,6 +47,7 @@
     <Compile Include="WorkspaceItem.cs" />
     <Compile Include="Workspace.cs" />
     <Compile Include="Monitor\WorkspaceWatcher.cs" />
+    <Compile Include="ILog.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
@@ -61,6 +65,9 @@
       <Project>{877cefbc-c28a-4326-bd90-3f5950bb53ed}</Project>
       <Name>AutoRender.Video</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

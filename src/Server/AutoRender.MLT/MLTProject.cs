@@ -1,7 +1,9 @@
 ﻿using AutoRender.Data;
 using AutoRender.Video;
+using log4net;
 using System;
 using System.IO;
+using System.Reflection;
 
 namespace AutoRender.MLT {
 
@@ -11,6 +13,7 @@ namespace AutoRender.MLT {
     ///       Also this class does too much - should only describe the project
     /// </summary>
     public class MLTProject {
+        private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
         public event EventHandler<ProjectStatus> ProjectChanged;
 
@@ -19,7 +22,7 @@ namespace AutoRender.MLT {
         private VideoInfo _objSourceInfo;
         public VideoInfoCache VideoInfoCache;
 
-        private MeltJob Job { get; set; }
+        public MeltJob Job { get; private set; }
 
         #region Properties
 
@@ -103,6 +106,7 @@ namespace AutoRender.MLT {
             Job = new MeltJob(this); // -- ToDo: pass null or the config for the job, not the project itself
             Job.ProgressChanged += (object sender, System.EventArgs e) => { ProjectChanged?.Invoke(sender, Status); };
             Job.StatusChanged += (object sender, JobStatus e) => {
+                Log.Info("Project was changed - notify everyone");
                 switch (e) {
                     case JobStatus.Failed:
                     case JobStatus.Success:
@@ -127,6 +131,7 @@ namespace AutoRender.MLT {
         }
 
         public void Schedule() {
+            //MeltJobScheduler.Schedule(Job);
             if (Status == ProjectStatus.Paused) {
                 MeltJobScheduler.GetScheduler().Schedule(Job);
             } else if (!TargetExists && SourceExists && Status != ProjectStatus.Busy) {

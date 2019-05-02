@@ -22,12 +22,12 @@ namespace AutoRender.Server {
         }
 
         private void Workspace_Updated(object sender, List<WorkspaceUpdatedEventArgs> e) {
-            Task.Run(() => {
+            //Task.Run(() => {
                 Log.Debug($"Workspace was updated, notifying clients...");
                 MessagingFactory.Provider.GetSubscriptionHandler<WorkspaceUpdatedHandler>().NotifyAll(
                     new Subscription.Messaging.Request.SendWorkspaceUpdatedRequest(e)
                 );
-            });
+            //});
         }
     }
 }
