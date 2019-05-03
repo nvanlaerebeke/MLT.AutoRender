@@ -15,7 +15,7 @@ Summary: melt AutoRender server
 Group: CrazySoftware
 License: MIT
 URL: crazytje.com		
-Source0: AutoRender-docker.tgz
+Source0: AutoRender-run.tgz
 AutoReqProv: no
 
 %description
@@ -31,7 +31,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %install
 install -d "$RPM_BUILD_ROOT"/usr/lib/AutoRender/Docker
-cp AutoRender-*-docker*.rpm "$RPM_BUILD_ROOT"/usr/lib/AutoRender/Docker
+cp AutoRender-*.rpm "$RPM_BUILD_ROOT"/usr/lib/AutoRender/Docker
 cp Makefile "$RPM_BUILD_ROOT"/usr/lib/AutoRender/Docker/Makefile
 cp Dockerfile "$RPM_BUILD_ROOT"/usr/lib/AutoRender/Docker/Makefile
 
@@ -44,4 +44,3 @@ cp Dockerfile "$RPM_BUILD_ROOT"/usr/lib/AutoRender/Docker/Makefile
 rm -rf $RPM_BUILD_ROOT
 
 %changelog
-- initial rpm release

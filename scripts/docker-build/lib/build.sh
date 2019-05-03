@@ -10,7 +10,7 @@ do
   sleep 10
 done
 
-cd ${SELF_DIR}/build && make dist 
+cd ${SELF_DIR}/build && make VERSION=$VERSION REVISION=$REVISION run
 
 cd ~/rpmbuild/
 rpmbuild -ba SPECS/build.spec --define="_version $VERSION" --define="_revision $REVISION"

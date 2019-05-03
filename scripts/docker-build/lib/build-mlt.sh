@@ -23,7 +23,7 @@ cp -R $SRC/mlt/presets $BIN
 
 mkdir $BIN/framework/ $BIN/mlt++/
 cp $SRC/mlt/src/framework/libmlt* $BIN/framework
-cp $SRC/mlt/src/mlt++/libmlt/* $BIN/mlt++
+cp $SRC/mlt/src/mlt++/libmlt* $BIN/mlt++
 
 #copy ffmpeg resources
 cp $SRC/ffmpeg/ffmpeg $BIN

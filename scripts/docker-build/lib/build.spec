@@ -32,21 +32,25 @@ rm -rf $RPM_BUILD_ROOT
 %build
 
 %install
-install -d "$RPM_BUILD_ROOT"/usr/lib/AutoRender/Server
+install -d "$RPM_BUILD_ROOT"/usr/lib64/AutoRender/Server
+install -d "$RPM_BUILD_ROOT"/usr/bin/
 install -d "$RPM_BUILD_ROOT"/etc/systemd/system/
 
-chmod +x build/bin/*.sh
-cp -r build/* "$RPM_BUILD_ROOT"/usr/lib/AutoRender/Server/
-cp build/lib/autorender-server.service "$RPM_BUILD_ROOT"/etc/systemd/system/
+cp -R bin "$RPM_BUILD_ROOT"/usr/lib64/AutoRender/Server/
+cp autorender "$RPM_BUILD_ROOT"/usr/bin/
+cp autorender.service "$RPM_BUILD_ROOT"/etc/systemd/system/
+
+chmod +x "$RPM_BUILD_ROOT"/usr/bin/autorender
 
 %files
-/usr/lib/AutoRender/Server/
-/etc/systemd/system/autorender-server.service
+/usr/bin/autorender
+/usr/lib64/AutoRender/Server/
+/etc/systemd/system/autorender.service
 
 %post
 systemctl daemon-reload
-systemctl enable autorender-server
-systemctl restart autorender-server
+systemctl enable autorender
+systemctl restart autorender
 
 %clean
 rm -rf $RPM_BUILD_ROOT

@@ -11,7 +11,6 @@ clean:
 
 env:
 	mkdir -p $(BUILDDIR)/rpmbuild/{BUILD,RPMS,SOURCES,SPECS,SRPMS}
-	/bin/cp -f $(ROOT)/scripts/docker-build/lib/build.spec $(BUILDDIR)/rpmbuild/SPECS/
 
 docker:
 	echo "Centos 7 RPM"

@@ -1,0 +1,10 @@
+[Unit]
+Description=AutoRender Server Agent
+After=getty@tty1.service getty@tty2.service getty@rrt3.service getty@tty4.service getty@tty5.service getty@tty6.service
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/autorender
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,25 @@
+#!/bin/bash
+
+NAME=AutoRender
+PIDFILE=/var/run/autorender-server.pid
+BIN=/usr/lib64/AutoRender/Server/
+MONO=`which mono`
+
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+NC='\033[0m'
+
+if [ -f $PIDFILE ]; then
+    PID=`cat $PIDFILE`
+    COUNT=`ps --no-headers --pid $PID | wc -l`
+    if [ $COUNT == 0 ]; then
+        rm -f $PIDFILE
+    fi
+fi
+if [ ! -f $PIDFILE ]; then
+    echo -e "${GREEN}Starting $NAME...${NC}"
+    cd $BIN && $MONO AutoRender.Service.exe | tee /var/log/autorender-server.log 2>&1
+else
+    echo -e "${RED}Service already running${NC}" 2>&1
+    exit 1
+fi

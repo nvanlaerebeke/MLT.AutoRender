@@ -1,6 +1,6 @@
 PROJECT:="AutoRender"
 ROOT:=../../
-RPMBUILDDIR:=$(shell ../../rpmbuld)
+RPMBUILDDIR:=../../rpmbuild
 
 .PHONY: clean env docker
 
@@ -11,18 +11,10 @@ env:
 	cp "$(ROOT)/scripts/docker-run/lib/Makefile" $(RPMBUILDDIR)
 
 tgz:
-	cd "$(RPMBUILDDIR)" && tar -ccvpf AutoRender-docker.tgz .
+	cd "$(RPMBUILDDIR)" && tar -ccvpf AutoRender-run.tgz --exclude=*.tgz .
 
 rpmbuild:
 	cp "$(RPMBUILDDIR)/AutoRender-run.tgz" ~/rpmbuild/SOURCES
 	cp "$(ROOT)/scripts/docker-run/lib/run.spec" ~/rpmbuild/SPECS
 
 	cd ~/rpmbuild && rpmbuild -ba SPECS/run.spec --define="_version $(VERSION)" --define="_revision $(REVISION)"
-
-run:
-	echo "Centos 7 RPM"
-	docker build -t $(PROJECT):el7-$(VERSION) -f Dockerfile .
-	docker run \
-		--rm \
-		--name $(PROJECT)-$(VERSION) \
-		$(PROJECT)-$(VERSION)
