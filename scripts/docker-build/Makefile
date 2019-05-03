@@ -27,3 +27,6 @@ docker:
 
 connect:
 	docker exec -ti `docker ps | grep rpmbuild:el7 | awk '{print $$1}'` /bin/bash
+
+stop:
+	docker stop `docker ps | grep rpmbuild:el7 | awk '{print $$1}'`
