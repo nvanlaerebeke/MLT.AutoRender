@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reflection;
+using System.Threading;
 using System.Threading.Tasks;
 using log4net;
 
@@ -9,6 +10,7 @@ namespace AutoRender.MLT {
         private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
         private readonly MeltRunner MeltRunner;
+        private readonly ManualResetEvent Wait = new ManualResetEvent(false);
 
         internal event EventHandler ProgressChanged;
         internal event EventHandler<JobStatus> StatusChanged;
@@ -47,18 +49,20 @@ namespace AutoRender.MLT {
             MeltRunner = new MeltRunner(Project.Config);
         }
 
-        internal void Start() {
-            if(Status == JobStatus.Running) { return; } // -- already running, ignore
+        internal async Task<bool> Start() {
+            return await Task.Run(() => { 
+                if (Status == JobStatus.Running) { return true; } // -- already running, ignore
 
-            if (Status == JobStatus.Paused) {
-                MeltRunner.Start();
-            } else {
-
-                StartTime = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
-                MeltRunner.ProgressChanged += ObjRunner_progressChanged;
-                MeltRunner.StatusChanged += MeltRunner_StatusChanged;
-                MeltRunner.Start();
-            }
+                if (Status == JobStatus.Paused) {
+                    MeltRunner.Start();
+                } else {
+                    StartTime = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+                    MeltRunner.ProgressChanged += ObjRunner_progressChanged;
+                    MeltRunner.StatusChanged += MeltRunner_StatusChanged;
+                    MeltRunner.Start();
+                }
+                return Wait.WaitOne();
+            });
         }
 
         internal void Stop() {
@@ -81,11 +85,14 @@ namespace AutoRender.MLT {
                     MeltRunner.ProgressChanged -= ObjRunner_progressChanged;
                     Percentage = 0;
                     StartTime = 0;
+                    Wait.Set();
                     break;
                 case JobStatus.Paused:
-                case JobStatus.Running:
                 case JobStatus.Scheduled:
                 case JobStatus.UnScheduled:
+                    Wait.Set();
+                    break;
+                case JobStatus.Running:
                     break;
             }
             StatusChanged?.Invoke(this, e);

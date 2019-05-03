@@ -18,9 +18,6 @@ URL: crazytje.com
 Source0: AutoRender.tgz
 AutoReqProv: no
 
-BuildRequires: mono-complete
-BuildRequires: nuget
-
 Requires: mono-core
 
 %description
@@ -33,7 +30,6 @@ rm -rf $RPM_BUILD_ROOT
 %setup -c
 
 %build
-make ROOT=$RPM_BUILD_ROOT build
 
 %install
 install -d "$RPM_BUILD_ROOT"/usr/lib/AutoRender/Server

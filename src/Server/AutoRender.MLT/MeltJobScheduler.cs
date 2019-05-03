@@ -132,8 +132,6 @@ namespace AutoRender.MLT {
         }
 
         private void StartJob(MeltJob pJob) {
-            ManualResetEvent objWait = new ManualResetEvent(false);
-
             pJob.StatusChanged += (sender, e) => {
                 switch (e) {
                     case JobStatus.Failed:
@@ -141,14 +139,12 @@ namespace AutoRender.MLT {
                         if (Running.ContainsKey(pJob.Project.ID.ToString())) {
                             Running.TryRemove(pJob.Project.ID.ToString(), out _);
                         }
-                        objWait.Set();
                         break;
                     case JobStatus.Paused:
                         if (Running.ContainsKey(pJob.Project.ID.ToString())) {
                             Running.TryRemove(pJob.Project.ID.ToString(), out _);
                         }
                         Paused.TryAdd(pJob.Project.ID.ToString(), pJob);
-                        objWait.Set();
                         break;
                     case JobStatus.UnScheduled:
                         if (Paused.ContainsKey(pJob.Project.ID.ToString())) {
@@ -157,16 +153,13 @@ namespace AutoRender.MLT {
                         if (Running.ContainsKey(pJob.Project.ID.ToString())) {
                             Running.TryRemove(pJob.Project.ID.ToString(), out _);
                         }
-                        objWait.Set();
                         break;
                     case JobStatus.Running:
                     case JobStatus.Scheduled:
                         break;
                 }
             };
-
-            pJob.Start();
-            objWait.WaitOne();
+            pJob.Start().Wait();
         }
     }
 }
