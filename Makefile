@@ -59,7 +59,6 @@ distsource: dist
 
 dist: clean app bin
 	install -d "$(RPMBUILDDIR)"
-	cp RPMS/*.rpm "$(RPMBUILDDIR)"
 
 app: submodules
 	nuget restore src/Server.sln

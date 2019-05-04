@@ -17,4 +17,8 @@ COPY "$SOURCE" /tmp/
 RUN rpm -ivh /tmp/*.rpm
 
 #run app
-ENTRYPOINT ["/usr/lib/AutoRender/Server/bin/startupscript.sh", "start"]
+#ENTRYPOINT ["/usr/lib/AutoRender/Server/bin/startupscript.sh", "start"]
+
+
+COPY run.sh /
+ENTRYPOINT [ "/run.sh" ]

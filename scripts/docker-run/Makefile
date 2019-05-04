@@ -7,9 +7,10 @@ RPMBUILDDIR:=../../rpmbuild
 rpm: env tgz rpmbuild
 
 env:
-	cp "$(ROOT)/scripts/docker-run/lib/Dockerfile" $(RPMBUILDDIR)
-	cp "$(ROOT)/scripts/docker-run/lib/Makefile" $(RPMBUILDDIR)
-
+	cp "$(ROOT)/scripts/docker-run/lib/Dockerfile" "$(RPMBUILDDIR)"
+	cp "$(ROOT)/scripts/docker-run/lib/Makefile" "$(RPMBUILDDIR)"
+	cp "$(ROOT)/VERSION" "$(RPMBUILDDIR)"
+	
 tgz:
 	cd "$(RPMBUILDDIR)" && tar -ccvpf AutoRender-run.tgz --exclude=*.tgz .
 
