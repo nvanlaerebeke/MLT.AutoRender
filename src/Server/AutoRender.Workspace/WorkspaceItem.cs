@@ -73,7 +73,9 @@ namespace AutoRender.Workspace {
                 New = null; return true;
             }
             if (New != null && !New.Equals(pInfo)) {
-                New = pInfo; return true;
+                New = pInfo;
+                Project.SourcePath = pInfo.Path;
+                return true;
             }
             return false;
         }

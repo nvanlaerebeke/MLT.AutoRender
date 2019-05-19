@@ -2,8 +2,8 @@
 
 NAME=AutoRender
 PIDFILE=/var/run/autorender-server.pid
-BIN=/usr/lib64/AutoRender/Server/
-MONO=`which mono`
+BIN=/usr/lib64/AutoRender/Server/bin/
+MONO=/usr/bin/mono
 
 RED='\033[0;31m'
 GREEN='\033[0;32m'

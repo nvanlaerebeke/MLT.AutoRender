@@ -26,7 +26,7 @@ namespace AutoRender.Data {
         public static string MeltPath {
             get {
                 if (Environment.OSVersion.Platform == PlatformID.Unix) {
-                    return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "bin", "melt");
+                    return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "melt");
                 } else {
                     return ConfigManager.Get<string>(Section.Global.ToString(), "MeltPath", Path.Combine(AppPath, "qmelt.exe"));
                 }
@@ -36,7 +36,7 @@ namespace AutoRender.Data {
         public static string FfprobePath {
             get {
                 if (Environment.OSVersion.Platform == PlatformID.Unix) {
-                    return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "bin", "ffprobe");
+                    return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "ffprobe");
                 } else {
                     return ConfigManager.Get<string>(Section.Global.ToString(), "FfprobePath", Path.Combine(AppPath), "ffprobe.exe");
                 }
@@ -46,7 +46,7 @@ namespace AutoRender.Data {
         public static string FfmpegPath {
             get {
                 if (Environment.OSVersion.Platform == PlatformID.Unix) {
-                    return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "bin", "ffmpeg");
+                    return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "ffmpeg");
                 } else {
                     return ConfigManager.Get<string>(Section.Global.ToString(), "FfmpegPath", Path.Combine(AppPath, @"ffmpeg.exe"));
                 }

@@ -15,7 +15,7 @@ namespace AutoRender.MLT {
     public class MLTProject {
         private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
-        public event EventHandler<ProjectStatus> ProjectChanged;
+        public event EventHandler<MLTProject> ProjectChanged;
 
         private FileInfo _objProjectFile;
         private VideoInfo _objTargetInfo;
@@ -37,6 +37,7 @@ namespace AutoRender.MLT {
                 if (Config.SourceFile != value) {
                     Config.SourceFile = value;
                     Reload();
+                    ProjectChanged?.Invoke(this, this);
                 }
             }
         }
@@ -58,7 +59,16 @@ namespace AutoRender.MLT {
         public bool SourceExists { get { return (File.Exists(Config.SourceFile)); } }
 
         //ToDo make changing the name(consumer) in the config possible
-        public string TargetName { get { return Path.GetFileName(Config.TargetPath); } set { Config.SetTargetName(value); Reload(); } }
+        public string TargetName { 
+            get { 
+                return Path.GetFileName(Config.TargetPath); 
+            } 
+            set { 
+                Config.SetTargetName(value); 
+                Reload();
+                ProjectChanged?.Invoke(this, this);
+            } 
+        }
 
         public double TimeTaken { get { return Job.TimeTaken; } }
         public long StartTime { get { return Job.StartTime; } }
@@ -104,7 +114,7 @@ namespace AutoRender.MLT {
             if (SourceExists) { _objSourceInfo = VideoInfoCache.Get(SourcePath); }
 
             Job = new MeltJob(this); // -- ToDo: pass null or the config for the job, not the project itself
-            Job.ProgressChanged += (object sender, System.EventArgs e) => { ProjectChanged?.Invoke(sender, Status); };
+            Job.ProgressChanged += (object sender, System.EventArgs e) => { ProjectChanged?.Invoke(sender, this); };
             Job.StatusChanged += (object sender, JobStatus e) => {
                 Log.Info("Project was changed - notify everyone");
                 switch (e) {
@@ -118,7 +128,7 @@ namespace AutoRender.MLT {
                     case JobStatus.UnScheduled:
                         break;
                 }
-                ProjectChanged?.Invoke(sender, Status);
+                ProjectChanged?.Invoke(sender, this);
             };
         }
 
@@ -188,7 +198,7 @@ namespace AutoRender.MLT {
                 SourceIsValid = SourceIsValid,
                 SourceName = Path.GetFileName(SourcePath),
                 StartTime = StartTime,
-                Status = Status,
+                Status = Status.ToString(),
                 TargetExists = TargetExists,
                 TargetIsValid = TargetIsValid,
                 TargetName = TargetName,

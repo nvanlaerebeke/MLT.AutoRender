@@ -2,6 +2,7 @@
 using CrazyUtils;
 using log4net;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
@@ -20,16 +21,17 @@ namespace AutoRender.Video {
         private ProcessRunner Process;
         private readonly ManualResetEvent ReadBlocker = new ManualResetEvent(false);
 
-        private Dictionary<int, Dictionary<string, string>> _dicSettings = new Dictionary<int, Dictionary<string, string>>();
+        private ConcurrentDictionary<int, ConcurrentDictionary<string, string>> _dicSettings = new ConcurrentDictionary<int, ConcurrentDictionary<string, string>>();
 
-        public Dictionary<string, string> VideoSettings { get; private set; } = new Dictionary<string, string>();
-        public Dictionary<string, string> AudioSettings { get; private set; } = new Dictionary<string, string>();
+        public ConcurrentDictionary<string, string> VideoSettings { get; private set; } = new ConcurrentDictionary<string, string>();
+        public ConcurrentDictionary<string, string> AudioSettings { get; private set; } = new ConcurrentDictionary<string, string>();
 
         private int _currIndex = -1;
 
         public VideoInfoReader(string pPath) {
             Path = pPath;
             Process = new ProcessRunner(Settings.FfprobePath, "-show_streams -i \"" + Path + "\"");
+            Log.Info($"Running: {Settings.FfmpegPath} -show_streams -i \"{Path}\"");
         }
 
         public Task<VideoInfo> Read() {
@@ -95,7 +97,7 @@ namespace AutoRender.Video {
                     }
                     if (_currIndex != -1) {
                         if (!_dicSettings.ContainsKey(_currIndex)) {
-                            _dicSettings.Add(_currIndex, new Dictionary<string, string>());
+                            _dicSettings.TryAdd(_currIndex, new ConcurrentDictionary<string, string>());
                         }
                         _dicSettings[_currIndex][arrParts[0]] = arrParts[1];
                     }
@@ -104,7 +106,7 @@ namespace AutoRender.Video {
         }
 
         private void ProcessSettings() {
-            foreach (KeyValuePair<int, Dictionary<string, string>> dicSettings in _dicSettings) {
+            foreach (KeyValuePair<int, ConcurrentDictionary<string, string>> dicSettings in _dicSettings) {
                 if (dicSettings.Value.ContainsKey("codec_name")) {
                     switch (dicSettings.Value["codec_name"]) {
                         case "h264":
@@ -121,7 +123,7 @@ namespace AutoRender.Video {
 
         private TimeSpan GetDuration() {
             if (VideoSettings.ContainsKey("duration")) {
-                string[] arrParts = VideoSettings["duration"].Split(',', '.');
+                var arrParts = VideoSettings["duration"].Split(',', '.');
                 return new TimeSpan(0, 0, 0, int.Parse(arrParts[0]), int.Parse(arrParts[1].Substring(0, 3)));
             }
             return new TimeSpan();

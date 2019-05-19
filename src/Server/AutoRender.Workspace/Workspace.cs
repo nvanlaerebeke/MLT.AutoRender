@@ -68,17 +68,21 @@ namespace AutoRender.Workspace {
             CreateWorkspaceItems(lstProjects, lstNew, lstFinal);
 
             //let everyone know this was updated
-            List<WorkspaceUpdatedEventArgs> lstUpdates = new List<WorkspaceUpdatedEventArgs>();
+            var lstUpdates = new List<WorkspaceUpdatedEventArgs>();
             foreach(var objKvp in WorkspaceItems) { 
                 lstUpdates.Add(GetUpdateEvent(WorkspaceAction.New, objKvp.Value));
             };
             Updated?.Invoke(this, lstUpdates);
         }
 
+        public VideoInfo GetSourceInfo(string pName) {
+            return VideoCache.Get(Path.Combine(Settings.NewDirectory, pName));
+        }
+
         private void CreateWorkspaceItems(List<FileInfo> pProjects, List<FileInfo> pNew, List<FileInfo> pFinal) {
             //Do the projects first as they can reference a file that isn't the same name as the project
             foreach (FileInfo objP in pProjects) {
-                MLTProject objProject = new MLTProject(objP.FullName, VideoCache);
+                var objProject = new MLTProject(objP.FullName, VideoCache);
                 FileInfo objNewFile = pNew.FirstOrDefault(f => f.Name == Path.GetFileName(objProject.SourcePath));
                 FileInfo objFinalFile = pFinal.FirstOrDefault(f => f.Name == objProject.TargetName);
 
@@ -120,7 +124,7 @@ namespace AutoRender.Workspace {
         }
 
         private void FinalUpdated(List<FSEventInfo> pUpdates) {
-            List<WorkspaceUpdatedEventArgs> lstUpdates = new List<WorkspaceUpdatedEventArgs>();
+            var lstUpdates = new List<WorkspaceUpdatedEventArgs>();
             pUpdates.ForEach(u => {
                 switch (u.Args.ChangeType) {
                     case WatcherChangeTypes.Changed:
@@ -179,7 +183,7 @@ namespace AutoRender.Workspace {
         }
 
         private void NewUpdated(List<FSEventInfo> pUpdates) {
-            List<WorkspaceUpdatedEventArgs> lstUpdates = new List<WorkspaceUpdatedEventArgs>();
+            var lstUpdates = new List<WorkspaceUpdatedEventArgs>();
             pUpdates.ForEach(u => {
                 switch (u.Args.ChangeType) {
                     case WatcherChangeTypes.Changed:
@@ -231,7 +235,7 @@ namespace AutoRender.Workspace {
         }
 
         private void ProjectsUpdated(List<FSEventInfo> pUpdates) {
-            List<WorkspaceUpdatedEventArgs> lstUpdates = new List<WorkspaceUpdatedEventArgs>();
+            var lstUpdates = new List<WorkspaceUpdatedEventArgs>();
             pUpdates.ForEach(u => {
                 var objWSItems = WorkspaceItems.Where(i => i.Value.Project != null && i.Value.Project.FullPath.Equals(u.Args.FullPath)).ToList();
                 switch (u.Args.ChangeType) {
@@ -302,24 +306,10 @@ namespace AutoRender.Workspace {
         }
 
         void WorkspaceItemUpdated(object sender, WorkspaceItem e) {
-            /*switch (e.Project.Status) {
-                case ProjectStatus.Error:
-                case ProjectStatus.Finished:
-                case ProjectStatus.SourceInvalid:
-                case ProjectStatus.SourceMissing:
-                case ProjectStatus.TargetExists:
-                case ProjectStatus.TargetInvalid:
-                    if (e.Project.TargetExists) {
-                        var objWsItem = WorkspaceItems.Where(i => i.Value.Project != null && i.Value.Project.ID.ToString().Equals(e.Project.ID.ToString())).FirstOrDefault();
-
-                    }
-                    break;
-            }*/
             Log.Info("Workspace was updated, sending updated workspaceitem");
             Updated?.Invoke(this, new List<WorkspaceUpdatedEventArgs>()
                 { new WorkspaceUpdatedEventArgs(e.GetWorkspaceItem(), WorkspaceAction.Updated) }
             );
         }
-
     }
 }

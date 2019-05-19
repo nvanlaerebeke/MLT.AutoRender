@@ -11,7 +11,7 @@ namespace AutoRender.Server {
         }
 
         public void Start() { 
-            new Mitto.Server().Start(new Mitto.Connection.Websocket.ServerParams(IPAddress.Any, 6666), (c) => {
+            new Mitto.Server().Start(new Mitto.Connection.Websocket.ServerParams(IPAddress.Any, 8080), (c) => {
                 Log.Debug($"Client Connected");
             });
         }

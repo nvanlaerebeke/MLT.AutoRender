@@ -8,7 +8,7 @@ mkdir -p $SRC
 mkdir -p $BIN
 
 cd $SRC
-git clone https://github.com/mltframework/mlt.git && cd mlt && git checkout tags/v6.14.0 
+git clone https://github.com/mltframework/mlt.git && cd mlt && git checkout tags/v6.16.0 
 cd $SRC
 git clone https://git.ffmpeg.org/ffmpeg.git && cd ffmpeg && git checkout n4.1.3 
 

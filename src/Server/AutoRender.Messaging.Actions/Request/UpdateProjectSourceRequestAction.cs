@@ -21,11 +21,14 @@ namespace AutoRender.Messaging.Action.Request {
         public override GetStatusResponse Start() {
             var objWsItem = WorkspaceFactory.Get().Get(Request.ItemID);
             if (objWsItem != null && objWsItem.Project != null) {
-                string strNewPath = Path.Combine(Settings.NewDirectory, Request.ProjectSourceName);
+                if (objWsItem.UpdateNew(WorkspaceFactory.Get().GetSourceInfo(Request.ProjectSourceName))) {
+                    return new GetStatusResponse(Request, new List<Data.WorkspaceItem>() { objWsItem.GetWorkspaceItem() });
+                }
+                /*var strNewPath = Path.Combine(Settings.NewDirectory, Request.ProjectSourceName);
                 if (File.Exists(strNewPath)) {
                     objWsItem.Project.SourcePath = strNewPath;
                     return new GetStatusResponse(Request, new List<Data.WorkspaceItem>() { objWsItem.GetWorkspaceItem() });
-                }
+                }*/
                 return new GetStatusResponse(Request, new ResponseStatus(ResponseState.Error, "File not found"));
             }
             return new GetStatusResponse(Request, new ResponseStatus(ResponseState.Error, "Project not found"));

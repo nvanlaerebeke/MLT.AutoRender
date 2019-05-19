@@ -17,6 +17,18 @@ namespace AutoRender.Server {
         private readonly WebSocketServer Server;
 
         public AutoRenderServer() {
+            var strBasePath = Path.GetDirectoryName(Settings.MeltPath);
+            var strModulePath = Path.Combine(strBasePath, "modules");
+            var strProfilePath = Path.Combine(strBasePath, "profiles");
+            var strPresetPath = Path.Combine(strBasePath, "presets");
+            var strLibPath = $"{Path.Combine(strBasePath, "framework")}:{Path.Combine(strBasePath, "mlt++")}:{Environment.GetEnvironmentVariable("LD_LIBRARY_PATH")}";
+
+            Environment.SetEnvironmentVariable("MLT_REPOSITORY", strModulePath);
+            Environment.SetEnvironmentVariable("MLT_DATA", strModulePath);
+            Environment.SetEnvironmentVariable("MLT_PROFILES_PATH", strProfilePath);
+            Environment.SetEnvironmentVariable("MLT_PRESETS_PATH", strPresetPath);
+            Environment.SetEnvironmentVariable("LD_LIBRARY_PATH", strLibPath);
+
             Config.Initialize(
                 new Config.ConfigParams() {
                     Logger = new MittoLogger(LogManager.GetLogger(typeof(Mitto.Server))),
