@@ -10,8 +10,12 @@ run:
 	docker build --build-arg "SOURCE=$(SOURCE)" -t "$(PROJECT_LOWER)-$(VERSION)" -f Dockerfile .
 	docker run \
 		--rm \
+		-v /mnt/nas/Video:/mnt/nas/Video \
 		--name $(PROJECT_LOWER)-$(VERSION) \
 		$(PROJECT_LOWER)-$(VERSION)
 
 connect:
 	docker exec -ti `docker ps | grep $(PROJECT_LOWER)-$(VERSION) | awk '{print $$1}'` /bin/bash
+
+stop:
+	docker stop `docker ps | grep $(PROJECT_LOWER)-$(VERSION) | awk '{print $$1}'`

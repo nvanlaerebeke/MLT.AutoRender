@@ -9,6 +9,7 @@ rpm: env tgz rpmbuild
 env:
 	cp "$(ROOT)/scripts/docker-run/lib/Dockerfile" "$(RPMBUILDDIR)"
 	cp "$(ROOT)/scripts/docker-run/lib/Makefile" "$(RPMBUILDDIR)"
+	cp "$(ROOT)/scripts/docker-run/lib/run.sh" "$(RPMBUILDDIR)"
 	cp "$(ROOT)/VERSION" "$(RPMBUILDDIR)"
 	
 tgz:

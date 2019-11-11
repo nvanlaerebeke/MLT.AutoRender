@@ -34,6 +34,7 @@ install -d "$RPM_BUILD_ROOT"/usr/lib64/AutoRender/Docker
 cp AutoRender-*.rpm "$RPM_BUILD_ROOT"/usr/lib64/AutoRender/Docker
 cp Makefile "$RPM_BUILD_ROOT"/usr/lib64/AutoRender/Docker/Makefile
 cp Dockerfile "$RPM_BUILD_ROOT"/usr/lib64/AutoRender/Docker/Dockerfile
+cp run.sh "$RPM_BUILD_ROOT"/usr/lib64/AutoRender/Docker/run.sh
 cp VERSION "$RPM_BUILD_ROOT"/usr/lib64/AutoRender/Docker/VERSION
 
 %files

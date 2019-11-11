@@ -16,6 +16,7 @@ namespace AutoRender.Video {
 
         public VideoValidator(string pPath) {
             Process = new ProcessRunner(Settings.FfmpegPath, "-i \"" + pPath + "\"");
+            Log.Info($"Running: {Settings.FfmpegPath} -show_streams -i \"{pPath}\"");
         }
 
         public Task<bool> IsValid() {

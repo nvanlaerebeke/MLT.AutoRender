@@ -9,7 +9,7 @@ namespace AutoRender.Data {
         public bool SourceIsValid { get; set; }
         public string SourceName { get; set; }
         public long StartTime { get; set; }
-        public ProjectStatus Status { get; set; }
+        public string Status { get; set; }
         public bool TargetExists { get; set; }
         public bool TargetIsValid { get; set; }
         public string TargetName { get; set; }

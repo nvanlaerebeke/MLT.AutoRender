@@ -22,6 +22,7 @@ rpm: clean tgz
 	/bin/cp -f "$(BUILDDIR)"/rpmbuild/RPMS/*.rpm "$(DISTDIR)"
 
 clean:
+	rm -rf "$(RPMBUILDDIR)"
 	rm -rf "$(BUILDDIR)"
 	rm -rf "$(DISTDIR)"
 	rm -rf "$(ROOT)"/src/*/bin

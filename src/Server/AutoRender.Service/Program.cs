@@ -15,6 +15,7 @@ namespace AutoRender.Service {
             if (Environment.OSVersion.Platform == PlatformID.Unix) {
                 Environment.SetEnvironmentVariable("MONO_REGISTRY_PATH", Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "registry"));
             }
+
             Logger.init(
                 log4net.Core.Level.Debug,
                 Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "AutoRender.log")
