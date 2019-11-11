@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Diagnostics;
-using System.IO;
 using System.Reflection;
 using System.Text;
-using AutoRender.Data;
 using log4net;
 
 namespace AutoRender.MLT {
-    public enum ProcessStatus { 
+
+    public enum ProcessStatus {
         Stopped,
         Paused,
         Running,
@@ -19,6 +18,7 @@ namespace AutoRender.MLT {
         private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
         public event EventHandler<string> StdOut;
+
         public event EventHandler<ProcessStatus> StatusChanged;
 
         private readonly string Command;
@@ -38,6 +38,7 @@ namespace AutoRender.MLT {
                 }
             }
         }
+
         public double TimeTaken { get; private set; } = 0;
 
         public Runner(string pCommand, string pParameters) {
@@ -72,7 +73,7 @@ namespace AutoRender.MLT {
         private void StartProcess() {
             Status = ProcessStatus.Running;
             try {
-                var strBasePath = Path.GetDirectoryName(Settings.MeltPath);
+                /*var strBasePath = Path.GetDirectoryName(Settings.MeltPath);
                 var strModulePath = Path.Combine(strBasePath, "modules");
                 var strProfilePath = Path.Combine(strBasePath, "profiles");
                 var strPresetPath = Path.Combine(strBasePath, "presets");
@@ -82,12 +83,11 @@ namespace AutoRender.MLT {
                 Environment.SetEnvironmentVariable("MLT_DATA", strModulePath);
                 Environment.SetEnvironmentVariable("MLT_PROFILES_PATH", strProfilePath);
                 Environment.SetEnvironmentVariable("MLT_PRESETS_PATH", strPresetPath);
-                Environment.SetEnvironmentVariable("LD_LIBRARY_PATH", strLibPath);
+                Environment.SetEnvironmentVariable("LD_LIBRARY_PATH", strLibPath);*/
 
                 Log.Debug($"Running {Command} {Parameters}");
 
-
-                _objProcess.StartInfo = new ProcessStartInfo(Command, Parameters) {
+                _objProcess.StartInfo = new ProcessStartInfo("\"" + Command + "\"", Parameters) {
                     UseShellExecute = false,
                     ErrorDialog = false,
                     CreateNoWindow = true,
@@ -98,11 +98,9 @@ namespace AutoRender.MLT {
                     RedirectStandardInput = true
                 };
                 _objProcess.EnableRaisingEvents = true;
-
                 _objProcess.OutputDataReceived += DataReceived;
                 _objProcess.ErrorDataReceived += DataReceived_Error;
                 _objProcess.Exited += _objProcess_Exited;
-
                 _objProcess.Start();
 
                 try {
@@ -130,23 +128,24 @@ namespace AutoRender.MLT {
                             ErrorDialog = false,
                             CreateNoWindow = true,
                         }
-                    }.Start(); 
+                    }.Start();
                 } catch (Exception) { }
             }
         }
 
-        void DataReceived(object sender, DataReceivedEventArgs e) {
-            if (!String.IsNullOrEmpty(e.Data)) {
-                StdOut?.Invoke(this, e.Data.Trim());
-            }
-        }
-        void DataReceived_Error(object sender, DataReceivedEventArgs e) {
+        private void DataReceived(object sender, DataReceivedEventArgs e) {
             if (!String.IsNullOrEmpty(e.Data)) {
                 StdOut?.Invoke(this, e.Data.Trim());
             }
         }
 
-        void _objProcess_Exited(object sender, System.EventArgs e) {
+        private void DataReceived_Error(object sender, DataReceivedEventArgs e) {
+            if (!String.IsNullOrEmpty(e.Data)) {
+                StdOut?.Invoke(this, e.Data.Trim());
+            }
+        }
+
+        private void _objProcess_Exited(object sender, System.EventArgs e) {
             _objProcess.OutputDataReceived -= DataReceived;
             _objProcess.ErrorDataReceived -= DataReceived;
             _objProcess.Exited -= _objProcess_Exited;

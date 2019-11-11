@@ -7,6 +7,7 @@ using AutoRender.Video;
 using System.Reflection;
 using AutoRender.Data;
 using log4net;
+using System.Globalization;
 
 namespace AutoRender.MLT {
 
@@ -32,7 +33,7 @@ namespace AutoRender.MLT {
                     _strSourceFile = value;
 
                     string strRes = "";
-                    if (!String.IsNullOrEmpty(_strSourceFile)) {
+                    if (!string.IsNullOrEmpty(_strSourceFile)) {
                         var objInfo = VideoInfoCache.Get(_strSourceFile);
                         if (objInfo != null && !string.IsNullOrEmpty(objInfo.Height)) {
                             strRes = " " + objInfo.Height + "p";
@@ -68,7 +69,9 @@ namespace AutoRender.MLT {
         }
 
         internal void Reload() {
-            LoadConfig();
+            try {
+                LoadConfig();
+            } catch { }
         }
 
         internal void WriteConfig() {
@@ -83,8 +86,9 @@ namespace AutoRender.MLT {
             bool locked = false;
             do {
                 try {
-                    var strConfig = "<?xml version=\"1.0\" encoding=\"utf-8\"?>" + Environment.NewLine + _objConfig.ToString();
-                    File.WriteAllText(ConfigFile, strConfig);
+                    var objTmp = new XDocument(_objConfig);
+                    FixLocale(objTmp);
+                    File.WriteAllText(ConfigFile, "<?xml version=\"1.0\" encoding=\"utf-8\"?>" + Environment.NewLine + objTmp.ToString());
                 } catch (IOException) {
                     //locked
                     locked = true;
@@ -97,6 +101,8 @@ namespace AutoRender.MLT {
             do {
                 try {
                     _objConfig = XDocument.Load(Project.FullPath);
+                } catch (FileNotFoundException ex) {
+                    throw ex;
                 } catch (IOException) {
                     //locked
                     System.Threading.Thread.Sleep(100);
@@ -113,8 +119,8 @@ namespace AutoRender.MLT {
             //  <consumer  target="../Final/testing.mp4" preset="ultrafast" f="mp4" vcodec="libx264" real_time="-1" threads="0" height="720" width="1280" crf="40" deinterlace_method="yadif" rescale="bilinear" top_field_first="2" r="25" mbd="rd" progressive="1" subcmp="satd" bf="2"  ab="384k" ac="2" acodec="acc" g="15"  ar="48000" trellis="1" mlt_service="avformat" b_strategy="1" channels="2" cmp="satd" />
             if (string.IsNullOrEmpty(SourceFile)) { return; }
 
-            VideoInfo objInfo = VideoInfoCache.Get(SourceFile);
-            if( objInfo == null ) { return;  }
+            var objInfo = VideoInfoCache.Get(SourceFile);
+            if (objInfo == null) { return; }
 
             _dicConsumerProperties = Settings.ConsumerProperties; //get settings from configuration
             _dicConsumerProperties["target"] = TempTargetPath;//Path.Combine(Settings.FinalDirectory, TargetPath);
@@ -198,6 +204,23 @@ namespace AutoRender.MLT {
                     r.Value = TempSourcePath;
                 }
             });
+        }
+
+        private void FixLocale(XDocument pConfig) {
+            var sep = CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator;
+            if (sep != ".") {
+                pConfig.Descendants().Where(s => (s.Name == "producer" || s.Name == "tractor") && s.Attributes().Any(a => a.Name == "in" || a.Name == "out")).ToList().ForEach(r => {
+                    r.Attribute("in").Value = r.Attribute("in").Value.Replace(".", sep);
+                    r.Attribute("out").Value = r.Attribute("out").Value.Replace(".", sep);
+                });
+                pConfig.Descendants().Where(s => s.Name == "property" && s.Attribute("name").Value == "length").ToList().ForEach(r => {
+                    r.Value = r.Value.Replace(".", sep);
+                });
+                pConfig.Descendants().Where(s => s.Name == "entry" && s.Attributes().Any(a => a.Name == "in" || a.Name == "out")).ToList().ForEach(r => {
+                    r.Attribute("in").Value = r.Attribute("in").Value.Replace(".", sep);
+                    r.Attribute("out").Value = r.Attribute("out").Value.Replace(".", sep);
+                });
+            }
         }
     }
 }

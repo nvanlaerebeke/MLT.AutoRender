@@ -36,7 +36,7 @@ namespace AutoRender {
 
         private void Connect() {
             var objParams = new ClientParams() {
-                Hostname = "192.168.0.167",
+                Hostname = "localhost",
                 Port = 6666,
                 Secure = false
             };

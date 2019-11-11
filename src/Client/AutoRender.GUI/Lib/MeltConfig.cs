@@ -10,26 +10,26 @@ namespace AutoRender {
     public static class MeltConfig {
 
         public static FileInfo CreateConfig(WorkspaceItem pWorkspaceItem) {
-            string strSourceFile = "../" + Settings.NewDirectoryName + "/" + pWorkspaceItem.New.Name;
-            string strNewProjectFile = Path.Combine(Settings.ProjectPath, Path.ChangeExtension(pWorkspaceItem.New.Name, ".mlt"));
+            var strSourceFile = "../" + Settings.NewDirectoryName + "/" + pWorkspaceItem.New.Name;
+            var strNewProjectFile = Path.Combine(Settings.ProjectPath, Path.ChangeExtension(pWorkspaceItem.New.Name, ".mlt"));
 
             if (!Directory.Exists(Settings.ProjectPath)) { throw new Exception("Unable to access " + Settings.ProjectPath); }
             //if(!File.Exists(strSourceFile)) { throw new Exception("Unable to find source file"); }
-            if (File.Exists(strNewProjectFile)) { throw new Exception("Project file alrady exists"); }
+            if (File.Exists(strNewProjectFile)) { throw new Exception("Project file already exists"); }
 
-            TimeSpan objSpan = pWorkspaceItem.New.Duration;
-            var strDurationStart = "00:00:00,000";
-            var strDurationEnd = String.Format("{0}:{1}:{2},{3}",
+            var objSpan = pWorkspaceItem.New.Duration;
+            var strDurationStart = "00:00:00.000";
+            var strDurationEnd = string.Format("{0}:{1}:{2}.{3}",
                 objSpan.Hours.ToString().PadLeft(2, '0'),
                 objSpan.Minutes.ToString().PadLeft(2, '0'),
                 objSpan.Seconds.ToString().PadLeft(2, '0'),
                 objSpan.Milliseconds.ToString().PadLeft(3, '0')
             );
 
-            XDocument doc = new XDocument(
+            var doc = new XDocument(
                 new XDeclaration("1.0", "utf-8", "no"),
                 new XElement("mlt",
-                    new XAttribute("LC_NUMERIC", "nl_BE"),
+                    new XAttribute("LC_NUMERIC", "C"),
                     new XAttribute("producer", "main bin"),
                     new XElement("playlist",
                         new XAttribute("id", "main bin"),
@@ -104,7 +104,7 @@ namespace AutoRender {
                 )
             );
 
-            StringBuilder builder = new StringBuilder();
+            var builder = new StringBuilder();
             using (TextWriter writer = new StringWriter(builder)) {
                 doc.Save(writer);
             }

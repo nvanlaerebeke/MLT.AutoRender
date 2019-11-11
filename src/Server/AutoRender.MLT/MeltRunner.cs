@@ -20,6 +20,7 @@ namespace AutoRender.MLT {
         private Runner Process;
 
         public event EventHandler ProgressChanged;
+
         public event EventHandler<JobStatus> StatusChanged;
 
         public JobStatus Status {
@@ -30,9 +31,9 @@ namespace AutoRender.MLT {
                     StatusChanged?.Invoke(this, _objStatus);
                 }
             }
-        } 
+        }
 
-        public double TimeTaken { 
+        public double TimeTaken {
             get {
                 return (Process == null) ? 0 : Process.TimeTaken;
             }
@@ -65,18 +66,19 @@ namespace AutoRender.MLT {
                 Config.WriteConfig(); // -- ToDo: Pass target path for the config so that the file copy isn't needed
                 File.Copy(Config.SourceFile, Config.TempSourcePath);
 
-                var strBasePath = Path.GetDirectoryName(Settings.MeltPath);
-                var strModulePath = Path.Combine(strBasePath, "modules");
-                var strProfilePath = Path.Combine(strBasePath, "profiles");
-                var strPresetPath = Path.Combine(strBasePath, "presets");
-                var strLibPath = $"{Path.Combine(strBasePath, "framework")}:{Path.Combine(strBasePath, "mlt++")}:{Environment.GetEnvironmentVariable("LD_LIBRARY_PATH")}";
+                /*if (Environment.OSVersion.Platform == PlatformID.Unix) {
+                    var strBasePath = Path.GetDirectoryName(Settings.MeltPath);
+                    var strModulePath = Path.Combine(strBasePath, "modules");
+                    var strProfilePath = Path.Combine(strBasePath, "profiles");
+                    var strPresetPath = Path.Combine(strBasePath, "presets");
+                    var strLibPath = $"{Path.Combine(strBasePath, "framework")}:{Path.Combine(strBasePath, "mlt++")}:{Environment.GetEnvironmentVariable("LD_LIBRARY_PATH")}";
 
-                Environment.SetEnvironmentVariable("MLT_REPOSITORY", strModulePath);
-                Environment.SetEnvironmentVariable("MLT_DATA", strModulePath);
-                Environment.SetEnvironmentVariable("MLT_PROFILES_PATH", strProfilePath);
-                Environment.SetEnvironmentVariable("MLT_PRESETS_PATH", strPresetPath);
-                Environment.SetEnvironmentVariable("LD_LIBRARY_PATH", strLibPath);
-
+                    Environment.SetEnvironmentVariable("MLT_REPOSITORY", strModulePath);
+                    Environment.SetEnvironmentVariable("MLT_DATA", strModulePath);
+                    Environment.SetEnvironmentVariable("MLT_PROFILES_PATH", strProfilePath);
+                    Environment.SetEnvironmentVariable("MLT_PRESETS_PATH", strPresetPath);
+                    Environment.SetEnvironmentVariable("LD_LIBRARY_PATH", strLibPath);
+                }*/
                 Process = new Runner(Settings.MeltPath, "-progress " + "\"" + Regex.Replace(Config.ConfigFile, @"(\\+)$", @"$1$1") + "\"");
                 Process.StatusChanged += _objProcess_StatusChanged;
                 Process.StdOut += Process_StdOut;
@@ -101,31 +103,35 @@ namespace AutoRender.MLT {
         /// ToDo: is it needed to have 2 enums?
         /// </summary>
         /// <param name="pStatus">P status.</param>
-        void _objProcess_StatusChanged(object sender, ProcessStatus pStatus) {
-            switch(pStatus) {
+        private void _objProcess_StatusChanged(object sender, ProcessStatus pStatus) {
+            switch (pStatus) {
                 case ProcessStatus.Done:
                     Finish();
                     Status = JobStatus.Success;
                     Cleanup();
                     break;
+
                 case ProcessStatus.Failed:
                     Status = JobStatus.Failed;
                     Cleanup();
                     break;
+
                 case ProcessStatus.Paused:
                     Status = JobStatus.Paused;
                     break;
+
                 case ProcessStatus.Running:
                     Status = JobStatus.Running;
                     break;
+
                 case ProcessStatus.Stopped:
                     Status = JobStatus.UnScheduled;
                     Cleanup();
-                    break;                
+                    break;
             }
         }
 
-        void Process_StdOut(object sender, string e) {
+        private void Process_StdOut(object sender, string e) {
             if (!String.IsNullOrEmpty(e)) {
                 Log.Info(e.Trim());
                 Handlers.ForEach(h => h.Handle(e));
@@ -147,11 +153,10 @@ namespace AutoRender.MLT {
             }
         }
 
-        void ObjProgress_ProgressUpdated(object sender, System.EventArgs e) {
+        private void ObjProgress_ProgressUpdated(object sender, System.EventArgs e) {
             Log.Info("Progress was changed");
             ProgressChanged?.Invoke(sender, e);
         }
-
 
         private void Cleanup() {
             Process.StatusChanged -= _objProcess_StatusChanged;
@@ -161,10 +166,10 @@ namespace AutoRender.MLT {
             objProgress.ProgressUpdated -= ObjProgress_ProgressUpdated;
 
             // -- clean up up env
-            if (File.Exists(Config.TempSourcePath)) { File.Delete(Config.TempSourcePath); }
-            if (File.Exists(Config.TempTargetPath)) { File.Delete(Config.TempTargetPath); }
+            //if (File.Exists(Config.TempSourcePath)) { File.Delete(Config.TempSourcePath); }
+            //if (File.Exists(Config.TempTargetPath)) { File.Delete(Config.TempTargetPath); }
 
-            TimeSpan ts = new TimeSpan(0, 0, (int)TimeTaken);
+            var ts = new TimeSpan(0, 0, (int)TimeTaken);
             Log.Info(String.Format("Encoding completed after {0} Hours, {1} Minutes and {2} Seconds", ts.Hours, ts.Minutes, ts.Seconds));
         }
     }

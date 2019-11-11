@@ -214,7 +214,7 @@ namespace AutoRender {
             try {
                 if (!File.Exists(Settings.ShotcutExecutable)) { throw new Exception("Shot-cut executable not found"); }
 
-                WorkspaceItemViewModel objWorkspaceItemViewModel = (sender as System.Windows.Documents.Hyperlink).DataContext as WorkspaceItemViewModel;
+                var objWorkspaceItemViewModel = (sender as System.Windows.Documents.Hyperlink).DataContext as WorkspaceItemViewModel;
                 Task.Run(() => {
                     if (objWorkspaceItemViewModel != null && objWorkspaceItemViewModel.Status == Status.ProjectMissing) {
                         objWorkspaceItemViewModel.IsUpdating = true;
