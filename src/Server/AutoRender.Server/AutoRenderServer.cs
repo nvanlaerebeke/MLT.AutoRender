@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using System.Reflection;
 using AutoRender.Data;
 using System;
+using Mitto.Connection.Websocket;
+using System.Net;
 
 namespace AutoRender.Server {
 
@@ -31,7 +33,15 @@ namespace AutoRender.Server {
 
             Config.Initialize(
                 new Config.ConfigParams() {
-                    Logger = new MittoLogger(LogManager.GetLogger(typeof(Mitto.Server))),
+                    ConnectionProvider = new WebSocketConnectionProvider() {
+                        ServerConfig = new ServerParams() {
+                            IP = IPAddress.Any,
+                            Port = 80,
+                            Path = "/",
+                            FragmentSize = 512,
+                        }
+                    },
+                    //Logger = new MittoLogger(LogManager.GetLogger(typeof(Mitto.Server))),
                     Assemblies = new List<AssemblyName> {
                         new AssemblyName("AutoRender.Messaging"),
                         new AssemblyName("AutoRender.Messaging.Actions")
@@ -45,8 +55,8 @@ namespace AutoRender.Server {
 
         public void Start() {
             //using (new SingleInstance(1000)) { //1000ms timeout on global lock
-                WorkspaceMonitor.Start();
-                Server.Start();
+            WorkspaceMonitor.Start();
+            Server.Start();
             //}
         }
 
@@ -55,7 +65,7 @@ namespace AutoRender.Server {
                 if (Directory.Exists(Settings.TempDirectory)) {
                     Directory.Delete(Settings.TempDirectory, true);
                 }
-            } catch(Exception ex) {
+            } catch (Exception ex) {
                 Log.Error($"Failed to clean up {Settings.TempDirectory}: {ex.Message}");
             }
         }

@@ -106,7 +106,7 @@ namespace AutoRender {
                 _blnSelectedForHandling = (
                     value == true &&
                     WorkspaceItem.Project != null &&
-                    WorkspaceItem.Project.Status == ProjectStatus.Processable
+                    WorkspaceItem.Project.Status == ProjectStatus.Processable.ToString()
                 );
                 OnPropertyChanged("SelectedForHandling");
             }

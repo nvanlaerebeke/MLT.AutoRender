@@ -45,13 +45,13 @@
     <Compile Include="WorkspaceUpdatedEventArgs.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\CrazyUtils\CrazyUtils.csproj">
       <Project>{232647d8-8ca8-4f02-91b9-72ee17e99dd1}</Project>
       <Name>CrazyUtils</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Properties\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

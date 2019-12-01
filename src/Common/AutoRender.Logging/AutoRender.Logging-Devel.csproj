@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{D51C4CE3-0473-4DDF-9F0C-B3022E493DBD}</ProjectGuid>
+    <ProjectGuid>{AAC4FB16-95FC-4D70-8BB0-916C760E3978}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>AutoRender.Logging</RootNamespace>
@@ -45,8 +45,8 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Lib\mitto\src\Mitto.Logging\Mitto.Logging.csproj">
-      <Project>{B54DE51C-A462-43A7-90C2-6A39E1865300}</Project>
+    <ProjectReference Include="..\..\..\..\mitto\src\Mitto.Logging\Mitto.Logging.csproj">
+      <Project>{b54de51c-a462-43a7-90c2-6a39e1865300}</Project>
       <Name>Mitto.Logging</Name>
     </ProjectReference>
   </ItemGroup>

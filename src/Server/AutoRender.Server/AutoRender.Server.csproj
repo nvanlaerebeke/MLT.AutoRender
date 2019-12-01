@@ -45,13 +45,13 @@
       <Project>{59d58f7e-ec28-4e70-bbc3-5d02b577bd11}</Project>
       <Name>AutoRender.Data</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Common\AutoRender.Logging\AutoRender.Logging.csproj">
-      <Project>{d51c4ce3-0473-4ddf-9f0c-b3022e493dbd}</Project>
-      <Name>AutoRender.Logging</Name>
+    <ProjectReference Include="..\..\Common\AutoRender.Logging\AutoRender.Logging-Devel.csproj">
+      <Project>{aac4fb16-95fc-4d70-8bb0-916c760e3978}</Project>
+      <Name>AutoRender.Logging-Devel</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Common\AutoRender.Messaging\AutoRender.Messaging.csproj">
-      <Project>{35101fce-d2b0-437b-b694-b0e04dd0bc3c}</Project>
-      <Name>AutoRender.Messaging</Name>
+    <ProjectReference Include="..\..\Common\AutoRender.Messaging\AutoRender.Messaging-Devel.csproj">
+      <Project>{1baf5e8c-4a8c-48ce-96f9-db45f2980a47}</Project>
+      <Name>AutoRender.Messaging-Devel</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Common\AutoRender.Subscription.Messaging\AutoRender.Subscription.Messaging.csproj">
       <Project>{F973DBC2-F3BA-4160-839B-8491E6827E3B}</Project>
@@ -65,34 +65,6 @@
       <Project>{232647d8-8ca8-4f02-91b9-72ee17e99dd1}</Project>
       <Name>CrazyUtils</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Lib\mitto\src\Mitto.Config\Mitto.Config.csproj">
-      <Project>{E3E0D40D-99AC-4ED4-9E64-19CDC10813B0}</Project>
-      <Name>Mitto.Config</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Lib\mitto\src\Mitto.IConnection\Mitto.IConnection.csproj">
-      <Project>{AAF65EBA-E48D-491A-AD2E-525BDE11EC6F}</Project>
-      <Name>Mitto.IConnection</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Lib\mitto\src\Mitto.Messaging\Mitto.Messaging.csproj">
-      <Project>{C29037E3-9C2F-4996-8434-36600735D465}</Project>
-      <Name>Mitto.Messaging</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Lib\mitto\src\Mitto.IMessaging\Mitto.IMessaging.csproj">
-      <Project>{3BB1C211-9006-4FEE-9F40-7556717431B0}</Project>
-      <Name>Mitto.IMessaging</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Lib\mitto\src\Mitto.Logging\Mitto.Logging.csproj">
-      <Project>{B54DE51C-A462-43A7-90C2-6A39E1865300}</Project>
-      <Name>Mitto.Logging</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Lib\mitto\src\Mitto.Main\Mitto.Main.csproj">
-      <Project>{958222ED-4BA0-45DD-92E5-6B72BA62ABA6}</Project>
-      <Name>Mitto.Main</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Lib\mitto\src\Mitto.Connection.Websocket\Mitto.Connection.Websocket.csproj">
-      <Project>{CF99D3F2-2C06-4A9F-BA22-E2E0CA457B58}</Project>
-      <Name>Mitto.Connection.Websocket</Name>
-    </ProjectReference>
     <ProjectReference Include="..\AutoRender.Messaging.Actions\AutoRender.Messaging.Actions.csproj">
       <Project>{A35BCC76-8ECE-436F-8DF7-B7AA12DA13BB}</Project>
       <Name>AutoRender.Messaging.Actions</Name>
@@ -104,6 +76,9 @@
   <ItemGroup>
     <PackageReference Include="log4net">
       <Version>2.0.8</Version>
+    </PackageReference>
+    <PackageReference Include="Mitto">
+      <Version>0.0.5</Version>
     </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

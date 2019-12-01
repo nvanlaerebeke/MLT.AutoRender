@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{0E9A1E35-BA14-4823-83FB-7BDC64C18F91}</ProjectGuid>
+    <ProjectGuid>{549BC411-DDBA-4F07-B904-8F85C820BBD2}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AutoRender.MLT</RootNamespace>
-    <AssemblyName>AutoRender.MLT</AssemblyName>
+    <RootNamespace>AutoRender.Server</RootNamespace>
+    <AssemblyName>AutoRender.Server</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -33,24 +33,12 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Xml" />
-    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Net.Http" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EventArgs\CompleteEventArgs.cs" />
-    <Compile Include="EventArgs\ProgressUpdatedEventArgs.cs" />
-    <Compile Include="EventArgs\StatusChangedEventArgs.cs" />
-    <Compile Include="JobStatus.cs" />
-    <Compile Include="MeltConfig.cs" />
-    <Compile Include="MeltHelper.cs" />
-    <Compile Include="MeltJob.cs" />
-    <Compile Include="MeltJobScheduler.cs" />
-    <Compile Include="MeltRunner.cs" />
-    <Compile Include="MLTProject.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="StdHandlers\Progress.cs" />
-    <Compile Include="StdHandlers\StdHandler.cs" />
-    <Compile Include="Runner.cs" />
+    <Compile Include="AutoRenderServer.cs" />
+    <Compile Include="WebSocketServer.cs" />
+    <Compile Include="WorkspaceMonitor.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Common\AutoRender.Data\AutoRender.Data.csproj">
@@ -61,14 +49,45 @@
       <Project>{aac4fb16-95fc-4d70-8bb0-916c760e3978}</Project>
       <Name>AutoRender.Logging-Devel</Name>
     </ProjectReference>
-    <ProjectReference Include="..\AutoRender.Video\AutoRender.Video.csproj">
-      <Project>{877cefbc-c28a-4326-bd90-3f5950bb53ed}</Project>
-      <Name>AutoRender.Video</Name>
+    <ProjectReference Include="..\..\Common\AutoRender.Messaging\AutoRender.Messaging-Devel.csproj">
+      <Project>{1baf5e8c-4a8c-48ce-96f9-db45f2980a47}</Project>
+      <Name>AutoRender.Messaging-Devel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Common\AutoRender.Subscription.Messaging\AutoRender.Subscription.Messaging-Devel.csproj">
+      <Project>{3a84b4ed-cebc-4d32-b094-272917d6e5c6}</Project>
+      <Name>AutoRender.Subscription.Messaging-Devel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Lib\mitto\src\Mitto.Config\Mitto.Config.csproj">
+      <Project>{e3e0d40d-99ac-4ed4-9e64-19cdc10813b0}</Project>
+      <Name>Mitto.Config</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Lib\mitto\src\Mitto.Connection.Websocket\Mitto.Connection.Websocket.csproj">
+      <Project>{cf99d3f2-2c06-4a9f-ba22-e2e0ca457b58}</Project>
+      <Name>Mitto.Connection.Websocket</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Lib\mitto\src\Mitto.IConnection\Mitto.IConnection.csproj">
+      <Project>{AAF65EBA-E48D-491A-AD2E-525BDE11EC6F}</Project>
+      <Name>Mitto.IConnection</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Lib\mitto\src\Mitto.IMessaging\Mitto.IMessaging.csproj">
+      <Project>{3bb1c211-9006-4fee-9f40-7556717431b0}</Project>
+      <Name>Mitto.IMessaging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Lib\mitto\src\Mitto.Main\Mitto.csproj">
+      <Project>{958222ed-4ba0-45dd-92e5-6b72ba62aba6}</Project>
+      <Name>Mitto</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AutoRender.Workspace\AutoRender.Workspace.csproj">
+      <Project>{5abe5f5a-6fd0-4db7-a045-00ed6e91c473}</Project>
+      <Name>AutoRender.Workspace</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Common\CrazyUtils\CrazyUtils.csproj">
       <Project>{232647d8-8ca8-4f02-91b9-72ee17e99dd1}</Project>
       <Name>CrazyUtils</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="log4net">

@@ -1,5 +1,4 @@
-﻿using Mitto.Connection.Websocket;
-using Mitto.Messaging;
+﻿using Mitto.Messaging;
 using Mitto.Utilities;
 using System;
 
@@ -7,7 +6,7 @@ namespace AutoRender {
 
     internal class Connection {
         private readonly Timer ReconnectTimer;
-        private readonly Mitto.Client Client;
+        private Mitto.Client Client;
 
         public event EventHandler Ready;
 
@@ -18,10 +17,6 @@ namespace AutoRender {
         public Connection() {
             ReconnectTimer = new Timer(5);
             ReconnectTimer.Elapsed += ReconnectTimer_Elapsed;
-
-            Client = new Mitto.Client();
-            Client.Connected += Connected;
-            Client.Disconnected += ClientDisconnected;
         }
 
         public void Request<T>(RequestMessage pMessage, Action<T> pCallBack) where T : ResponseMessage {
@@ -35,12 +30,21 @@ namespace AutoRender {
         }
 
         private void Connect() {
-            var objParams = new ClientParams() {
-                Hostname = "localhost",
-                Port = 6666,
-                Secure = false
-            };
-            Client.ConnectAsync(objParams);
+            if (Client != null) {
+                Client.Connected += Connected;
+                Client.Disconnected += ClientDisconnected;
+                Client.Disconnect();
+            }
+
+            Client = new Mitto.Client();
+            Client.Connected += Connected;
+            Client.Disconnected += ClientDisconnected;
+
+            Client.ConnectAsync(new Mitto.Connection.Websocket.ClientParams() {
+                HostName = "localhost",
+                Port = 80,
+                Secure = false,
+            });
         }
 
         private void Connected(object sender, Mitto.Client e) {

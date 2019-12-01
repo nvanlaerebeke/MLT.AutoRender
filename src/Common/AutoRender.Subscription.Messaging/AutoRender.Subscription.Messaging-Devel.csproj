@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{F973DBC2-F3BA-4160-839B-8491E6827E3B}</ProjectGuid>
+    <ProjectGuid>{3A84B4ED-CEBC-4D32-B094-272917D6E5C6}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>AutoRender.Subscription.Messaging</RootNamespace>
@@ -46,33 +46,29 @@
     <Compile Include="UnSubscribe\WorkspaceUpdatedUnSubscribe.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\mitto\src\Mitto.IMessaging\Mitto.IMessaging.csproj">
+      <Project>{3bb1c211-9006-4fee-9f40-7556717431b0}</Project>
+      <Name>Mitto.IMessaging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\mitto\src\Mitto.Messaging\Mitto.Messaging.csproj">
+      <Project>{c29037e3-9c2f-4996-8434-36600735d465}</Project>
+      <Name>Mitto.Messaging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\mitto\src\Mitto.Subscription.IMessaging\Mitto.Subscription.IMessaging.csproj">
+      <Project>{9ff69878-e3d3-459d-a779-a6cb0091de75}</Project>
+      <Name>Mitto.Subscription.IMessaging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\mitto\src\Mitto.Subscription.Messaging\Mitto.Subscription.Messaging.csproj">
+      <Project>{5d420f78-c169-4615-acb2-a039bf8acbd6}</Project>
+      <Name>Mitto.Subscription.Messaging</Name>
+    </ProjectReference>
     <ProjectReference Include="..\AutoRender.Data\AutoRender.Data.csproj">
       <Project>{59d58f7e-ec28-4e70-bbc3-5d02b577bd11}</Project>
       <Name>AutoRender.Data</Name>
     </ProjectReference>
-    <ProjectReference Include="..\AutoRender.Messaging\AutoRender.Messaging.csproj">
-      <Project>{35101fce-d2b0-437b-b694-b0e04dd0bc3c}</Project>
-      <Name>AutoRender.Messaging</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Lib\mitto\src\Mitto.Messaging\Mitto.Messaging.csproj">
-      <Project>{C29037E3-9C2F-4996-8434-36600735D465}</Project>
-      <Name>Mitto.Messaging</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Lib\mitto\src\Mitto.IMessaging\Mitto.IMessaging.csproj">
-      <Project>{3BB1C211-9006-4FEE-9F40-7556717431B0}</Project>
-      <Name>Mitto.IMessaging</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Lib\mitto\src\Mitto.Subscription.IMessaging\Mitto.Subscription.IMessaging.csproj">
-      <Project>{9FF69878-E3D3-459D-A779-A6CB0091DE75}</Project>
-      <Name>Mitto.Subscription.IMessaging</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Lib\mitto\src\Mitto.Subscription.Messaging\Mitto.Subscription.Messaging.csproj">
-      <Project>{5D420F78-C169-4615-ACB2-A039BF8ACBD6}</Project>
-      <Name>Mitto.Subscription.Messaging</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Lib\mitto\src\Mitto.IRouting\Mitto.IRouting.csproj">
-      <Project>{7A80E47B-C82F-4A16-83F0-E0C65F22885A}</Project>
-      <Name>Mitto.IRouting</Name>
+    <ProjectReference Include="..\AutoRender.Messaging\AutoRender.Messaging-Devel.csproj">
+      <Project>{1baf5e8c-4a8c-48ce-96f9-db45f2980a47}</Project>
+      <Name>AutoRender.Messaging-Devel</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

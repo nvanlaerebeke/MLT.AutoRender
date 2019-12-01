@@ -50,9 +50,9 @@
       <Project>{59d58f7e-ec28-4e70-bbc3-5d02b577bd11}</Project>
       <Name>AutoRender.Data</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Common\AutoRender.Messaging\AutoRender.Messaging.csproj">
-      <Project>{35101fce-d2b0-437b-b694-b0e04dd0bc3c}</Project>
-      <Name>AutoRender.Messaging</Name>
+    <ProjectReference Include="..\..\Lib\mitto\src\Mitto.Messaging\Mitto.Messaging.csproj">
+      <Project>{c29037e3-9c2f-4996-8434-36600735d465}</Project>
+      <Name>Mitto.Messaging</Name>
     </ProjectReference>
     <ProjectReference Include="..\AutoRender.MLT\AutoRender.MLT.csproj">
       <Project>{0e9a1e35-ba14-4823-83fb-7bdc64c18f91}</Project>
@@ -62,26 +62,15 @@
       <Project>{5abe5f5a-6fd0-4db7-a045-00ed6e91c473}</Project>
       <Name>AutoRender.Workspace</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Lib\mitto\src\Mitto.IMessaging\Mitto.IMessaging.csproj">
-      <Project>{3BB1C211-9006-4FEE-9F40-7556717431B0}</Project>
-      <Name>Mitto.IMessaging</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Lib\mitto\src\Mitto.Messaging\Mitto.Messaging.csproj">
-      <Project>{C29037E3-9C2F-4996-8434-36600735D465}</Project>
-      <Name>Mitto.Messaging</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Common\AutoRender.Subscription.Messaging\AutoRender.Subscription.Messaging.csproj">
       <Project>{F973DBC2-F3BA-4160-839B-8491E6827E3B}</Project>
       <Name>AutoRender.Subscription.Messaging</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Lib\mitto\src\Mitto.Subscription.Messaging\Mitto.Subscription.Messaging.csproj">
-      <Project>{5D420F78-C169-4615-ACB2-A039BF8ACBD6}</Project>
-      <Name>Mitto.Subscription.Messaging</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Lib\mitto\src\Mitto.Subscription.IMessaging\Mitto.Subscription.IMessaging.csproj">
-      <Project>{9FF69878-E3D3-459D-A779-A6CB0091DE75}</Project>
-      <Name>Mitto.Subscription.IMessaging</Name>
-    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Mitto">
+      <Version>0.0.5</Version>
+    </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
