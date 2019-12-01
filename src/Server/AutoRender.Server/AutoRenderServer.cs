@@ -9,6 +9,7 @@ using AutoRender.Data;
 using System;
 using Mitto.Connection.Websocket;
 using System.Net;
+using CrazyUtils;
 
 namespace AutoRender.Server {
 
@@ -19,18 +20,6 @@ namespace AutoRender.Server {
         private readonly WebSocketServer Server;
 
         public AutoRenderServer() {
-            var strBasePath = Path.GetDirectoryName(Settings.MeltPath);
-            var strModulePath = Path.Combine(strBasePath, "modules");
-            var strProfilePath = Path.Combine(strBasePath, "profiles");
-            var strPresetPath = Path.Combine(strBasePath, "presets");
-            var strLibPath = $"{Path.Combine(strBasePath, "framework")}:{Path.Combine(strBasePath, "mlt++")}:{Environment.GetEnvironmentVariable("LD_LIBRARY_PATH")}";
-
-            Environment.SetEnvironmentVariable("MLT_REPOSITORY", strModulePath);
-            Environment.SetEnvironmentVariable("MLT_DATA", strModulePath);
-            Environment.SetEnvironmentVariable("MLT_PROFILES_PATH", strProfilePath);
-            Environment.SetEnvironmentVariable("MLT_PRESETS_PATH", strPresetPath);
-            Environment.SetEnvironmentVariable("LD_LIBRARY_PATH", strLibPath);
-
             Config.Initialize(
                 new Config.ConfigParams() {
                     ConnectionProvider = new WebSocketConnectionProvider() {
@@ -54,10 +43,15 @@ namespace AutoRender.Server {
         }
 
         public void Start() {
-            //using (new SingleInstance(1000)) { //1000ms timeout on global lock
-            WorkspaceMonitor.Start();
-            Server.Start();
-            //}
+            if (Environment.OSVersion.Platform == PlatformID.Unix) {
+                WorkspaceMonitor.Start();
+                Server.Start();
+            } else {
+                using (new SingleInstance(1000)) { //1000ms timeout on global lock
+                    WorkspaceMonitor.Start();
+                    Server.Start();
+                }
+            }
         }
 
         private void Cleanup() {

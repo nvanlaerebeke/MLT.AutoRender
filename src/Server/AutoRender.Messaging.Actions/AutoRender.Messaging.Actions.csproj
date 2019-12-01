@@ -50,9 +50,9 @@
       <Project>{59d58f7e-ec28-4e70-bbc3-5d02b577bd11}</Project>
       <Name>AutoRender.Data</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Lib\mitto\src\Mitto.Messaging\Mitto.Messaging.csproj">
-      <Project>{c29037e3-9c2f-4996-8434-36600735d465}</Project>
-      <Name>Mitto.Messaging</Name>
+    <ProjectReference Include="..\..\Common\AutoRender.Messaging\AutoRender.Messaging.csproj">
+      <Project>{35101fce-d2b0-437b-b694-b0e04dd0bc3c}</Project>
+      <Name>AutoRender.Messaging</Name>
     </ProjectReference>
     <ProjectReference Include="..\AutoRender.MLT\AutoRender.MLT.csproj">
       <Project>{0e9a1e35-ba14-4823-83fb-7bdc64c18f91}</Project>

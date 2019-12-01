@@ -45,13 +45,13 @@
       <Project>{59d58f7e-ec28-4e70-bbc3-5d02b577bd11}</Project>
       <Name>AutoRender.Data</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Common\AutoRender.Logging\AutoRender.Logging-Devel.csproj">
-      <Project>{aac4fb16-95fc-4d70-8bb0-916c760e3978}</Project>
-      <Name>AutoRender.Logging-Devel</Name>
+    <ProjectReference Include="..\..\Common\AutoRender.Logging\AutoRender.Logging.csproj">
+      <Project>{d51c4ce3-0473-4ddf-9f0c-b3022e493dbd}</Project>
+      <Name>AutoRender.Logging</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Common\AutoRender.Messaging\AutoRender.Messaging-Devel.csproj">
-      <Project>{1baf5e8c-4a8c-48ce-96f9-db45f2980a47}</Project>
-      <Name>AutoRender.Messaging-Devel</Name>
+    <ProjectReference Include="..\..\Common\AutoRender.Messaging\AutoRender.Messaging.csproj">
+      <Project>{35101fce-d2b0-437b-b694-b0e04dd0bc3c}</Project>
+      <Name>AutoRender.Messaging</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Common\AutoRender.Subscription.Messaging\AutoRender.Subscription.Messaging.csproj">
       <Project>{F973DBC2-F3BA-4160-839B-8491E6827E3B}</Project>

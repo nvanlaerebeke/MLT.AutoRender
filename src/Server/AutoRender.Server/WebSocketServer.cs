@@ -13,16 +13,6 @@ namespace AutoRender.Server {
         }
 
         public void Start() {
-            /*Config.Initialize(new Config.ConfigParams() {
-                ConnectionProvider = new WebSocketConnectionProvider() {
-                    ServerConfig = new ServerParams() {
-                        IP = IPAddress.Any,
-                        Port = 80,
-                        Path = "/",
-                        FragmentSize = 512,
-                    }
-                }
-            });*/
             new Mitto.Server().Start(null, (c) => {
                 Log.Debug($"Client Connected");
             });

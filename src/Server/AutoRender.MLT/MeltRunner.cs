@@ -1,5 +1,4 @@
 ﻿using AutoRender.Data;
-using CrazyUtils;
 using log4net;
 using System;
 using System.Collections.Generic;
@@ -54,7 +53,7 @@ namespace AutoRender.MLT {
         }
 
         public void Start() {
-            Task.Run(() => {
+            _ = Task.Run(() => {
                 if (Status == JobStatus.Paused && Process != null) {
                     Process.Start();
                     return;
@@ -79,7 +78,8 @@ namespace AutoRender.MLT {
                     Environment.SetEnvironmentVariable("MLT_PRESETS_PATH", strPresetPath);
                     Environment.SetEnvironmentVariable("LD_LIBRARY_PATH", strLibPath);
                 }*/
-                Process = new Runner(Settings.MeltPath, "-progress " + "\"" + Regex.Replace(Config.ConfigFile, @"(\\+)$", @"$1$1") + "\"");
+                var config = Regex.Replace(Config.ConfigFile, @"(\\+)$", @"$1$1");
+                Process = new Runner(Settings.MeltPath, "-progress " + '"' + config + '"');
                 Process.StatusChanged += _objProcess_StatusChanged;
                 Process.StdOut += Process_StdOut;
 
@@ -166,8 +166,8 @@ namespace AutoRender.MLT {
             objProgress.ProgressUpdated -= ObjProgress_ProgressUpdated;
 
             // -- clean up up env
-            //if (File.Exists(Config.TempSourcePath)) { File.Delete(Config.TempSourcePath); }
-            //if (File.Exists(Config.TempTargetPath)) { File.Delete(Config.TempTargetPath); }
+            if (File.Exists(Config.TempSourcePath)) { File.Delete(Config.TempSourcePath); }
+            if (File.Exists(Config.TempTargetPath)) { File.Delete(Config.TempTargetPath); }
 
             var ts = new TimeSpan(0, 0, (int)TimeTaken);
             Log.Info(String.Format("Encoding completed after {0} Hours, {1} Minutes and {2} Seconds", ts.Hours, ts.Minutes, ts.Seconds));

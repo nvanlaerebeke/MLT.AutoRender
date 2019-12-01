@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Diagnostics;
+using System.IO;
 using System.Reflection;
 using System.Text;
+using AutoRender.Data;
 using log4net;
 
 namespace AutoRender.MLT {
@@ -78,8 +80,8 @@ namespace AutoRender.MLT {
                 var strProfilePath = Path.Combine(strBasePath, "profiles");
                 var strPresetPath = Path.Combine(strBasePath, "presets");
                 var strLibPath = $"{Path.Combine(strBasePath, "framework")}:{Path.Combine(strBasePath, "mlt++")}:{Environment.GetEnvironmentVariable("LD_LIBRARY_PATH")}";
-
-                Environment.SetEnvironmentVariable("MLT_REPOSITORY", strModulePath);
+                */
+                /*Environment.SetEnvironmentVariable("MLT_REPOSITORY", strModulePath);
                 Environment.SetEnvironmentVariable("MLT_DATA", strModulePath);
                 Environment.SetEnvironmentVariable("MLT_PROFILES_PATH", strProfilePath);
                 Environment.SetEnvironmentVariable("MLT_PRESETS_PATH", strPresetPath);
@@ -87,7 +89,7 @@ namespace AutoRender.MLT {
 
                 Log.Debug($"Running {Command} {Parameters}");
 
-                _objProcess.StartInfo = new ProcessStartInfo("\"" + Command + "\"", Parameters) {
+                _objProcess.StartInfo = new ProcessStartInfo(Command, Parameters) {
                     UseShellExecute = false,
                     ErrorDialog = false,
                     CreateNoWindow = true,

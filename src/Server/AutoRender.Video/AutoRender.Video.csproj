@@ -47,9 +47,9 @@
       <Project>{59d58f7e-ec28-4e70-bbc3-5d02b577bd11}</Project>
       <Name>AutoRender.Data</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Common\AutoRender.Logging\AutoRender.Logging-Devel.csproj">
-      <Project>{aac4fb16-95fc-4d70-8bb0-916c760e3978}</Project>
-      <Name>AutoRender.Logging-Devel</Name>
+    <ProjectReference Include="..\..\Common\AutoRender.Logging\AutoRender.Logging.csproj">
+      <Project>{d51c4ce3-0473-4ddf-9f0c-b3022e493dbd}</Project>
+      <Name>AutoRender.Logging</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Common\CrazyUtils\CrazyUtils.csproj">
       <Project>{232647d8-8ca8-4f02-91b9-72ee17e99dd1}</Project>
