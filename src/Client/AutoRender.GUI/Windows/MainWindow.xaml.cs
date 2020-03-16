@@ -1,7 +1,4 @@
-﻿using AutoRender.Data;
-using AutoRender.Subscription.Messaging.Action.Request;
-using Mitto.IMessaging;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -9,6 +6,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using AutoRender.Data;
+using AutoRender.Subscription.Messaging.Action.Request;
+using Mitto.IMessaging;
 
 namespace AutoRender {
 
@@ -110,7 +110,7 @@ namespace AutoRender {
         #region WorkspaceItem Actions
 
         private void TargetNameChanged(object sender, RoutedEventArgs e) {
-            WorkspaceItemViewModel objViewModel = ((sender as Button).BindingGroup.Owner as DataGridRow).DataContext as WorkspaceItemViewModel;
+            var objViewModel = ((sender as Button).BindingGroup.Owner as DataGridRow).DataContext as WorkspaceItemViewModel;
             if (!string.IsNullOrEmpty(objViewModel.TargetName)) {
                 objViewModel.IsUpdating = true;
                 new WorkspaceItemAction(ConnectionManager.Connection, objViewModel.ID, (r, wsis) => {
@@ -126,7 +126,7 @@ namespace AutoRender {
         }
 
         private void SourceNameChanged(object sender, RoutedEventArgs e) {
-            WorkspaceItemViewModel objViewModel = ((sender as Button).BindingGroup.Owner as DataGridRow).DataContext as WorkspaceItemViewModel;
+            var objViewModel = ((sender as Button).BindingGroup.Owner as DataGridRow).DataContext as WorkspaceItemViewModel;
             if (!string.IsNullOrEmpty(objViewModel.SourceName)) {
                 objViewModel.IsUpdating = true;
                 new WorkspaceItemAction(ConnectionManager.Connection, objViewModel.ID, (r, wsis) => {
@@ -146,7 +146,7 @@ namespace AutoRender {
         #region ContextMenu Actions
 
         private void Start_Click(object sender, RoutedEventArgs e) {
-            WorkspaceItemViewModel objViewModel = (sender as MenuItem).DataContext as WorkspaceItemViewModel;
+            var objViewModel = (sender as MenuItem).DataContext as WorkspaceItemViewModel;
             if (objViewModel != null && objViewModel.Status == Status.Processable || objViewModel.Status == Status.Paused) {
                 objViewModel.IsUpdating = true;
                 objViewModel.SelectedForHandling = true;
@@ -164,7 +164,7 @@ namespace AutoRender {
         }
 
         private void Stop_Click(object sender, RoutedEventArgs e) {
-            WorkspaceItemViewModel objViewModel = (sender as MenuItem).DataContext as WorkspaceItemViewModel;
+            var objViewModel = (sender as MenuItem).DataContext as WorkspaceItemViewModel;
             if (objViewModel != null && objViewModel.Status == Status.Busy) {
                 objViewModel.IsUpdating = true;
                 objViewModel.SelectedForHandling = false;
@@ -182,7 +182,7 @@ namespace AutoRender {
         }
 
         private void Pause_Click(object sender, RoutedEventArgs e) {
-            WorkspaceItemViewModel objViewModel = (sender as MenuItem).DataContext as WorkspaceItemViewModel;
+            var objViewModel = (sender as MenuItem).DataContext as WorkspaceItemViewModel;
             if (objViewModel != null && objViewModel.Status == Status.Busy) {
                 objViewModel.IsUpdating = true;
                 new WorkspaceItemAction(ConnectionManager.Connection, objViewModel.ID, (r, wsis) => {
@@ -201,12 +201,12 @@ namespace AutoRender {
         #endregion Server Actions
 
         private void EditTargetName_Click(object sender, RoutedEventArgs e) {
-            WorkspaceItemViewModel objWorkspaceItemViewModel = (sender as MenuItem).DataContext as WorkspaceItemViewModel;
+            var objWorkspaceItemViewModel = (sender as MenuItem).DataContext as WorkspaceItemViewModel;
             objWorkspaceItemViewModel.TargetNameIsEditing = true;
         }
 
         private void EditSourceName_Click(object sender, RoutedEventArgs e) {
-            WorkspaceItemViewModel objWorkspaceItemViewModel = (sender as MenuItem).DataContext as WorkspaceItemViewModel;
+            var objWorkspaceItemViewModel = (sender as MenuItem).DataContext as WorkspaceItemViewModel;
             objWorkspaceItemViewModel.SourceNameIsEditing = true;
         }
 
@@ -219,7 +219,7 @@ namespace AutoRender {
                     if (objWorkspaceItemViewModel != null && objWorkspaceItemViewModel.Status == Status.ProjectMissing) {
                         objWorkspaceItemViewModel.IsUpdating = true;
                         try {
-                            FileInfo objFI = MeltConfig.CreateConfig(objWorkspaceItemViewModel.WorkspaceItem);
+                            var objFI = MeltConfig.CreateConfig(objWorkspaceItemViewModel.WorkspaceItem);
                             new Process {
                                 StartInfo = new ProcessStartInfo(Settings.ShotcutExecutable, "\"" + objFI.FullName + "\"")
                             }.Start();
@@ -235,8 +235,8 @@ namespace AutoRender {
         }
 
         private void OpenShotcut_Click(object sender, RoutedEventArgs e) {
-            WorkspaceItemViewModel objWorkspaceItemViewModel = (sender as MenuItem).DataContext as WorkspaceItemViewModel;
-            string strPath = Path.Combine(Settings.ProjectPath, objWorkspaceItemViewModel.ProjectName);
+            var objWorkspaceItemViewModel = (sender as MenuItem).DataContext as WorkspaceItemViewModel;
+            var strPath = Path.Combine(Settings.ProjectPath, objWorkspaceItemViewModel.ProjectName);
             if (File.Exists(strPath) && File.Exists(Settings.ShotcutExecutable)) {
                 new Process {
                     StartInfo = new ProcessStartInfo(Settings.ShotcutExecutable, "\"" + strPath + "\"")

@@ -1,12 +1,12 @@
-﻿using AutoRender.Data;
-using log4net;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using AutoRender.Data;
+using log4net;
 
 namespace AutoRender.MLT {
 
@@ -132,7 +132,7 @@ namespace AutoRender.MLT {
         }
 
         private void Process_StdOut(object sender, string e) {
-            if (!String.IsNullOrEmpty(e)) {
+            if (!string.IsNullOrEmpty(e)) {
                 Log.Info(e.Trim());
                 Handlers.ForEach(h => h.Handle(e));
             }
@@ -166,11 +166,25 @@ namespace AutoRender.MLT {
             objProgress.ProgressUpdated -= ObjProgress_ProgressUpdated;
 
             // -- clean up up env
-            if (File.Exists(Config.TempSourcePath)) { File.Delete(Config.TempSourcePath); }
-            if (File.Exists(Config.TempTargetPath)) { File.Delete(Config.TempTargetPath); }
+            if (File.Exists(Config.TempSourcePath)) {
+                try {
+                    File.Delete(Config.TempSourcePath);
+                } catch (Exception ex) {
+                    Log.Error($"Failed to clean up {Config.TempSourcePath}, leaking temp files");
+                    Log.Error(ex);
+                }
+            }
+            if (File.Exists(Config.TempTargetPath)) {
+                try {
+                    File.Delete(Config.TempTargetPath);
+                } catch (Exception ex) {
+                    Log.Error($"Failed to clean up {Config.TempTargetPath}, leaking temp files");
+                    Log.Error(ex);
+                }
+            }
 
             var ts = new TimeSpan(0, 0, (int)TimeTaken);
-            Log.Info(String.Format("Encoding completed after {0} Hours, {1} Minutes and {2} Seconds", ts.Hours, ts.Minutes, ts.Seconds));
+            Log.Info(string.Format("Encoding completed after {0} Hours, {1} Minutes and {2} Seconds", ts.Hours, ts.Minutes, ts.Seconds));
         }
     }
 }

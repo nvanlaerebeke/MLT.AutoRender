@@ -26,7 +26,6 @@ namespace AutoRender.Video {
                 }
             }
             try {
-
                 var objNewVideoInfo = new VideoInfoWrapper(objFileInfo, new VideoInfoReader(pPath).Read().Result);
                 if (_dicVideoCache.ContainsKey(pPath)) {
                     _dicVideoCache[pPath] = objNewVideoInfo;
@@ -35,7 +34,7 @@ namespace AutoRender.Video {
                 }
 
                 return _dicVideoCache[pPath].VideoInfo;
-            } catch(Exception ex) {
+            } catch (Exception ex) {
                 Log.Error($"Unable to fetch info for {objFileInfo.FullName}: {ex.Message}");
             }
             return null;

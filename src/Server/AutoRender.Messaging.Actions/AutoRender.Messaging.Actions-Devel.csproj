@@ -51,36 +51,16 @@
       <Name>AutoRender.Data</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Common\AutoRender.Messaging\AutoRender.Messaging-Devel.csproj">
-      <Project>{1baf5e8c-4a8c-48ce-96f9-db45f2980a47}</Project>
+      <Project>{1BAF5E8C-4A8C-48CE-96F9-DB45F2980A47}</Project>
       <Name>AutoRender.Messaging-Devel</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Common\AutoRender.Subscription.Messaging\AutoRender.Subscription.Messaging-Devel.csproj">
-      <Project>{3a84b4ed-cebc-4d32-b094-272917d6e5c6}</Project>
-      <Name>AutoRender.Subscription.Messaging-Devel</Name>
+    <ProjectReference Include="..\AutoRender.MLT\AutoRender.MLT-Debug.csproj">
+      <Project>{8B35EBCE-B31C-463A-8011-4986560252C3}</Project>
+      <Name>AutoRender.MLT-Debug</Name>
     </ProjectReference>
-    <ProjectReference Include="..\AutoRender.MLT\AutoRender.MLT.csproj">
-      <Project>{0e9a1e35-ba14-4823-83fb-7bdc64c18f91}</Project>
-      <Name>AutoRender.MLT</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\AutoRender.Workspace\AutoRender.Workspace.csproj">
-      <Project>{5abe5f5a-6fd0-4db7-a045-00ed6e91c473}</Project>
-      <Name>AutoRender.Workspace</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Lib\mitto\src\Mitto.IMessaging\Mitto.IMessaging.csproj">
-      <Project>{3BB1C211-9006-4FEE-9F40-7556717431B0}</Project>
-      <Name>Mitto.IMessaging</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Lib\mitto\src\Mitto.Messaging\Mitto.Messaging.csproj">
-      <Project>{C29037E3-9C2F-4996-8434-36600735D465}</Project>
-      <Name>Mitto.Messaging</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Lib\mitto\src\Mitto.Subscription.Messaging\Mitto.Subscription.Messaging.csproj">
-      <Project>{5D420F78-C169-4615-ACB2-A039BF8ACBD6}</Project>
-      <Name>Mitto.Subscription.Messaging</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Lib\mitto\src\Mitto.Subscription.IMessaging\Mitto.Subscription.IMessaging.csproj">
-      <Project>{9FF69878-E3D3-459D-A779-A6CB0091DE75}</Project>
-      <Name>Mitto.Subscription.IMessaging</Name>
+    <ProjectReference Include="..\AutoRender.Workspace\AutoRender.Workspace-Debug.csproj">
+      <Project>{B668B03E-B8FD-4C4A-BE79-3A96BAB7AD8C}</Project>
+      <Name>AutoRender.Workspace-Debug</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

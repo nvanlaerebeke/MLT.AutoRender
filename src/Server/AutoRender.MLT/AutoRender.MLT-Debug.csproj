@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{877CEFBC-C28A-4326-BD90-3F5950BB53ED}</ProjectGuid>
+    <ProjectGuid>{8B35EBCE-B31C-463A-8011-4986560252C3}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AutoRender.Video</RootNamespace>
-    <AssemblyName>AutoRender.Video</AssemblyName>
+    <RootNamespace>AutoRender.MLT</RootNamespace>
+    <AssemblyName>AutoRender.MLT</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -32,20 +32,38 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EventArgs\CompleteEventArgs.cs" />
+    <Compile Include="EventArgs\ProgressUpdatedEventArgs.cs" />
+    <Compile Include="EventArgs\StatusChangedEventArgs.cs" />
+    <Compile Include="JobStatus.cs" />
+    <Compile Include="MeltConfig.cs" />
+    <Compile Include="MeltHelper.cs" />
+    <Compile Include="MeltJob.cs" />
+    <Compile Include="MeltJobScheduler.cs" />
+    <Compile Include="MeltRunner.cs" />
+    <Compile Include="MLTProject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="VideoFactory.cs" />
-    <Compile Include="VideoInfoReader.cs" />
-    <Compile Include="VideoInfoCache.cs" />
-    <Compile Include="VideoValidator.cs" />
+    <Compile Include="StdHandlers\Progress.cs" />
+    <Compile Include="StdHandlers\StdHandler.cs" />
+    <Compile Include="Runner.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Common\AutoRender.Data\AutoRender.Data.csproj">
       <Project>{59d58f7e-ec28-4e70-bbc3-5d02b577bd11}</Project>
       <Name>AutoRender.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Common\AutoRender.Logging\AutoRender.Logging-Devel.csproj">
+      <Project>{aac4fb16-95fc-4d70-8bb0-916c760e3978}</Project>
+      <Name>AutoRender.Logging-Devel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AutoRender.Video\AutoRender.Video-Debug.csproj">
+      <Project>{3415eeae-f02c-4d2d-980a-86f597a4a74c}</Project>
+      <Name>AutoRender.Video-Debug</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Common\CrazyUtils\CrazyUtils.csproj">
       <Project>{232647d8-8ca8-4f02-91b9-72ee17e99dd1}</Project>
@@ -53,11 +71,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="DirectShowLib">
-      <Version>1.0.0</Version>
-    </PackageReference>
-    <PackageReference Include="MediaToolkit">
-      <Version>1.1.0.1</Version>
+    <PackageReference Include="log4net">
+      <Version>2.0.8</Version>
     </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

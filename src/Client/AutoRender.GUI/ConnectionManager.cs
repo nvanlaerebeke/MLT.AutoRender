@@ -62,9 +62,8 @@ namespace AutoRender {
         private bool Setup() {
             StatusChanged?.Invoke(this, "Loading");
 
-            Task<bool> objSubTask = Subscribe();
-            Task<bool> objGetStatusTask = GetStatus();
-
+            var objSubTask = Subscribe();
+            var objGetStatusTask = GetStatus();
             objSubTask.Wait();
             objGetStatusTask.Wait();
 
@@ -76,9 +75,9 @@ namespace AutoRender {
 
         private async Task<bool> Subscribe() {
             return await Task.Run(() => {
-                bool blnSuccess = false;
+                var blnSuccess = false;
                 do {
-                    ManualResetEvent objBlock = new ManualResetEvent(false);
+                    var objBlock = new ManualResetEvent(false);
                     Connection.Request<ACKResponse>(new WorkspaceUpdatedSubscribe(), (r) => {
                         if (r.Status.State == ResponseState.Success) {
                             blnSuccess = true;
@@ -95,10 +94,10 @@ namespace AutoRender {
 
         internal async Task<List<WorkspaceItem>> ReLoad() {
             return await Task.Run(() => {
-                List<WorkspaceItem> lstItems = new List<WorkspaceItem>();
-                bool blnSuccess = false;
+                var lstItems = new List<WorkspaceItem>();
+                var blnSuccess = false;
                 do {
-                    ManualResetEvent objBlock = new ManualResetEvent(false);
+                    var objBlock = new ManualResetEvent(false);
                     Connection.Request<GetStatusResponse>(new ReloadRequest(), (r) => {
                         if (r.Status.State == ResponseState.Success) {
                             lstItems.AddRange(r.WorkspaceItems);
@@ -106,9 +105,9 @@ namespace AutoRender {
                         } else {
                             Thread.Sleep(2000);
                         }
-                        objBlock.Set();
+                        _ = objBlock.Set();
                     });
-                    objBlock.WaitOne();
+                    _ = objBlock.WaitOne();
                 } while (!blnSuccess && Connection.IsConnected);
                 return lstItems;
             });
@@ -116,9 +115,9 @@ namespace AutoRender {
 
         private async Task<bool> GetStatus() {
             return await Task.Run(() => {
-                bool blnSuccess = false;
+                var blnSuccess = false;
                 do {
-                    ManualResetEvent objBlock = new ManualResetEvent(false);
+                    var objBlock = new ManualResetEvent(false);
                     Connection.Request<GetStatusResponse>(new GetStatusRequest(), (r) => {
                         if (r.Status.State == ResponseState.Success) {
                             blnSuccess = true;
@@ -126,9 +125,9 @@ namespace AutoRender {
                         } else {
                             Thread.Sleep(2000);
                         }
-                        objBlock.Set();
+                        _ = objBlock.Set();
                     });
-                    objBlock.WaitOne();
+                    _ = objBlock.WaitOne();
                 } while (!blnSuccess && Connection.IsConnected);
                 return blnSuccess;
             });

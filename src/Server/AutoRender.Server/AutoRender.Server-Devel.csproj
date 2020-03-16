@@ -61,8 +61,12 @@
       <Project>{e3e0d40d-99ac-4ed4-9e64-19cdc10813b0}</Project>
       <Name>Mitto.Config</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Lib\mitto\src\Mitto.Connection.Websocket\Mitto.Connection.Websocket.csproj">
+    <ProjectReference Include="..\..\Lib\mitto\src\Mitto.Connection.WebsocketSharp\Mitto.Connection.WebsocketSharp.csproj">
       <Project>{cf99d3f2-2c06-4a9f-ba22-e2e0ca457b58}</Project>
+      <Name>Mitto.Connection.WebsocketSharp</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Lib\mitto\src\Mitto.Connection.Websocket\Mitto.Connection.Websocket.csproj">
+      <Project>{5557b374-341e-4176-9d46-be8606136ada}</Project>
       <Name>Mitto.Connection.Websocket</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Lib\mitto\src\Mitto.IConnection\Mitto.IConnection.csproj">
@@ -77,9 +81,9 @@
       <Project>{958222ed-4ba0-45dd-92e5-6b72ba62aba6}</Project>
       <Name>Mitto</Name>
     </ProjectReference>
-    <ProjectReference Include="..\AutoRender.Workspace\AutoRender.Workspace.csproj">
-      <Project>{5abe5f5a-6fd0-4db7-a045-00ed6e91c473}</Project>
-      <Name>AutoRender.Workspace</Name>
+    <ProjectReference Include="..\AutoRender.Workspace\AutoRender.Workspace-Debug.csproj">
+      <Project>{b668b03e-b8fd-4c4a-be79-3a96bab7ad8c}</Project>
+      <Name>AutoRender.Workspace-Debug</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Common\CrazyUtils\CrazyUtils.csproj">
       <Project>{232647d8-8ca8-4f02-91b9-72ee17e99dd1}</Project>

@@ -1,15 +1,14 @@
-﻿using Mitto;
-using AutoRender.Workspace;
-using AutoRender.Logging;
-using log4net;
-using System.IO;
+﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Net;
 using System.Reflection;
 using AutoRender.Data;
-using System;
-using Mitto.Connection.Websocket;
-using System.Net;
+using AutoRender.Workspace;
 using CrazyUtils;
+using log4net;
+using Mitto;
+using Mitto.Connection.Websocket;
 
 namespace AutoRender.Server {
 
@@ -20,6 +19,34 @@ namespace AutoRender.Server {
         private readonly WebSocketServer Server;
 
         public AutoRenderServer() {
+            SetupSystemNetWebSocket();
+            //SetupWebSocketSharp();
+            Cleanup();
+            Server = new WebSocketServer();
+            WorkspaceMonitor = new WorkspaceMonitor(WorkspaceFactory.Get());
+        }
+
+        /*private void SetupWebSocketSharp() {
+            Config.Initialize(
+                new Config.ConfigParams() {
+                    ConnectionProvider = new Mitto.Connection.WebsocketSharp.WebSocketConnectionProvider() {
+                        ServerConfig = new Mitto.Connection.WebsocketSharp.ServerParams() {
+                            IP = IPAddress.Any,
+                            Port = 80,
+                            Path = "/",
+                            FragmentSize = 512,
+                        }
+                    },
+                    //Logger = new MittoLogger(LogManager.GetLogger(typeof(Mitto.Server))),
+                    Assemblies = new List<AssemblyName> {
+                        new AssemblyName("AutoRender.Messaging"),
+                        new AssemblyName("AutoRender.Messaging.Actions")
+                    }
+                }
+            );
+        }*/
+
+        private void SetupSystemNetWebSocket() {
             Config.Initialize(
                 new Config.ConfigParams() {
                     ConnectionProvider = new WebSocketConnectionProvider() {
@@ -37,9 +64,6 @@ namespace AutoRender.Server {
                     }
                 }
             );
-            Cleanup();
-            Server = new WebSocketServer();
-            WorkspaceMonitor = new WorkspaceMonitor(WorkspaceFactory.Get());
         }
 
         public void Start() {

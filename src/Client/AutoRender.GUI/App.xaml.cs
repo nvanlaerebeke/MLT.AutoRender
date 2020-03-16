@@ -35,31 +35,9 @@ namespace AutoRender {
                         }
                     }
                 );
-
-                /*Task.Run(() => {
-                    var objClient = new Mitto.Client();
-                    objClient.Connected += ObjClient_Connected;
-                    objClient.Disconnected += ObjClient_Disconnected;
-                    objClient.ConnectAsync(new Mitto.Connection.Websocket.ClientParams() {
-                        HostName = "test.crazyzone.be",
-                        Port = 443,
-                        Secure = true,
-                    });
-                });*/
-
-                //while (true) { System.Threading.Thread.Sleep(500); }
                 //show the main window
-                var objMain = new MainWindow();
-                objMain.Show();
+                new MainWindow().Show();
             }
         }
-
-        /*private void ObjClient_Disconnected(object sender, Client e) {
-            Console.WriteLine("Client Disconnected");
-        }
-
-        private void ObjClient_Connected(object sender, Client e) {
-            Console.WriteLine("Client Connected");
-        }*/
     }
 }
