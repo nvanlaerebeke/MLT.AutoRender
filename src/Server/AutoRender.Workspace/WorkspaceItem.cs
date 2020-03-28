@@ -32,7 +32,7 @@ namespace AutoRender.Workspace {
                         case ProjectStatus.TargetExists:
                         case ProjectStatus.TargetInvalid:
                             if (Project.TargetExists) {
-                                Final = Project.VideoInfoCache.Get(Project.TargetPath);
+                                Final = Project.VideoInfoProvider.Get(Project.TargetPath);
                             }
                             break;
                     }

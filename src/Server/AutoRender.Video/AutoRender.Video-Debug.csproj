@@ -12,6 +12,7 @@
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -37,10 +38,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="VideoFactory.cs" />
-    <Compile Include="VideoInfoReader.cs" />
-    <Compile Include="VideoInfoCache.cs" />
-    <Compile Include="VideoValidator.cs" />
+    <Compile Include="VideoInfoProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Common\AutoRender.Data\AutoRender.Data.csproj">
@@ -61,11 +59,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="DirectShowLib">
-      <Version>1.0.0</Version>
-    </PackageReference>
-    <PackageReference Include="MediaToolkit">
-      <Version>1.1.0.1</Version>
+    <PackageReference Include="NReco.VideoInfo">
+      <Version>1.1.1</Version>
     </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

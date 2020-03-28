@@ -8,7 +8,7 @@ using Mitto.Connection.Websocket;
 namespace AutoRender.Server.Services {
 
     internal class CommunicationService : Service {
-        private WebSocketServer Server;
+        private Mitto.Server _Server;
 
         public CommunicationService() {
         }
@@ -16,8 +16,8 @@ namespace AutoRender.Server.Services {
         public override void Start() {
             try {
                 ConfigMitto();
-                Server = new WebSocketServer();
-                Server.Start();
+                _Server = new Mitto.Server();
+                _Server.Start(null, (c) => { });
             } catch (Exception ex) {
                 Log.Error("Failed to set up the websocket server, clients will not be able to connect");
                 Log.Error(ex);
@@ -26,7 +26,7 @@ namespace AutoRender.Server.Services {
 
         public override void Stop() {
             try {
-                Server.Stop();
+                _Server.Stop();
             } catch (Exception ex) {
                 Log.Error("Failed to stop the websocket server");
                 Log.Error(ex);

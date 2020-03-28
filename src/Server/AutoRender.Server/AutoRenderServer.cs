@@ -2,7 +2,6 @@
 using System.IO;
 using System.Reflection;
 using AutoRender.Data;
-using AutoRender.Server.Services;
 using log4net;
 
 namespace AutoRender.Server {
@@ -19,15 +18,13 @@ namespace AutoRender.Server {
             if (Environment.OSVersion.Platform == PlatformID.Unix) {
                 Environment.SetEnvironmentVariable("MONO_REGISTRY_PATH", Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "registry"));
             }
-
-            ServiceManager.Start();
-
             try {
                 Cleanup();
             } catch (Exception ex) {
                 Log.Error("Failed to run the cleanup");
                 Log.Error(ex);
             }
+            ServiceManager.Start();
         }
 
         public void Stop() {
@@ -42,6 +39,9 @@ namespace AutoRender.Server {
                 }
             } catch (Exception ex) {
                 Log.Error($"Failed to clean up {Settings.TempDirectory}: {ex.Message}");
+            }
+            if (!Directory.Exists(Settings.TempDirectory)) {
+                Directory.CreateDirectory(Settings.TempDirectory);
             }
         }
     }

@@ -24,7 +24,7 @@ namespace AutoRender.Workspace {
 
         public event EventHandler<List<WorkspaceUpdatedEventArgs>> Updated;
 
-        private readonly VideoInfoCache VideoCache;
+        private readonly VideoInfoProvider VideoCache;
         private readonly WorkspaceWatcher Watcher;
         public ConcurrentDictionary<string, WorkspaceItem> WorkspaceItems { get; private set; }
 
@@ -47,7 +47,7 @@ namespace AutoRender.Workspace {
                 _ = Directory.CreateDirectory(Settings.TempDirectory);
             }
 
-            VideoCache = new VideoInfoCache();
+            VideoCache = new VideoInfoProvider();
             WorkspaceItems = new ConcurrentDictionary<string, WorkspaceItem>();
             Watcher = new WorkspaceWatcher();
 

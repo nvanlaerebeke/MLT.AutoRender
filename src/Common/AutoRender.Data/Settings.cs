@@ -34,26 +34,6 @@ namespace AutoRender.Data {
             }
         }
 
-        public static string FfprobePath {
-            get {
-                if (Environment.OSVersion.Platform == PlatformID.Unix) {
-                    return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "ffprobe");
-                } else {
-                    return ConfigManager.Get<string>(Section.Global.ToString(), "FfprobePath", Path.Combine(AppPath), "ffprobe.exe");
-                }
-            }
-        }
-
-        public static string FfmpegPath {
-            get {
-                if (Environment.OSVersion.Platform == PlatformID.Unix) {
-                    return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "ffmpeg");
-                } else {
-                    return ConfigManager.Get<string>(Section.Global.ToString(), "FfmpegPath", Path.Combine(AppPath, @"ffmpeg.exe"));
-                }
-            }
-        }
-
         public static string BasePath {
             get {
                 if (Environment.OSVersion.Platform == PlatformID.Unix) {
@@ -96,7 +76,7 @@ namespace AutoRender.Data {
                     //crf sets quality
                     //https://trac.ffmpeg.org/wiki/Encode/H.264#a1.ChooseaCRFvalue
                     { "crf",  "21" },
-                    { "preset",  "faster" },
+                    { "preset",  "medium" },
                     { "tune", "film" },
 
                     //required settings melt
@@ -112,7 +92,7 @@ namespace AutoRender.Data {
 
                     //Video codec settings
                     { "vcodec",  "libx264" }, // -- x264 by default
-                    //{"movflags",  "+faststart" }, // -- puts all info in the beginning of the file
+                    { "movflags",  "+faststart" }, // -- puts all info in the beginning of the file
                     { "threads",  "0" }, // -- 0 = optimal
 
                     //mlt threads, not clear what this needs to be,crashes when < -1
@@ -127,7 +107,7 @@ namespace AutoRender.Data {
                     {"trellis",  "1" },
 
                     //settings overwritten by source file
-                    {"bf",  "2" }, // -- 16 recommended by ffmpeg https://sites.google.com/site/linuxencoding/x264-ffmpeg-mapping
+                    {"bf",  "3" }, // -- 16 recommended by ffmpeg https://sites.google.com/site/linuxencoding/x264-ffmpeg-mapping
                     {"b_strategy",  "1" },
                     {"height",  "720" },
                     {"width",  "1280" },
@@ -138,7 +118,7 @@ namespace AutoRender.Data {
                     {"r",  "25" },
 
                     //GOP = keyframe interval, recommended in 250
-                    { "g",  "250" }, // -- https://sites.google.com/site/linuxencoding/x264-ffmpeg-mapping
+                    { "g",  "125" }, // -- https://sites.google.com/site/linuxencoding/x264-ffmpeg-mapping
 
                     //audio
                     //{ "acodec",  "aac" }, // default audio codec
@@ -152,59 +132,6 @@ namespace AutoRender.Data {
                     { "cmp",  "satd" },
                     //{ "aspect",  "1,77778" },
                 };
-                /*return ConfigManager.Get<Dictionary<string, string>>(Section.ConsumerSettings, new Dictionary<string, string> {
-                    //required settings melt
-                    { "mlt_service",  "avformat" },
-                    {"target",  "" },
-
-                    //format we export in
-                    {"f",  "mp4" },
-
-                    //resizing params - hardcoded, no need to change this
-                    {"rescale",  "bicubic" },
-                    {"progressive",  "1" },
-
-                    //Video codec settings
-                    {"vcodec",  "libx264" }, // -- x264 by default
-                    {"movflags",  "+faststart" }, // -- puts all info in the beginning of the file
-                    {"threads",  "0" }, // -- 0 = optimal
-
-                    //mlt threads, not clear what this needs to be,crashes when < -1
-                    //lower than 0 means number of none-frame droppping threads, but 1 seems kinda low
-                    //https://www.mltframework.org/plugins/ConsumerAvformat/#real_time
-                    //https://www.mltframework.org/faq/#does-mlt-take-advantage-of-multiple-cores-or-how-do-i-enable-parallel-processing
-                    { "real_time",  "-1" },
-
-                    // when files are interlaced, deinterlace them
-                    { "deinterlace_method",  "yadif" },
-                    {"top_field_first",  "2" },
-
-                    //settings overwritten by source file
-                    { "bf",  "3" }, // -- use 3 by default
-                    {"height",  "720" },
-                    {"width",  "1280" },
-                    {"frame_rate_den",  "1001" }, //these make up the framerate (r=num/den)
-                    {"frame_rate_num",  "30000" },
-
-                    //crf sets quality
-                    //https://trac.ffmpeg.org/wiki/Encode/H.264#a1.ChooseaCRFvalue
-                    { "crf",  "21" },
-
-                    //Don't think we need this
-                    //{"aspect",  "1,77778" },
-
-                    //to test
-                    { "preset",  "fast" },
-
-                    //GOP = keyframe interval, recommended in 250
-                    { "g",  "150" },
-
-                    //audio
-                    {"acodec",  "aac" }, // default audio codec
-                    {"ar",  "48000"  }, // -- sample rate: https://www.mltframework.org/plugins/ConsumerAvformat/#ar
-                    { "ab",  "384k" }, // -- bitrate
-                    { "channels",  "2" }, // -- by default use stereo
-                });*/
             }
         }
     }

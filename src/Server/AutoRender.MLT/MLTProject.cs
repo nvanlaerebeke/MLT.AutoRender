@@ -1,9 +1,9 @@
-﻿using AutoRender.Data;
-using AutoRender.Video;
-using log4net;
-using System;
+﻿using System;
 using System.IO;
 using System.Reflection;
+using AutoRender.Data;
+using AutoRender.Video;
+using log4net;
 
 namespace AutoRender.MLT {
 
@@ -17,10 +17,10 @@ namespace AutoRender.MLT {
 
         public event EventHandler<MLTProject> ProjectChanged;
 
-        private FileInfo _objProjectFile;
+        private readonly FileInfo _objProjectFile;
         private VideoInfo _objTargetInfo;
         private VideoInfo _objSourceInfo;
-        public VideoInfoCache VideoInfoCache;
+        public VideoInfoProvider VideoInfoProvider;
 
         public MeltJob Job { get; private set; }
 
@@ -59,15 +59,15 @@ namespace AutoRender.MLT {
         public bool SourceExists { get { return (File.Exists(Config.SourceFile)); } }
 
         //ToDo make changing the name(consumer) in the config possible
-        public string TargetName { 
-            get { 
-                return Path.GetFileName(Config.TargetPath); 
-            } 
-            set { 
-                Config.SetTargetName(value); 
+        public string TargetName {
+            get {
+                return Path.GetFileName(Config.TargetPath);
+            }
+            set {
+                Config.SetTargetName(value);
                 Reload();
                 ProjectChanged?.Invoke(this, this);
-            } 
+            }
         }
 
         public double TimeTaken { get { return Job.TimeTaken; } }
@@ -102,16 +102,16 @@ namespace AutoRender.MLT {
 
         #endregion Properties
 
-        public MLTProject(string pFullPath, VideoInfoCache pVideoInfoCache) {
-            VideoInfoCache = pVideoInfoCache;
+        public MLTProject(string pFullPath, VideoInfoProvider pVideoInfoCache) {
+            VideoInfoProvider = pVideoInfoCache;
             ID = Guid.NewGuid();
             Directory.CreateDirectory(Path.Combine(Settings.TempDirectory, ID.ToString()));
 
             _objProjectFile = new FileInfo(pFullPath);
 
-            Config = new MeltConfig(this, VideoInfoCache);
-            if (TargetExists) { _objTargetInfo = VideoInfoCache.Get(TargetPath); }
-            if (SourceExists) { _objSourceInfo = VideoInfoCache.Get(SourcePath); }
+            Config = new MeltConfig(this, VideoInfoProvider);
+            if (TargetExists) { _objTargetInfo = VideoInfoProvider.Get(TargetPath); }
+            if (SourceExists) { _objSourceInfo = VideoInfoProvider.Get(SourcePath); }
 
             Job = new MeltJob(this); // -- ToDo: pass null or the config for the job, not the project itself
             Job.ProgressChanged += (object sender, System.EventArgs e) => { ProjectChanged?.Invoke(sender, this); };
@@ -122,6 +122,7 @@ namespace AutoRender.MLT {
                     case JobStatus.Success:
                         Reload();
                         break;
+
                     case JobStatus.Paused:
                     case JobStatus.Running:
                     case JobStatus.Scheduled:
@@ -136,8 +137,8 @@ namespace AutoRender.MLT {
 
         public void Reload() {
             Config.Reload();
-            if (TargetExists) { _objTargetInfo = VideoInfoCache.Get(TargetPath); }
-            if (SourceExists) { _objSourceInfo = VideoInfoCache.Get(SourcePath); }
+            if (TargetExists) { _objTargetInfo = VideoInfoProvider.Get(TargetPath); }
+            if (SourceExists) { _objSourceInfo = VideoInfoProvider.Get(SourcePath); }
         }
 
         public void Schedule() {

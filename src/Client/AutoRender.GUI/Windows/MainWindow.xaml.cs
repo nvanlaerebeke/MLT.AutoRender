@@ -216,17 +216,21 @@ namespace AutoRender {
 
                 var objWorkspaceItemViewModel = (sender as System.Windows.Documents.Hyperlink).DataContext as WorkspaceItemViewModel;
                 Task.Run(() => {
-                    if (objWorkspaceItemViewModel != null && objWorkspaceItemViewModel.Status == Status.ProjectMissing) {
-                        objWorkspaceItemViewModel.IsUpdating = true;
-                        try {
-                            var objFI = MeltConfig.CreateConfig(objWorkspaceItemViewModel.WorkspaceItem);
-                            new Process {
-                                StartInfo = new ProcessStartInfo(Settings.ShotcutExecutable, "\"" + objFI.FullName + "\"")
-                            }.Start();
-                        } catch (Exception ex) {
-                            Console.WriteLine(ex);
+                    try {
+                        if (objWorkspaceItemViewModel != null && objWorkspaceItemViewModel.Status == Status.ProjectMissing) {
+                            objWorkspaceItemViewModel.IsUpdating = true;
+                            try {
+                                var objFI = MeltConfig.CreateConfig(objWorkspaceItemViewModel.WorkspaceItem);
+                                new Process {
+                                    StartInfo = new ProcessStartInfo(Settings.ShotcutExecutable, "\"" + objFI.FullName + "\"")
+                                }.Start();
+                            } catch (Exception ex) {
+                                Console.WriteLine(ex);
+                            }
+                            objWorkspaceItemViewModel.IsUpdating = false;
                         }
-                        objWorkspaceItemViewModel.IsUpdating = false;
+                    } catch (Exception ex) {
+                        MessageBox.Show(ex.Message); ;
                     }
                 });
             } catch (Exception ex) {

@@ -43,7 +43,6 @@
     <Compile Include="Services\Service.cs" />
     <Compile Include="ServiceManager.cs" />
     <Compile Include="Services\WorkspaceMonitorService.cs" />
-    <Compile Include="WebSocketServer.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Common\AutoRender.Data\AutoRender.Data.csproj">

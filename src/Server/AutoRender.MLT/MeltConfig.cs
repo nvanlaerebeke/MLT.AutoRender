@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Xml.Linq;
-using System.Linq;
-using AutoRender.Video;
-using System.Reflection;
-using AutoRender.Data;
-using log4net;
 using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Xml.Linq;
+using AutoRender.Data;
+using AutoRender.Video;
+using log4net;
 
 namespace AutoRender.MLT {
 
@@ -20,7 +20,7 @@ namespace AutoRender.MLT {
         private Dictionary<string, string> _dicConsumerProperties = null;
         private string _strSourceFile;
         private XDocument _objConfig = null;
-        private readonly VideoInfoCache VideoInfoCache;
+        private readonly VideoInfoProvider VideoInfoProvider;
 
         public string TargetPath { get; private set; }
 
@@ -32,10 +32,10 @@ namespace AutoRender.MLT {
                 if (File.Exists(value)) {
                     _strSourceFile = value;
 
-                    string strRes = "";
+                    var strRes = "";
                     if (!string.IsNullOrEmpty(_strSourceFile)) {
-                        var objInfo = VideoInfoCache.Get(_strSourceFile);
-                        if (objInfo != null && !string.IsNullOrEmpty(objInfo.Height)) {
+                        var objInfo = VideoInfoProvider.Get(_strSourceFile);
+                        if (objInfo != null && objInfo.Height != 0) {
                             strRes = " " + objInfo.Height + "p";
                         }
                     }
@@ -50,14 +50,18 @@ namespace AutoRender.MLT {
         public string TempTargetPath { get; private set; }
         private MLTProject Project { get; set; }
 
-        internal MeltConfig(MLTProject pProject, VideoInfoCache pVideoInfoCache) {
-            VideoInfoCache = pVideoInfoCache;
+        internal MeltConfig(MLTProject pProject, VideoInfoProvider pVideoInfoProvider) {
+            VideoInfoProvider = pVideoInfoProvider;
             Project = pProject;
-            ConfigFile = Path.Combine(Settings.TempDirectory, Project.ID.ToString(), Path.ChangeExtension(Path.GetFileName(Project.FullPath), ".xml"));
             try {
+                var ProjectTempDir = Path.Combine(Settings.TempDirectory, Project.ID.ToString());
+                if (!Directory.Exists(ProjectTempDir)) {
+                    _ = Directory.CreateDirectory(ProjectTempDir);
+                }
+                ConfigFile = Path.Combine(ProjectTempDir, Path.ChangeExtension(Path.GetFileName(Project.FullPath), ".xml"));
                 LoadConfig();
                 DetectSource();
-                TempTargetPath = Path.Combine(Settings.TempDirectory, Project.ID.ToString(), Path.ChangeExtension(Path.GetFileName(TargetPath), ".tmp"));
+                TempTargetPath = Path.Combine(ProjectTempDir, Path.ChangeExtension(Path.GetFileName(TargetPath), ".tmp"));
             } catch (Exception ex) {
                 //log and ignore?
                 Log.Error(ex);
@@ -83,7 +87,7 @@ namespace AutoRender.MLT {
                 return;
             }
 
-            bool locked = false;
+            var locked = false;
             do {
                 try {
                     var objTmp = new XDocument(_objConfig);
@@ -116,10 +120,9 @@ namespace AutoRender.MLT {
 
         private void AddConsumer() {
             //working
-            //  <consumer  target="../Final/testing.mp4" preset="ultrafast" f="mp4" vcodec="libx264" real_time="-1" threads="0" height="720" width="1280" crf="40" deinterlace_method="yadif" rescale="bilinear" top_field_first="2" r="25" mbd="rd" progressive="1" subcmp="satd" bf="2"  ab="384k" ac="2" acodec="acc" g="15"  ar="48000" trellis="1" mlt_service="avformat" b_strategy="1" channels="2" cmp="satd" />
             if (string.IsNullOrEmpty(SourceFile)) { return; }
 
-            var objInfo = VideoInfoCache.Get(SourceFile);
+            var objInfo = VideoInfoProvider.Get(SourceFile);
             if (objInfo == null) { return; }
 
             _dicConsumerProperties = Settings.ConsumerProperties; //get settings from configuration
@@ -127,40 +130,12 @@ namespace AutoRender.MLT {
 
             //VIDEO
             _dicConsumerProperties["vcodec"] = objInfo.VideoCodec;
-            _dicConsumerProperties["width"] = objInfo.Width;
-            _dicConsumerProperties["height"] = objInfo.Height;
-            //_dicConsumerProperties["bf"] = objInfo.VideoSettings["has_b_frames"];
-
-            //_dicConsumerProperties["frame_rate_num"] = "30000";
-            //_dicConsumerProperties["frame_rate_den"] = "1001";
-            /*var strFrameRate = objInfo.VideoSettings["r_frame_rate"];
-            if (strFrameRate.Contains("/")) {
-                var arrParts = strFrameRate.Split('/');
-                _dicConsumerProperties["frame_rate_num"] = arrParts[0];
-                _dicConsumerProperties["frame_rate_den"] = arrParts[1];
-            }*/
-
-            //AUDIO
+            _dicConsumerProperties["width"] = objInfo.Width.ToString();
+            _dicConsumerProperties["height"] = objInfo.Height.ToString();
             _dicConsumerProperties["acodec"] = objInfo.AudioCodec;
-            _dicConsumerProperties["ar"] = objInfo.AudioSampleRate; // -- sample rate https://www.mltframework.org/plugins/ConsumerAvformat/#ar
-            _dicConsumerProperties["ab"] = objInfo.AudioBitRate; // -- bitrate https://www.mltframework.org/plugins/ConsumerAvformat/#ab
-            //_dicConsumerProperties["channels"] = objInfo.AudioSettings["channels"];
-
-            //Some testing params
-            //Use lossess compression, = same as source
-            //https://trac.ffmpeg.org/wiki/Encode/H.264#LosslessH.264
-            //_dicConsumerProperties["crf"] = _dicConsumerProperties["crf"];
-
-            //impacts quality per filesize
-            //https://trac.ffmpeg.org/wiki/Encode/H.264#a2.Chooseapresetandtune
-            //_dicConsumerProperties["preset"] = "ultrafast";
-            //_dicConsumerProperties["crf"] = "45";
-
-            //GOP = keyframe interval, shotcut used 150, recommended  = 250
-            //_dicConsumerProperties["g"] = _dicConsumerProperties["g"]; // = "250"
 
             //create consumer element
-            XElement objEl = new XElement("consumer");
+            var objEl = new XElement("consumer");
             foreach (var objKvp in _dicConsumerProperties) {
                 objEl.Add(new XAttribute(objKvp.Key, objKvp.Value));
             }
@@ -174,7 +149,7 @@ namespace AutoRender.MLT {
 
         private void DetectSource() {
             var strSourcePath = "";
-            if (String.IsNullOrEmpty(strSourcePath)) {
+            if (string.IsNullOrEmpty(strSourcePath)) {
                 var strProjectNamePath = CrazyUtils.PathHelper.NormalizeAbsolutePath(Path.Combine(Settings.NewDirectory, Path.GetFileName(Project.FullPath)));
                 if (File.Exists(strProjectNamePath)) {
                     strSourcePath = strProjectNamePath;
@@ -186,12 +161,12 @@ namespace AutoRender.MLT {
             foreach (var resource in resources) {
                 var strFullPath = CrazyUtils.PathHelper.NormalizeAbsolutePath(Path.Combine(Settings.NewDirectory, Path.GetFileName(resource.Value))); ;
                 if (File.Exists(strFullPath)) {
-                    if (String.IsNullOrEmpty(strSourcePath)) {
+                    if (string.IsNullOrEmpty(strSourcePath)) {
                         strSourcePath = strFullPath;
                     }
                 }
             }
-            if (!String.IsNullOrEmpty(strSourcePath)) {
+            if (!string.IsNullOrEmpty(strSourcePath)) {
                 SourceFile = strSourcePath;
             }
         }
@@ -209,6 +184,7 @@ namespace AutoRender.MLT {
         private void FixLocale(XDocument pConfig) {
             var sep = CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator;
             if (sep != ".") {
+                var matches = pConfig.Descendants().Where(s => (s.Name == "producer" || s.Name == "tractor") && s.Attributes().Any(a => a.Name == "in" || a.Name == "out")).ToList();
                 pConfig.Descendants().Where(s => (s.Name == "producer" || s.Name == "tractor") && s.Attributes().Any(a => a.Name == "in" || a.Name == "out")).ToList().ForEach(r => {
                     r.Attribute("in").Value = r.Attribute("in").Value.Replace(".", sep);
                     r.Attribute("out").Value = r.Attribute("out").Value.Replace(".", sep);

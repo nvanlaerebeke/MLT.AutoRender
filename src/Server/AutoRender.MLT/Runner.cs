@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
-using System.IO;
 using System.Reflection;
 using System.Text;
-using AutoRender.Data;
 using log4net;
 
 namespace AutoRender.MLT {
@@ -26,7 +24,7 @@ namespace AutoRender.MLT {
         private readonly string Command;
         private readonly string Parameters;
 
-        private Process _objProcess;
+        private readonly Process _objProcess;
         private ProcessStatus _objStatus = ProcessStatus.Stopped;
 
         public ProcessStatus Status {
@@ -136,13 +134,13 @@ namespace AutoRender.MLT {
         }
 
         private void DataReceived(object sender, DataReceivedEventArgs e) {
-            if (!String.IsNullOrEmpty(e.Data)) {
+            if (!string.IsNullOrEmpty(e.Data)) {
                 StdOut?.Invoke(this, e.Data.Trim());
             }
         }
 
         private void DataReceived_Error(object sender, DataReceivedEventArgs e) {
-            if (!String.IsNullOrEmpty(e.Data)) {
+            if (!string.IsNullOrEmpty(e.Data)) {
                 StdOut?.Invoke(this, e.Data.Trim());
             }
         }
@@ -152,8 +150,8 @@ namespace AutoRender.MLT {
             _objProcess.ErrorDataReceived -= DataReceived;
             _objProcess.Exited -= _objProcess_Exited;
 
-            Status = (_objProcess.ExitCode != 0) ? ProcessStatus.Failed : ProcessStatus.Done;
             TimeTaken = _objProcess.ExitTime.Subtract(_objProcess.StartTime).TotalSeconds;
+            Status = (_objProcess.ExitCode != 0) ? ProcessStatus.Failed : ProcessStatus.Done;
         }
     }
 }

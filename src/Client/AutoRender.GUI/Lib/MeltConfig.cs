@@ -1,9 +1,8 @@
-﻿using AutoRender.Data;
-using AutoRender.Messaging;
-using System;
+﻿using System;
 using System.IO;
 using System.Text;
 using System.Xml.Linq;
+using AutoRender.Data;
 
 namespace AutoRender {
 
@@ -30,9 +29,10 @@ namespace AutoRender {
                 new XDeclaration("1.0", "utf-8", "no"),
                 new XElement("mlt",
                     new XAttribute("LC_NUMERIC", "C"),
-                    new XAttribute("producer", "main bin"),
+                    new XAttribute("producer", "main_bin"),
                     new XElement("playlist",
-                        new XAttribute("id", "main bin"),
+                        new XAttribute("id", "main_bin"),
+                        new XAttribute("autoclose", "1"),
                         new XElement("property", new XAttribute("name", "xml_retain")) { Value = "1" }
                     ),
                     new XElement("profile",
@@ -64,6 +64,7 @@ namespace AutoRender {
                     ),
                     new XElement("playlist",
                         new XAttribute("id", "background"),
+                        new XAttribute("autoclose", "1"),
                         new XElement("entry",
                             new XAttribute("producer", "black"),
                             new XAttribute("in", strDurationStart),
@@ -88,6 +89,7 @@ namespace AutoRender {
                     ),
                     new XElement("playlist",
                         new XAttribute("id", "playlist0"),
+                        new XAttribute("autoclose", "1"),
                         new XElement("entry",
                             new XAttribute("producer", "producer0"),
                             new XAttribute("in", strDurationStart),

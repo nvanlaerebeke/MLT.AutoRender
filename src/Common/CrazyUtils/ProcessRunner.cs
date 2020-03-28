@@ -4,7 +4,8 @@ using System.Text;
 using System.Threading;
 
 namespace CrazyUtils {
-    public enum ProcessStatus { 
+
+    public enum ProcessStatus {
         Stopped,
         Paused,
         Running,
@@ -13,7 +14,9 @@ namespace CrazyUtils {
     }
 
     public class ProcessRunner {
+
         public event EventHandler<string> StdOut;
+
         public event EventHandler<ProcessStatus> StatusChanged;
 
         private readonly string Command;
@@ -33,6 +36,7 @@ namespace CrazyUtils {
                 }
             }
         }
+
         public double TimeTaken { get; private set; } = 0;
 
         public ProcessRunner(string pCommand, string pParameters) {
@@ -40,12 +44,16 @@ namespace CrazyUtils {
             Parameters = pParameters;
         }
 
+        private static readonly Mutex SingleExec = new Mutex();
+
         public void Start() {
-            if (Status == ProcessStatus.Paused) {
-                Kill("CONT");
-                Status = ProcessStatus.Running;
-            } else {
-                StartProcess();
+            lock (SingleExec) {
+                if (Status == ProcessStatus.Paused) {
+                    Kill("CONT");
+                    Status = ProcessStatus.Running;
+                } else {
+                    StartProcess();
+                }
             }
         }
 
@@ -95,7 +103,7 @@ namespace CrazyUtils {
                 try {
                     _objProcess.PriorityClass = ProcessPriorityClass.BelowNormal;
                 } catch { }
-
+                var output = _objProcess.StandardOutput.ReadToEnd();
                 _objProcess.WaitForExit();
             } catch (Exception) {
                 Status = ProcessStatus.Failed;
@@ -111,23 +119,26 @@ namespace CrazyUtils {
                             ErrorDialog = false,
                             CreateNoWindow = true,
                         }
-                    }.Start(); 
+                    }.Start();
                 } catch (Exception) { }
             }
         }
 
-        void DataReceived(object sender, DataReceivedEventArgs e) {
-            if (!String.IsNullOrEmpty(e.Data)) {
-                StdOut?.Invoke(this, e.Data.Trim());
-            }
-        }
-        void DataReceived_Error(object sender, DataReceivedEventArgs e) {
-            if (!String.IsNullOrEmpty(e.Data)) {
+        private void DataReceived(object sender, DataReceivedEventArgs e) {
+            Console.WriteLine(e.Data);
+            if (!string.IsNullOrEmpty(e.Data)) {
                 StdOut?.Invoke(this, e.Data.Trim());
             }
         }
 
-        void _objProcess_Exited(object sender, EventArgs e) {
+        private void DataReceived_Error(object sender, DataReceivedEventArgs e) {
+            Console.WriteLine(e.Data);
+            if (!string.IsNullOrEmpty(e.Data)) {
+                StdOut?.Invoke(this, e.Data.Trim());
+            }
+        }
+
+        private void _objProcess_Exited(object sender, EventArgs e) {
             _objProcess.OutputDataReceived -= DataReceived;
             _objProcess.ErrorDataReceived -= DataReceived;
             _objProcess.Exited -= _objProcess_Exited;

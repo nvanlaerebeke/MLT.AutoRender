@@ -6,7 +6,7 @@
     <ProductVersion>3.10</ProductVersion>
     <ProjectGuid>1495a077-81f0-4b8b-9586-d25b308760fe</ProjectGuid>
     <SchemaVersion>2.0</SchemaVersion>
-    <OutputName>AutoRender.Client.Installer</OutputName>
+    <OutputName>AutoRender Client</OutputName>
     <OutputType>Package</OutputType>
     <Cultures>;</Cultures>
   </PropertyGroup>

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Reflection;
-using System.Runtime.InteropServices;
 using System.Security.AccessControl;
 using System.Security.Principal;
 using System.Threading;
@@ -13,11 +12,11 @@ namespace CrazyUtils {
         private Mutex _mutex;
 
         private void InitMutex() {
-            string appGuid = GetStringSha256Hash(Assembly.GetExecutingAssembly().FullName);
+            var appGuid = GetStringSha256Hash(Assembly.GetEntryAssembly().FullName);
             try {
-            //    appGuid = ((GuidAttribute)Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(GuidAttribute), false).GetValue(0)).Value;
+                //    appGuid = ((GuidAttribute)Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(GuidAttribute), false).GetValue(0)).Value;
             } catch { }
-            string mutexId = string.Format("Global\\{{{0}}}", appGuid);
+            var mutexId = string.Format("Global\\{{{0}}}", appGuid);
             _mutex = new Mutex(false, mutexId);
 
             var allowEveryoneRule = new MutexAccessRule(new SecurityIdentifier(WellKnownSidType.WorldSid, null), MutexRights.FullControl, AccessControlType.Allow);
@@ -50,16 +49,14 @@ namespace CrazyUtils {
             }
         }
 
-        internal string GetStringSha256Hash(string text)
-        {
-            if (String.IsNullOrEmpty(text))
-                return String.Empty;
+        internal string GetStringSha256Hash(string text) {
+            if (string.IsNullOrEmpty(text))
+                return string.Empty;
 
-            using (var sha = new System.Security.Cryptography.SHA256Managed())
-            {
-                byte[] textData = System.Text.Encoding.UTF8.GetBytes(text);
-                byte[] hash = sha.ComputeHash(textData);
-                return BitConverter.ToString(hash).Replace("-", String.Empty);
+            using (var sha = new System.Security.Cryptography.SHA256Managed()) {
+                var textData = System.Text.Encoding.UTF8.GetBytes(text);
+                var hash = sha.ComputeHash(textData);
+                return BitConverter.ToString(hash).Replace("-", string.Empty);
             }
         }
     }
