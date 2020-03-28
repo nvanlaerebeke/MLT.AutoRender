@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using CrazyUtils;
 
@@ -58,7 +59,11 @@ namespace AutoRender.Data {
                 if (Environment.OSVersion.Platform == PlatformID.Unix) {
                     return ConfigManager.Get<string>(Section.Global.ToString(), "BasePath", Path.Combine("/mnt/nas/Video/Movies", "Inbox"));
                 } else {
-                    return ConfigManager.Get<string>(Section.Global.ToString(), "BasePath", Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "Inbox"));
+                    if (Debugger.IsAttached) {
+                        return ConfigManager.Get<string>(Section.Global.ToString(), "BasePath", Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "Inbox"));
+                    } else {
+                        return ConfigManager.Get<string>(Section.Global.ToString(), "BasePath", Path.Combine(@"C:\", "Inbox"));
+                    }
                 }
             }
         }

@@ -1,33 +1,37 @@
-﻿using System;
+﻿using System.Diagnostics;
+using System.ServiceProcess;
 using System.Threading;
 using AutoRender.Server;
-using AutoRender.Logging;
-using System.IO;
-using System.Reflection;
+using CrazyUtils;
 
 namespace AutoRender.Service {
 
     internal static class Program {
-        private static ManualResetEvent _quit = new ManualResetEvent(false);
+        private static readonly ManualResetEvent _quit = new ManualResetEvent(false);
         private static AutoRenderServer AutoRender;
 
         private static void Main() {
-            if (Environment.OSVersion.Platform == PlatformID.Unix) {
-                Environment.SetEnvironmentVariable("MONO_REGISTRY_PATH", Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "registry"));
+            if (Debugger.IsAttached) {
+                using (new SingleInstance(1000)) { //1000ms timeout on global lock
+                    new Thread(() => {
+                        AutoRender = new AutoRenderServer();
+                        AutoRender.Start();
+                    }) { IsBackground = true }.Start();
+                    System.Console.CancelKeyPress += Console_CancelKeyPress;
+                    _ = _quit.WaitOne();
+                }
+            } else {
+                ServiceBase[] ServicesToRun;
+                ServicesToRun = new ServiceBase[]
+                {
+                new AutoRenderService()
+                };
+                ServiceBase.Run(ServicesToRun);
             }
+        }
 
-            Logger.init(
-                log4net.Core.Level.Debug,
-                Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "AutoRender.log")
-            );
-
-            AutoRender = new AutoRenderServer();
-            AutoRender.Start();
-
-            Console.CancelKeyPress += (s, e) => {
-                _quit.Set();
-            };
-            _quit.WaitOne();
+        private static void Console_CancelKeyPress(object sender, System.ConsoleCancelEventArgs e) {
+            _ = _quit.Set();
         }
     }
 }

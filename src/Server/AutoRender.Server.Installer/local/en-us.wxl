@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WixLocalization Culture="en-us" xmlns="http://schemas.microsoft.com/wix/2006/localization">
+  <String Id="productname">AutoRender Server</String>
+  <String Id="languageid">1033</String>
+  <String Id="company">CrazyTown</String>
+  <String Id="downgrade">A newer version of !(loc.productname) is already installed.</String>
+  <String Id="description">AutoRender Server</String>
+</WixLocalization>

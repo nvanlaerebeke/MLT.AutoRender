@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace AutoRender.Workspace.Monitor {
+
     internal delegate void WorkspaceUpdated(WorkspaceType pType, List<FSEventInfo> pChanges);
 
-    internal enum WorkspaceType { 
-        Project,
-        New,
-        Final
-    }
-
     internal class WorkspaceWatcher {
+
         public event WorkspaceUpdated Updated;
 
         #region private Fields
@@ -35,17 +30,15 @@ namespace AutoRender.Workspace.Monitor {
             _objFinalMonitor.Start();
         }
 
-        void _objNewMonitor_Changed(List<FSEventInfo> pEvents) {
+        private void _objNewMonitor_Changed(List<FSEventInfo> pEvents) {
             Updated?.Invoke(WorkspaceType.New, pEvents);
         }
 
-
-        void _objFinalMonitor_Changed(List<FSEventInfo> pEvents) {
+        private void _objFinalMonitor_Changed(List<FSEventInfo> pEvents) {
             Updated?.Invoke(WorkspaceType.Final, pEvents);
         }
 
-
-        void _objProjectMonitor_Changed(List<FSEventInfo> pEvents) {
+        private void _objProjectMonitor_Changed(List<FSEventInfo> pEvents) {
             Updated?.Invoke(WorkspaceType.Project, pEvents);
         }
     }

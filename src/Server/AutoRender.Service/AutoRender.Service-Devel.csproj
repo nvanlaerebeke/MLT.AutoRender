@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{C4BA79BE-2094-4B71-A84C-E4ACABDE3958}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <RootNamespace>AutoRender.Service</RootNamespace>
     <AssemblyName>AutoRender.Service</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
@@ -17,7 +17,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\..\build\</OutputPath>
+    <OutputPath>..\..\..\build\Server\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -32,11 +32,21 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.ServiceProcess" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AutoRenderService.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="AutoRenderService.Designer.cs">
+      <DependentUpon>AutoRenderService.cs</DependentUpon>
+    </Compile>
     <Compile Include="ErrorHandler.cs" />
     <Compile Include="Program.cs" />
   </ItemGroup>
@@ -52,6 +62,10 @@
       <Project>{1baf5e8c-4a8c-48ce-96f9-db45f2980a47}</Project>
       <Name>AutoRender.Messaging-Devel</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Common\CrazyUtils\CrazyUtils.csproj">
+      <Project>{232647D8-8CA8-4F02-91B9-72EE17E99DD1}</Project>
+      <Name>CrazyUtils</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Lib\mitto\src\Mitto.Connection.WebsocketSharp\Mitto.Connection.WebsocketSharp.csproj">
       <Project>{cf99d3f2-2c06-4a9f-ba22-e2e0ca457b58}</Project>
       <Name>Mitto.Connection.WebsocketSharp</Name>
@@ -59,6 +73,14 @@
     <ProjectReference Include="..\..\Lib\mitto\src\Mitto.Connection.Websocket\Mitto.Connection.Websocket.csproj">
       <Project>{5557b374-341e-4176-9d46-be8606136ada}</Project>
       <Name>Mitto.Connection.Websocket</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Lib\mitto\src\Mitto.IConnection\Mitto.IConnection.csproj">
+      <Project>{aaf65eba-e48d-491a-ad2e-525bde11ec6f}</Project>
+      <Name>Mitto.IConnection</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Lib\mitto\src\Mitto.IMessaging\Mitto.IMessaging.csproj">
+      <Project>{3bb1c211-9006-4fee-9f40-7556717431b0}</Project>
+      <Name>Mitto.IMessaging</Name>
     </ProjectReference>
     <ProjectReference Include="..\AutoRender.Messaging.Actions\AutoRender.Messaging.Actions-Devel.csproj">
       <Project>{246967f3-4261-4c80-bef9-4437fda84388}</Project>
@@ -79,6 +101,11 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\..\Resources\autorender.ico">
+      <Link>autorender.ico</Link>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

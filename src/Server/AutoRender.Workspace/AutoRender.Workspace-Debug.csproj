@@ -39,6 +39,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EqualExtension.cs" />
+    <Compile Include="Monitor\Objects\WorkspaceType.cs" />
+    <Compile Include="Monitor\Objects\FSEventInfo.cs" />
     <Compile Include="Monitor\FinalMonitor.cs" />
     <Compile Include="Monitor\Monitor.cs" />
     <Compile Include="Monitor\NewMonitor.cs" />
@@ -47,7 +49,6 @@
     <Compile Include="WorkspaceItem.cs" />
     <Compile Include="Workspace.cs" />
     <Compile Include="Monitor\WorkspaceWatcher.cs" />
-    <Compile Include="ILog.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />

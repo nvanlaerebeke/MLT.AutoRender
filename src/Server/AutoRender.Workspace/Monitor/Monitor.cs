@@ -1,29 +1,21 @@
 ﻿using System;
-using System.Linq;
-using System.IO;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Timers;
 
 namespace AutoRender.Workspace.Monitor {
 
     internal delegate void FSEvent(List<FSEventInfo> pEvents);
 
-    internal class FSEventInfo {
-        public FileSystemEventArgs Args;
-
-        public FSEventInfo(object sender, FileSystemEventArgs e) {
-            Args = e as FileSystemEventArgs;
-        }
-    }
-
     public class Monitor {
 
         internal event FSEvent Changed;
 
-        private FileSystemWatcher _objWatcher;
-        private List<FSEventInfo> _lstEvents = new List<FSEventInfo>();
+        private readonly FileSystemWatcher _objWatcher;
+        private readonly List<FSEventInfo> _lstEvents = new List<FSEventInfo>();
 
-        private Timer _objWaitTimer;
+        private readonly Timer _objWaitTimer;
 
         public Monitor(FileSystemWatcher pWatcher) {
             _objWatcher = pWatcher;

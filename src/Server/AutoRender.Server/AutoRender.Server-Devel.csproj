@@ -37,8 +37,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AutoRenderServer.cs" />
+    <Compile Include="Services\CommunicationService.cs" />
+    <Compile Include="Services\IService.cs" />
+    <Compile Include="Services\LoggingService.cs" />
+    <Compile Include="Services\Service.cs" />
+    <Compile Include="ServiceManager.cs" />
+    <Compile Include="Services\WorkspaceMonitorService.cs" />
     <Compile Include="WebSocketServer.cs" />
-    <Compile Include="WorkspaceMonitor.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Common\AutoRender.Data\AutoRender.Data.csproj">

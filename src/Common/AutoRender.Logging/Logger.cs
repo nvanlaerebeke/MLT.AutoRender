@@ -3,12 +3,11 @@ using log4net.Appender;
 using log4net.Core;
 using log4net.Layout;
 using log4net.Repository.Hierarchy;
-using System;
 
 namespace AutoRender.Logging {
 
     public static class Logger {
-        private static object LOCK = new object();
+        private static readonly object LOCK = new object();
 
         public static void init(Level pLogLevel, string pLogFile) {
             lock (LOCK) {
@@ -21,7 +20,7 @@ namespace AutoRender.Logging {
                 var hierarchy = (Hierarchy)LogManager.GetRepository();
                 hierarchy.Root.Level = pLogLevel;
 
-                if (!String.IsNullOrEmpty(pLogFile)) {
+                if (!string.IsNullOrEmpty(pLogFile)) {
                     var roller = new RollingFileAppender {
                         AppendToFile = true,
                         File = pLogFile,
@@ -35,24 +34,20 @@ namespace AutoRender.Logging {
                     roller.ActivateOptions();
                     hierarchy.Root.AddAppender(roller);
 
-
-#if DEBUG
-                    var debugAppender = new ConsoleAppender
-                    {
+                    //#if DEBUG
+                    var debugAppender = new ConsoleAppender {
                         Layout = patternLayout
                     };
                     debugAppender.ActivateOptions();
                     hierarchy.Root.AddAppender(debugAppender);
-#endif
-                }
-                else {
+                    //#endif
+                } else {
                     var consoleappender = new ConsoleAppender {
                         Layout = patternLayout
                     };
                     consoleappender.ActivateOptions();
                     hierarchy.Root.AddAppender(consoleappender);
                 }
-
 
                 hierarchy.Configured = true;
             }

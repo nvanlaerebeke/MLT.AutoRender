@@ -1,6 +1,6 @@
-﻿using Mitto.Messaging;
+﻿using System;
+using Mitto.Messaging;
 using Mitto.Utilities;
-using System;
 
 namespace AutoRender {
 
@@ -42,7 +42,7 @@ namespace AutoRender {
 
             Client.ConnectAsync(new Mitto.Connection.Websocket.ClientParams() {
                 HostName = "localhost",
-                Port = 80,
+                Port = 37697,
                 Secure = false,
             });
         }

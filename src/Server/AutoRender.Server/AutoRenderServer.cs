@@ -1,85 +1,42 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Net;
 using System.Reflection;
 using AutoRender.Data;
-using AutoRender.Workspace;
-using CrazyUtils;
+using AutoRender.Server.Services;
 using log4net;
-using Mitto;
-using Mitto.Connection.Websocket;
 
 namespace AutoRender.Server {
 
     public class AutoRenderServer {
         private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
-
-        private readonly WorkspaceMonitor WorkspaceMonitor;
-        private readonly WebSocketServer Server;
+        private readonly ServiceManager ServiceManager;
 
         public AutoRenderServer() {
-            SetupSystemNetWebSocket();
-            //SetupWebSocketSharp();
-            Cleanup();
-            Server = new WebSocketServer();
-            WorkspaceMonitor = new WorkspaceMonitor(WorkspaceFactory.Get());
-        }
-
-        /*private void SetupWebSocketSharp() {
-            Config.Initialize(
-                new Config.ConfigParams() {
-                    ConnectionProvider = new Mitto.Connection.WebsocketSharp.WebSocketConnectionProvider() {
-                        ServerConfig = new Mitto.Connection.WebsocketSharp.ServerParams() {
-                            IP = IPAddress.Any,
-                            Port = 80,
-                            Path = "/",
-                            FragmentSize = 512,
-                        }
-                    },
-                    //Logger = new MittoLogger(LogManager.GetLogger(typeof(Mitto.Server))),
-                    Assemblies = new List<AssemblyName> {
-                        new AssemblyName("AutoRender.Messaging"),
-                        new AssemblyName("AutoRender.Messaging.Actions")
-                    }
-                }
-            );
-        }*/
-
-        private void SetupSystemNetWebSocket() {
-            Config.Initialize(
-                new Config.ConfigParams() {
-                    ConnectionProvider = new WebSocketConnectionProvider() {
-                        ServerConfig = new ServerParams() {
-                            IP = IPAddress.Any,
-                            Port = 80,
-                            Path = "/",
-                            FragmentSize = 512,
-                        }
-                    },
-                    //Logger = new MittoLogger(LogManager.GetLogger(typeof(Mitto.Server))),
-                    Assemblies = new List<AssemblyName> {
-                        new AssemblyName("AutoRender.Messaging"),
-                        new AssemblyName("AutoRender.Messaging.Actions")
-                    }
-                }
-            );
+            ServiceManager = new ServiceManager();
         }
 
         public void Start() {
             if (Environment.OSVersion.Platform == PlatformID.Unix) {
-                WorkspaceMonitor.Start();
-                Server.Start();
-            } else {
-                using (new SingleInstance(1000)) { //1000ms timeout on global lock
-                    WorkspaceMonitor.Start();
-                    Server.Start();
-                }
+                Environment.SetEnvironmentVariable("MONO_REGISTRY_PATH", Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "registry"));
             }
+
+            ServiceManager.Start();
+
+            try {
+                Cleanup();
+            } catch (Exception ex) {
+                Log.Error("Failed to run the cleanup");
+                Log.Error(ex);
+            }
+        }
+
+        public void Stop() {
+            ServiceManager.Stop();
         }
 
         private void Cleanup() {
             try {
+                Log.Debug("Cleaning up temp directory");
                 if (Directory.Exists(Settings.TempDirectory)) {
                     Directory.Delete(Settings.TempDirectory, true);
                 }

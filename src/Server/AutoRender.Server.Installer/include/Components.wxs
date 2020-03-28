@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi" xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
+  <Fragment>
+    <ComponentGroup Id="ProductComponents">
+      <ComponentRef Id="MainAppShortcut" />
+      <ComponentRef Id="AutoRenderService" />
+    </ComponentGroup>
+
+    <DirectoryRef Id="AutoRenderServerInstallDir" FileSource="..\..\..\build\Server">
+      <!-- Start Menu ShortCut -->
+      <Component Id="MainAppShortcut" Guid="{A43A5033-D5A9-4F8D-9950-1EBD5702BB0A}">
+        <Shortcut
+          Id="MainAppShortcut"
+          Name="AutoRender Server"
+          Target="[AutoRenderServerInstallDir]AutoRender.Service.exe"
+          Directory="ProgramMenuFolderName"
+          WorkingDirectory="AutoRenderServerInstallDir"
+          Icon="icon" />
+
+        <RegistryValue Id="RegShortcutKey" Root="HKCU" Key="SOFTWARE\AutoRender\Server" Name="Shortcut" Value="1" Type="integer" KeyPath="yes" />
+
+        <!-- Remove On UnInstall -->
+        <RemoveFolder Id="RemoveStartMenu" Directory="ProgramMenuFolderName" On="uninstall" />
+      </Component>
+
+      <!-- Service -->
+      <Component Id="AutoRenderService" Guid="{2F0118FE-C1ED-403C-9265-136A19AF3EC7}">
+        <File
+          Id='ServiceFile'
+          Name='AutoRender.Service.exe'
+          DiskId='1'
+          Source="..\..\..\build\Server\AutoRender.Service.exe"
+          Vital='yes'
+          KeyPath='yes' />
+
+        <ServiceInstall
+          Id="ServiceInstaller"
+          Type="ownProcess"
+          Name="AutoRender Service"
+          DisplayName="AutoRender Service"
+          Description="AutoRender Service"
+          Start="auto"
+          ErrorControl="normal"
+          Vital="yes"
+          Account="LocalSystem"
+          Interactive="no" />
+
+        <ServiceControl
+          Id="ServiceControl"
+          Start="install"
+          Stop="both"
+          Remove="uninstall"
+          Name="AutoRender Service"
+          Wait="yes" />
+      </Component>
+    </DirectoryRef>
+  </Fragment>
+</Wix>

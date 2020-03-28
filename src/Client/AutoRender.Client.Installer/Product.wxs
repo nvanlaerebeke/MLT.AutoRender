@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+
+  <!-- Define Variables -->
+
+  <!-- Product ID - Changes with each version -->
+  <?define id = "{842BAEF4-07FD-40E4-96D6-E62209DB45C4}" ?>
+
+  <!-- Misc -->
+  <?define appwebsite = "https://github.com/nvanlaerebeke/MLT.AutoRender" ?>
+
+  <!-- Unique Product Upgrade Code => Never Changes-->
+  <?define upgradecode = "15ca5321-8a8e-4259-bdf4-630e564a1085" ?>
+
+  <Product
+    Id="$(var.id)"
+    Name="!(loc.productname)"
+    Language="!(loc.languageid)"
+    Version="$(var.BuildVersion)"
+    Manufacturer="!(loc.company)"
+    UpgradeCode="$(var.upgradecode)">
+
+    <Package
+      InstallerVersion="200"
+      Compressed="yes"
+      InstallScope="perMachine"
+      Manufacturer="!(loc.company)"
+      Description="!(loc.description)" />
+
+    <MajorUpgrade DowngradeErrorMessage="!(loc.downgrade)" />
+
+    <!-- Cab file needs to be included -->
+    <MediaTemplate EmbedCab="yes" />
+
+    <!-- Give the installer an icon -->
+    <Icon Id="icon" SourceFile="$(var.ProjectDir)\..\..\Resources\autorender.ico" />
+    <Property Id="ARPPRODUCTICON">icon</Property>
+    <Property Id="ARPURLINFOABOUT">$(var.appwebsite)</Property>
+
+    <!-- Pages (UI) -->
+    <UIRef Id="WixUI_Minimal" />
+
+    <!-- Installer Images -->
+    <WixVariable Id="WixUIDialogBmp" Value="$(var.ProjectDir)\assets\Background.bmp" />
+    <WixVariable Id="WixUIBannerBmp" Value="$(var.ProjectDir)\assets\Banner.bmp" />
+    <WixVariable Id="WixUILicenseRtf" Value="$(var.ProjectDir)\assets\License.rtf" />
+
+    <!-- Define components, shorts, files, registry stuff etc... -->
+    <Feature Id="ProductFeature" Title="AutoRender.Client.Installer" Level="1">
+      <ComponentGroupRef Id="ProductComponents" />
+      <ComponentGroupRef Id="PublishedComponents" />
+    </Feature>
+  </Product>
+</Wix>

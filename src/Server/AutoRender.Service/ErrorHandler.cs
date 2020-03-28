@@ -1,7 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Reflection;
 using System.Threading.Tasks;
-using System.Collections.Generic;
 using log4net;
 
 namespace AutoRender.Lib.Helpers {
@@ -27,8 +27,10 @@ namespace AutoRender.Lib.Helpers {
         }
 
         private void LogAndExit(Exception e) {
+            Console.WriteLine($"Exception: {e.Message}");
             Log.Error("Exception detected:");
-            List<Exception> lstToLog = new List<Exception>();
+
+            var lstToLog = new List<Exception>();
 
             while (e != null) {
                 lstToLog.Add(e);
@@ -36,8 +38,8 @@ namespace AutoRender.Lib.Helpers {
                 var objType = e.GetType();
                 switch (objType.ToString()) {
                     case "Npgsql.Tls.ClientAlertException":
-                        PropertyInfo objDescription = objType.GetProperty("Description");
-                        PropertyInfo objExtraInfo = objType.GetProperty("ExtraInfo");
+                        var objDescription = objType.GetProperty("Description");
+                        var objExtraInfo = objType.GetProperty("ExtraInfo");
                         if (objDescription != null && objExtraInfo != null) {
                             if (objDescription.GetValue(e).ToString() == "CertificateUnknown") {
                                 Log.Error("Postgres TLS certificate not trusted");
@@ -49,9 +51,13 @@ namespace AutoRender.Lib.Helpers {
                         break;
                 }
                 e = e.InnerException;
+                Console.WriteLine($"Exception: {e.Message}");
             }
             //log exceptions & exit
-            lstToLog.ForEach(ex => { Log.Error(ex); });
+            lstToLog.ForEach(ex => {
+                Console.WriteLine($"Exception: {ex.Message}");
+                Log.Error(ex);
+            });
             Log.Error("Exiting...");
             Environment.Exit(1);
         }

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Fragment>
+    <Directory Id="TARGETDIR" Name="SourceDir">
+
+      <!-- Start Menu -->
+      <Directory Id="ProgramMenuFolder">
+        <Directory Id="ProgramMenuFolderName" Name="AutoRender" />
+      </Directory>
+
+      <?if $(var.Platform)=x64 ?>
+      <Directory Id="ProgramFiles64Folder">
+        <Directory Id="INSTALLFOLDER" Name="AutoRender">
+          <Directory Id="AutoRenderServerInstallDir" Name="Server" />
+          <Directory Id="AutoRenderServerDirRef" Name="Server" />
+        </Directory>
+      </Directory>
+      <?else?>
+      <Directory Id="ProgramFilesFolder">
+        <Directory Id="INSTALLFOLDER" Name="AutoRender">
+          <Directory Id="AutoRenderServerInstallDir" Name="Server" />
+          <Directory Id="AutoRenderServerDirRef" Name="Server" />
+        </Directory>
+      </Directory>
+      <?endif?>
+    </Directory>
+  </Fragment>
+</Wix>
