@@ -18,11 +18,22 @@ namespace AutoRender.MLT {
         private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
         private Dictionary<string, string> _dicConsumerProperties = null;
-        private string _strSourceFile;
+        private string _strSourceFile = "";
         private XDocument _objConfig = null;
         private readonly VideoInfoProvider VideoInfoProvider;
+        private string _strTargetPath = "";
 
-        public string TargetPath { get; private set; }
+        public string TargetPath {
+            get {
+                if (string.IsNullOrEmpty(_strTargetPath)) {
+                    _ = SourceFile;
+                }
+                return _strTargetPath;
+            }
+            private set {
+                _strTargetPath = value;
+            }
+        }
 
         public string SourceFile {
             get {
@@ -45,9 +56,26 @@ namespace AutoRender.MLT {
             }
         }
 
-        internal string ConfigFile { get; private set; }
+        internal string ConfigFile {
+            get {
+                return Path.Combine(
+                    Path.Combine(Settings.TempDirectory, Project.ID.ToString()),
+                    Path.ChangeExtension(Path.GetFileName(Project.FullPath), ".xml")
+                );
+            }
+        }
+
         public string TempSourcePath { get; private set; }
-        public string TempTargetPath { get; private set; }
+
+        public string TempTargetPath {
+            get {
+                return Path.Combine(
+                    Path.Combine(Settings.TempDirectory, Project.ID.ToString()),
+                    Path.ChangeExtension(Path.GetFileName(TargetPath), ".tmp")
+                );
+            }
+        }
+
         private MLTProject Project { get; set; }
 
         internal MeltConfig(MLTProject pProject, VideoInfoProvider pVideoInfoProvider) {
@@ -58,10 +86,8 @@ namespace AutoRender.MLT {
                 if (!Directory.Exists(ProjectTempDir)) {
                     _ = Directory.CreateDirectory(ProjectTempDir);
                 }
-                ConfigFile = Path.Combine(ProjectTempDir, Path.ChangeExtension(Path.GetFileName(Project.FullPath), ".xml"));
                 LoadConfig();
                 DetectSource();
-                TempTargetPath = Path.Combine(ProjectTempDir, Path.ChangeExtension(Path.GetFileName(TargetPath), ".tmp"));
             } catch (Exception ex) {
                 //log and ignore?
                 Log.Error(ex);

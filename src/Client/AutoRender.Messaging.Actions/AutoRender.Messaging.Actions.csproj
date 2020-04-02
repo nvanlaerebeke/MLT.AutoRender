@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{246967F3-4261-4C80-BEF9-4437FDA84388}</ProjectGuid>
+    <ProjectGuid>{18183397-F6C3-4964-8591-CD61C598FF4E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>AutoRender.Messaging.Actions</RootNamespace>
@@ -12,6 +12,7 @@
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -37,34 +38,20 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Request\GetStatusRequestAction.cs" />
-    <Compile Include="Request\JobPauseRequestAction.cs" />
-    <Compile Include="Request\JobStartRequestAction.cs" />
-    <Compile Include="Request\JobStopRequestAction.cs" />
     <Compile Include="Request\ReloadRequestAction.cs" />
-    <Compile Include="Request\UpdateProjectSourceRequestAction.cs" />
-    <Compile Include="Request\UpdateProjectTargetRequestAction.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Common\AutoRender.Data\AutoRender.Data.csproj">
-      <Project>{59d58f7e-ec28-4e70-bbc3-5d02b577bd11}</Project>
-      <Name>AutoRender.Data</Name>
+    <ProjectReference Include="..\..\..\..\mitto\src\Mitto.IMessaging\Mitto.IMessaging.csproj">
+      <Project>{3bb1c211-9006-4fee-9f40-7556717431b0}</Project>
+      <Name>Mitto.IMessaging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\mitto\src\Mitto.Messaging\Mitto.Messaging.csproj">
+      <Project>{c29037e3-9c2f-4996-8434-36600735d465}</Project>
+      <Name>Mitto.Messaging</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Common\AutoRender.Messaging\AutoRender.Messaging-Devel.csproj">
-      <Project>{1BAF5E8C-4A8C-48CE-96F9-DB45F2980A47}</Project>
+      <Project>{1baf5e8c-4a8c-48ce-96f9-db45f2980a47}</Project>
       <Name>AutoRender.Messaging-Devel</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\AutoRender.MLT\AutoRender.MLT-Debug.csproj">
-      <Project>{8B35EBCE-B31C-463A-8011-4986560252C3}</Project>
-      <Name>AutoRender.MLT-Debug</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\AutoRender.Video\AutoRender.Video-Debug.csproj">
-      <Project>{3415eeae-f02c-4d2d-980a-86f597a4a74c}</Project>
-      <Name>AutoRender.Video-Debug</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\AutoRender.Workspace\AutoRender.Workspace-Debug.csproj">
-      <Project>{B668B03E-B8FD-4C4A-BE79-3A96BAB7AD8C}</Project>
-      <Name>AutoRender.Workspace-Debug</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

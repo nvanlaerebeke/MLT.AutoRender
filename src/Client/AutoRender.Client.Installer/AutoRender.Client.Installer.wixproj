@@ -26,17 +26,11 @@
     <Compile Include="Product.wxs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="assets" />
     <Folder Include="include" />
     <Folder Include="local" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="local\en-us.wxl" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="assets\Background.bmp" />
-    <Content Include="assets\Banner.bmp" />
-    <Content Include="assets\License.rtf" />
   </ItemGroup>
   <ItemGroup>
     <WixExtension Include="WixUtilExtension">

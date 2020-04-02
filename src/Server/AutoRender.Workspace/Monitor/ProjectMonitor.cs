@@ -1,15 +1,14 @@
-﻿using AutoRender.Data;
-using System.IO;
+﻿using System.IO;
 
 namespace AutoRender.Workspace.Monitor {
 
     public class ProjectMonitor {
-        private Monitor _objMonitor;
+        private readonly Monitor _objMonitor;
 
         internal event FSEvent Changed;
 
-        public ProjectMonitor() {
-            _objMonitor = new Monitor(new FileSystemWatcher(Settings.ProjectDirectory, "*.mlt"));
+        public ProjectMonitor(string pPath) {
+            _objMonitor = new Monitor(new FileSystemWatcher(pPath, "*.mlt"));
             _objMonitor.Changed += _objMonitor_Changed;
             _objMonitor.Start();
         }

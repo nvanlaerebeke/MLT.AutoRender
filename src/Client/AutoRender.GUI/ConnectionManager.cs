@@ -1,13 +1,13 @@
-﻿using AutoRender.Data;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
+using AutoRender.Data;
 using AutoRender.Messaging.Request;
 using AutoRender.Messaging.Response;
 using AutoRender.Subscription.Messaging;
 using Mitto.IMessaging;
 using Mitto.Messaging.Response;
-using System;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace AutoRender {
 
@@ -113,7 +113,7 @@ namespace AutoRender {
             });
         }
 
-        private async Task<bool> GetStatus() {
+        public async Task<bool> GetStatus() {
             return await Task.Run(() => {
                 var blnSuccess = false;
                 do {

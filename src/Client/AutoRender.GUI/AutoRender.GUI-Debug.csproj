@@ -250,6 +250,10 @@
       <Project>{232647d8-8ca8-4f02-91b9-72ee17e99dd1}</Project>
       <Name>CrazyUtils</Name>
     </ProjectReference>
+    <ProjectReference Include="..\AutoRender.Messaging.Actions\AutoRender.Messaging.Actions.csproj">
+      <Project>{18183397-f6c3-4964-8591-cd61c598ff4e}</Project>
+      <Name>AutoRender.Messaging.Actions</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="DirectShowLib">

@@ -45,10 +45,16 @@
     <Compile Include="Monitor\Monitor.cs" />
     <Compile Include="Monitor\NewMonitor.cs" />
     <Compile Include="Monitor\ProjectMonitor.cs" />
+    <Compile Include="Monitor\WorkspaceMonitor.cs" />
+    <Compile Include="Monitor\WorkspaceUpdateCollector.cs" />
+    <Compile Include="Updater.cs" />
     <Compile Include="WorkspaceFactory.cs" />
-    <Compile Include="WorkspaceItem.cs" />
+    <Compile Include="Workspace\WorkspaceItem.cs" />
     <Compile Include="Workspace.cs" />
-    <Compile Include="Monitor\WorkspaceWatcher.cs" />
+    <Compile Include="WorkspaceOld.cs" />
+    <Compile Include="Workspace\WorkspaceContainer.cs" />
+    <Compile Include="Workspace\WorkspaceItemMatcher.cs" />
+    <Compile Include="Workspace\WorkspaceScanner.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />

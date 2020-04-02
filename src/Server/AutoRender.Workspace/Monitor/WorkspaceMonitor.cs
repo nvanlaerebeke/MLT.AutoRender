@@ -2,25 +2,23 @@
 
 namespace AutoRender.Workspace.Monitor {
 
-    internal delegate void WorkspaceUpdated(WorkspaceType pType, List<FSEventInfo> pChanges);
+    internal delegate void WorkspaceUpdated(WorkspaceType pType, List<FSEventInfo> pEvents);
 
-    internal class WorkspaceWatcher {
+    internal class WorkspaceMonitor {
 
         public event WorkspaceUpdated Updated;
-
-        #region private Fields
 
         private readonly ProjectMonitor _objProjectMonitor;
         private readonly FinalMonitor _objFinalMonitor;
         private readonly NewMonitor _objNewMonitor;
 
-        #endregion private Fields
+        public WorkspaceMonitor(string pNewDir, string pFinalDir, string pProjectDir) {
+            _objProjectMonitor = new ProjectMonitor(pProjectDir);
+            _objFinalMonitor = new FinalMonitor(pFinalDir);
+            _objNewMonitor = new NewMonitor(pNewDir);
+        }
 
-        public WorkspaceWatcher() {
-            _objProjectMonitor = new ProjectMonitor();
-            _objFinalMonitor = new FinalMonitor();
-            _objNewMonitor = new NewMonitor();
-
+        public void Start() {
             _objProjectMonitor.Changed += _objProjectMonitor_Changed;
             _objFinalMonitor.Changed += _objFinalMonitor_Changed;
             _objNewMonitor.Changed += _objNewMonitor_Changed;
@@ -28,6 +26,16 @@ namespace AutoRender.Workspace.Monitor {
             _objProjectMonitor.Start();
             _objNewMonitor.Start();
             _objFinalMonitor.Start();
+        }
+
+        public void Stop() {
+            _objProjectMonitor.Changed -= _objProjectMonitor_Changed;
+            _objFinalMonitor.Changed -= _objFinalMonitor_Changed;
+            _objNewMonitor.Changed -= _objNewMonitor_Changed;
+
+            _objProjectMonitor.Stop();
+            _objNewMonitor.Stop();
+            _objFinalMonitor.Stop();
         }
 
         private void _objNewMonitor_Changed(List<FSEventInfo> pEvents) {

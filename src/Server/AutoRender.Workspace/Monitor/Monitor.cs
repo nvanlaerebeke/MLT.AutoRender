@@ -2,13 +2,16 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Timers;
+using log4net;
 
 namespace AutoRender.Workspace.Monitor {
 
     internal delegate void FSEvent(List<FSEventInfo> pEvents);
 
     public class Monitor {
+        private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
         internal event FSEvent Changed;
 
@@ -31,6 +34,7 @@ namespace AutoRender.Workspace.Monitor {
                 }
             };
             _objWaitTimer.AutoReset = false;
+            _objWatcher.EnableRaisingEvents = true;
         }
 
         public void Start() {
@@ -39,7 +43,6 @@ namespace AutoRender.Workspace.Monitor {
                 _objWatcher.Created += _objWatcher_Created;
                 _objWatcher.Deleted += _objWatcher_Deleted;
                 _objWatcher.Renamed += _objWatcher_Renamed;
-                _objWatcher.EnableRaisingEvents = true;
             } catch (Exception ex) {
                 Console.WriteLine(ex);
             }
@@ -47,12 +50,10 @@ namespace AutoRender.Workspace.Monitor {
 
         public void Stop() {
             try {
-                _objWatcher.EnableRaisingEvents = false;
                 _objWatcher.Changed -= _objWatcher_Changed;
                 _objWatcher.Created -= _objWatcher_Created;
                 _objWatcher.Deleted -= _objWatcher_Deleted;
                 _objWatcher.Renamed -= _objWatcher_Renamed;
-                _objWatcher.Dispose();
             } catch (Exception ex) {
                 Console.WriteLine(ex);
             }
@@ -93,11 +94,33 @@ namespace AutoRender.Workspace.Monitor {
             lock (_lstEvents) {
                 try {
                     if (!_lstEvents.Any(e => e.Args.FullPath == eventArgs.FullPath && eventArgs.ChangeType == e.Args.ChangeType)) {
+                        switch (eventArgs.ChangeType) {
+                            case WatcherChangeTypes.Deleted:
+                                _lstEvents.RemoveAll(e => e.Args.FullPath.Equals(eventArgs.FullPath));
+                                break;
+                        }
                         _lstEvents.Add(new FSEventInfo(sender, eventArgs));
                     }
                 } catch (Exception ex) {
-                    Console.WriteLine(ex);
+                    Log.Error(ex);
                 }
+            }
+        }
+
+        ~Monitor() {
+            try {
+                if (_objWatcher != null) {
+                    _objWatcher.Dispose();
+                }
+            } catch (Exception) {
+            }
+
+            try {
+                if (_objWaitTimer != null) {
+                    _objWaitTimer.Stop();
+                    _objWaitTimer.Dispose();
+                }
+            } catch (Exception) {
             }
         }
     }

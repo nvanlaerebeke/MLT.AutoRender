@@ -21,6 +21,7 @@ namespace AutoRender.Server.Services {
             try {
                 Workspace = WorkspaceFactory.Get();
                 Workspace.Updated += Workspace_Updated;
+                Workspace.Reloaded += Workspace_Reloaded;
             } catch (Exception ex) {
                 Log.Error("Failed to set up the workspace monitor, clients will not receive updates");
                 Log.Error(ex);
@@ -29,6 +30,12 @@ namespace AutoRender.Server.Services {
 
         public override void Stop() {
             Workspace.Updated -= Workspace_Updated;
+            Workspace.Reloaded -= Workspace_Reloaded;
+        }
+
+        private void Workspace_Reloaded(object sender, EventArgs e) {
+            Log.Debug($"Workspace was reloaded, notifying clients...");
+            _ = MessagingFactory.Provider.GetSubscriptionHandler<WorkspaceUpdatedHandler>().NotifyReload();
         }
 
         private void Workspace_Updated(object sender, List<WorkspaceUpdatedEventArgs> e) {

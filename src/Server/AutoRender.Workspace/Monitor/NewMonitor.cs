@@ -1,16 +1,14 @@
-﻿using AutoRender.Data;
-using System;
-using System.IO;
+﻿using System.IO;
 
 namespace AutoRender.Workspace.Monitor {
 
     public class NewMonitor {
-        private Monitor _objMonitor;
+        private readonly Monitor _objMonitor;
 
         internal event FSEvent Changed;
 
-        public NewMonitor() {
-            _objMonitor = new Monitor(new FileSystemWatcher(Settings.NewDirectory, "*.mp4"));
+        public NewMonitor(string pPath) {
+            _objMonitor = new Monitor(new FileSystemWatcher(pPath, "*.mp4"));
             _objMonitor.Changed += _objMonitor_Changed;
         }
 

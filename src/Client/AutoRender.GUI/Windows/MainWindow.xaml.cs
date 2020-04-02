@@ -32,6 +32,7 @@ namespace AutoRender {
             ConnectionManager.Start();
 
             SendWorkspaceUpdatedRequestAction.WorkspaceUpdated += SendWorkspaceUpdatedRequestAction_WorkspaceUpdated;
+            AutoRender.Messaging.Actions.Request.ReloadRequestAction.ReloadRequested += ReloadRequestAction_ReloadRequested;
         }
 
         private void ConnectionManager_WorkspaceUpdated(object sender, List<WorkspaceItem> pWorkspaceItems) {
@@ -77,17 +78,11 @@ namespace AutoRender {
         #region Global
 
         private void ReLoad_Click(object sender, RoutedEventArgs e) {
-            SetLoading("ReLoading Workspace...");
-            _objViewModel.WorkspaceItems.Clear();
-            Task.Run(() => {
-                var objResult = ConnectionManager.ReLoad().Result;
-                _objViewModel.Update(objResult);
-                EndLoading();
-            });
+            Reload();
         }
 
         private void Refresh_Click(object sender, RoutedEventArgs e) {
-            ConnectionManager.Refesh();
+            Refresh();
         }
 
         private void StartAll_Click(object sender, RoutedEventArgs e) {
@@ -246,6 +241,28 @@ namespace AutoRender {
                     StartInfo = new ProcessStartInfo(Settings.ShotcutExecutable, "\"" + strPath + "\"")
                 }.Start();
             }
+        }
+
+        private void ReloadRequestAction_ReloadRequested(object sender, EventArgs e) {
+            Refresh();
+        }
+
+        private void Reload() {
+            SetLoading("ReLoading Workspace...");
+            _objViewModel.Clear();
+            Task.Run(() => {
+                var objResult = ConnectionManager.ReLoad().Result;
+                _objViewModel.Update(objResult);
+                EndLoading();
+            });
+        }
+
+        private void Refresh() {
+            SetLoading("Refreshing Workspace...");
+            Task.Run(() => {
+                ConnectionManager.GetStatus().Wait();
+                EndLoading();
+            });
         }
     }
 }

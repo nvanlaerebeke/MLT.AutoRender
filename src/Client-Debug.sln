@@ -55,6 +55,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Installer", "Installer", "{
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UnitTests", "UnitTests", "{ECC73345-EB97-4A55-9507-18B0E71C8794}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoRender.Messaging.Actions", "Client\AutoRender.Messaging.Actions\AutoRender.Messaging.Actions.csproj", "{18183397-F6C3-4964-8591-CD61C598FF4E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug_Ubuntu|Any CPU = Debug_Ubuntu|Any CPU
@@ -619,6 +621,30 @@ Global
 		{1495A077-81F0-4B8B-9586-D25B308760FE}.Release|x64.ActiveCfg = Release|x86
 		{1495A077-81F0-4B8B-9586-D25B308760FE}.Release|x86.ActiveCfg = Release|x86
 		{1495A077-81F0-4B8B-9586-D25B308760FE}.Release|x86.Build.0 = Release|x86
+		{18183397-F6C3-4964-8591-CD61C598FF4E}.Debug_Ubuntu|Any CPU.ActiveCfg = Debug|Any CPU
+		{18183397-F6C3-4964-8591-CD61C598FF4E}.Debug_Ubuntu|Any CPU.Build.0 = Debug|Any CPU
+		{18183397-F6C3-4964-8591-CD61C598FF4E}.Debug_Ubuntu|x64.ActiveCfg = Debug|Any CPU
+		{18183397-F6C3-4964-8591-CD61C598FF4E}.Debug_Ubuntu|x64.Build.0 = Debug|Any CPU
+		{18183397-F6C3-4964-8591-CD61C598FF4E}.Debug_Ubuntu|x86.ActiveCfg = Debug|Any CPU
+		{18183397-F6C3-4964-8591-CD61C598FF4E}.Debug_Ubuntu|x86.Build.0 = Debug|Any CPU
+		{18183397-F6C3-4964-8591-CD61C598FF4E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18183397-F6C3-4964-8591-CD61C598FF4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18183397-F6C3-4964-8591-CD61C598FF4E}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{18183397-F6C3-4964-8591-CD61C598FF4E}.Debug|x64.Build.0 = Debug|Any CPU
+		{18183397-F6C3-4964-8591-CD61C598FF4E}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{18183397-F6C3-4964-8591-CD61C598FF4E}.Debug|x86.Build.0 = Debug|Any CPU
+		{18183397-F6C3-4964-8591-CD61C598FF4E}.Release_Ubuntu|Any CPU.ActiveCfg = Release|Any CPU
+		{18183397-F6C3-4964-8591-CD61C598FF4E}.Release_Ubuntu|Any CPU.Build.0 = Release|Any CPU
+		{18183397-F6C3-4964-8591-CD61C598FF4E}.Release_Ubuntu|x64.ActiveCfg = Release|Any CPU
+		{18183397-F6C3-4964-8591-CD61C598FF4E}.Release_Ubuntu|x64.Build.0 = Release|Any CPU
+		{18183397-F6C3-4964-8591-CD61C598FF4E}.Release_Ubuntu|x86.ActiveCfg = Release|Any CPU
+		{18183397-F6C3-4964-8591-CD61C598FF4E}.Release_Ubuntu|x86.Build.0 = Release|Any CPU
+		{18183397-F6C3-4964-8591-CD61C598FF4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{18183397-F6C3-4964-8591-CD61C598FF4E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{18183397-F6C3-4964-8591-CD61C598FF4E}.Release|x64.ActiveCfg = Release|Any CPU
+		{18183397-F6C3-4964-8591-CD61C598FF4E}.Release|x64.Build.0 = Release|Any CPU
+		{18183397-F6C3-4964-8591-CD61C598FF4E}.Release|x86.ActiveCfg = Release|Any CPU
+		{18183397-F6C3-4964-8591-CD61C598FF4E}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -647,6 +673,7 @@ Global
 		{CE5F0847-F8B5-4B95-8E86-E007FCDC92A3} = {06BEA568-CC92-4848-BD68-ABA1675A8F93}
 		{B357BAC7-529E-4D81-A0D2-71041B19C8DE} = {06BEA568-CC92-4848-BD68-ABA1675A8F93}
 		{1495A077-81F0-4B8B-9586-D25B308760FE} = {F7B53856-70DC-47AF-8447-305A9C7FD189}
+		{18183397-F6C3-4964-8591-CD61C598FF4E} = {06BEA568-CC92-4848-BD68-ABA1675A8F93}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {56ED6544-64AE-4AA9-8549-7860F927C495}

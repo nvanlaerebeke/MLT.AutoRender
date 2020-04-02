@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Fragment Id="AutoRenderInstallers">
+    <PackageGroup Id="AutoRender">
+      <MsiPackage Id="Client" SourceFile="..\..\dist\AutoRender Client.msi" Compressed="yes" Vital="yes" DisplayInternalUI='no' />
+      <MsiPackage Id="Server" SourceFile="..\..\dist\AutoRender Server.msi" Compressed="yes" Vital="yes" DisplayInternalUI='no' />
+    </PackageGroup>
+  </Fragment>
+</Wix>

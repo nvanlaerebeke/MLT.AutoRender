@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi" xmlns:bal="http://schemas.microsoft.com/wix/BalExtension">
+  <Bundle
+    Name="AutoRender"
+    Version="1.0.0.0"
+    Manufacturer="CrazyTown"
+    UpgradeCode="{BFD7E68F-5B5F-4859-B1AF-15DC4915BAAB}"
+    IconSourceFile="..\Resources\autorender.ico">
+    <BootstrapperApplicationRef Id="WixStandardBootstrapperApplication.HyperlinkSidebarLicense">
+      <bal:WixStandardBootstrapperApplication
+          LicenseUrl="https://github.com/nvanlaerebeke/MLT.AutoRender/blob/master/LICENSE"
+          LogoSideFile="..\Resources\logosidefile.png"
+          LogoFile="..\Resources\logofile.png"
+          ShowVersion="yes"
+          SuppressDowngradeFailure="no"
+          SuppressOptionsUI="yes"
+          SuppressRepair="no" />
+    </BootstrapperApplicationRef>
+
+    <Chain>
+      <PackageGroupRef Id="AutoRender" />
+    </Chain>
+  </Bundle>
+</Wix>

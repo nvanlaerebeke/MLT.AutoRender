@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using AutoRender.Data;
 using log4net;
 
 namespace AutoRender.Workspace {
@@ -10,8 +11,13 @@ namespace AutoRender.Workspace {
 
         public static Workspace Get() {
             if (Workspace == null) {
-                Workspace = new Workspace();
-                Workspace.ReLoad();
+                Workspace = new Workspace(
+                    Settings.NewDirectory,
+                    Settings.FinalDirectory,
+                    Settings.ProjectDirectory,
+                    Settings.TempDirectory,
+                    new Video.VideoInfoProvider()
+                );
             }
             return Workspace;
         }

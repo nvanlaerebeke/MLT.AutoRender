@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29519.87
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "Installer", "Installer\Installer.wixproj", "{E9E56F14-6FB1-4AD2-B9BD-B1E0A520F903}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E9E56F14-6FB1-4AD2-B9BD-B1E0A520F903}.Debug|x86.ActiveCfg = Debug|x86
+		{E9E56F14-6FB1-4AD2-B9BD-B1E0A520F903}.Debug|x86.Build.0 = Debug|x86
+		{E9E56F14-6FB1-4AD2-B9BD-B1E0A520F903}.Release|x86.ActiveCfg = Release|x86
+		{E9E56F14-6FB1-4AD2-B9BD-B1E0A520F903}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C1D4C39F-6841-4B67-B98F-8B718B953C3C}
+	EndGlobalSection
+EndGlobal

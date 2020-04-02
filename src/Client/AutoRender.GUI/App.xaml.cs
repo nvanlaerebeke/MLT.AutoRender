@@ -1,14 +1,12 @@
-﻿using AutoRender.Logging;
+﻿using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
+using System.Windows;
+using AutoRender.Logging;
 using CrazyUtils;
 using log4net;
 using Mitto;
 using Mitto.Connection.Websocket;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Reflection;
-using System.Threading.Tasks;
-using System.Windows;
 
 namespace AutoRender {
 
@@ -31,6 +29,7 @@ namespace AutoRender {
                         Logger = new MittoLogger(LogManager.GetLogger(typeof(App))),
                         Assemblies = new List<AssemblyName>() {
                             new AssemblyName("AutoRender.Messaging"),
+                            new AssemblyName("AutoRender.Messaging.Actions"),
                             new AssemblyName("AutoRender.Subscription.Messaging")
                         }
                     }

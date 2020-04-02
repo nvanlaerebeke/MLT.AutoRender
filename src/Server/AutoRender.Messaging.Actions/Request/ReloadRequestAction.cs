@@ -1,9 +1,8 @@
-﻿using AutoRender.Data;
+﻿using System.Linq;
 using AutoRender.Messaging.Request;
 using AutoRender.Messaging.Response;
 using Mitto.IMessaging;
 using Mitto.Messaging.Action;
-using System.Collections.Generic;
 
 namespace AutoRender.Messaging.Action.Request {
 
@@ -13,13 +12,12 @@ namespace AutoRender.Messaging.Action.Request {
         }
 
         public override GetStatusResponse Start() {
-            Workspace.WorkspaceFactory.Get().ReLoad();
+            Workspace.WorkspaceFactory.Get().Reload();
 
-            List<WorkspaceItem> lstItems = new List<WorkspaceItem>();
-            foreach(var objKvp in Workspace.WorkspaceFactory.Get().WorkspaceItems) {
-                lstItems.Add(objKvp.Value.GetWorkspaceItem());
-            }
-            return new GetStatusResponse(Request, lstItems);
+            return new GetStatusResponse(
+                Request,
+                Workspace.WorkspaceFactory.Get().GetAll().Select(i => i.GetWorkspaceItem()).ToList()
+            );
         }
     }
 }

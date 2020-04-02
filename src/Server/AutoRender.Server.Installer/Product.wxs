@@ -9,6 +9,10 @@
 
   <!-- Misc -->
   <?define appwebsite = "https://github.com/nvanlaerebeke/MLT.AutoRender" ?>
+  <?define icon= "$(var.ProjectDir)\..\..\Resources\autorender.ico" ?>
+  <?define background="$(var.ProjectDir)\..\..\Resources\background.bmp" ?>
+  <?define banner="$(var.ProjectDir)\..\..\Resources\banner.bmp" ?>
+  <?define license="$(var.ProjectDir)\..\..\Resources\license.rtf" ?>
 
   <!-- Unique Product Upgrade Code => Never Changes-->
   <?define upgradecode = "f3ab8dd9-fd6b-479f-9ca5-bdffa6ca0c86" ?>
@@ -35,7 +39,7 @@
     <MediaTemplate EmbedCab="yes" />
 
     <!-- Give the installer an icon -->
-    <Icon Id="icon" SourceFile="$(var.ProjectDir)\..\..\Resources\autorender.ico" />
+    <Icon Id="icon" SourceFile="$(var.icon)" />
     <Property Id="ARPPRODUCTICON">icon</Property>
     <Property Id="ARPURLINFOABOUT">$(var.appwebsite)</Property>
 
@@ -43,9 +47,9 @@
     <UIRef Id="WixUI_Minimal" />
 
     <!-- Installer Images -->
-    <WixVariable Id="WixUIDialogBmp" Value="$(var.ProjectDir)\assets\Background.bmp" />
-    <WixVariable Id="WixUIBannerBmp" Value="$(var.ProjectDir)\assets\Banner.bmp" />
-    <WixVariable Id="WixUILicenseRtf" Value="$(var.ProjectDir)\assets\License.rtf" />
+    <WixVariable Id="WixUIDialogBmp" Value="$(var.background)" />
+    <WixVariable Id="WixUIBannerBmp" Value="$(var.banner)" />
+    <WixVariable Id="WixUILicenseRtf" Value="$(var.license)" />
 
     <!-- Define components, shorts, files, registry stuff etc... -->
     <Feature Id="ProductFeature" Title="AutoRender.Server.Installer" Level="1">

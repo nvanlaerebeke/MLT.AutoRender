@@ -54,7 +54,12 @@ namespace AutoRender.MLT {
         public string TargetPath { get { return Config.TargetPath; } }
         public bool SourceIsValid { get { return (SourceExists && _objSourceInfo != null && _objSourceInfo.IsValid); } }
         public int Progress { get { return Job.Percentage; } }
+
+        /// <summary>
+        /// ToDo: rename to path, final and new use Path prop
+        /// </summary>
         public string FullPath { get { return _objProjectFile.FullName; } }
+
         public string Name { get { return _objProjectFile.Name; } }
         public bool SourceExists { get { return (File.Exists(Config.SourceFile)); } }
 
@@ -186,7 +191,7 @@ namespace AutoRender.MLT {
         }
 
         public override bool Equals(object obj) {
-            return Equals(obj as Project);
+            return Equals(obj as MLTProject);
         }
 
         #endregion Equals

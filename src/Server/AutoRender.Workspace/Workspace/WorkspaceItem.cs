@@ -1,7 +1,7 @@
-﻿using AutoRender.Data;
-using AutoRender.MLT;
-using System;
+﻿using System;
 using System.Reflection;
+using AutoRender.Data;
+using AutoRender.MLT;
 using log4net;
 
 namespace AutoRender.Workspace {
@@ -41,53 +41,63 @@ namespace AutoRender.Workspace {
             }
         }
 
-
         #region Update Methods
 
         public bool UpdateProject(MLTProject pProject) {
             if (pProject == null) {
-                Project = null; return true;
-            } else if (Project == null || !this.Project.Equals(pProject)) {
-                Project = pProject;
-                return true;
-            }
-            return false;
-        }
-
-        public bool UpdateFinal(VideoInfo pInfo) {
-            if (Project != null) { Project.Reload(); }
-            if (pInfo == null) {
-                if (Final != null) {
-                    Final = null; return true;
+                if (Project != null) {
+                    Project = pProject;
+                    Updated?.Invoke(this, this);
+                    return true;
                 }
-            } else if (Final == null || !Final.Equals(pInfo)) {
-                Final = pInfo;
+            } else if (!pProject.Equals(Project)) {
+                Project = pProject;
+                Updated?.Invoke(this, this);
                 return true;
             }
             return false;
         }
 
-        public bool UpdateNew(VideoInfo pInfo) {
+        public bool UpdateFinal(VideoInfo pFinal) {
             if (Project != null) { Project.Reload(); }
-            if (pInfo == null && New != null) {
-                New = null; return true;
+            if (pFinal == null) {
+                if (Final != null) {
+                    Final = pFinal;
+                    Updated?.Invoke(this, this);
+                    return true;
+                }
+            } else if (!pFinal.Equals(Final)) {
+                Final = pFinal;
+                Updated.Invoke(this, this);
+                return true;
             }
-            if (New != null && !New.Equals(pInfo)) {
-                New = pInfo;
-                Project.SourcePath = pInfo.Path;
+            return false;
+        }
+
+        public bool UpdateNew(VideoInfo pNew) {
+            if (Project != null) { Project.Reload(); }
+            if (pNew == null) {
+                if (New != null) {
+                    New = pNew;
+                    Updated?.Invoke(this, this);
+                    return true;
+                }
+            } else if (!pNew.Equals(New)) {
+                New = pNew;
+                Updated?.Invoke(this, this);
                 return true;
             }
             return false;
         }
 
         public Data.WorkspaceItem GetWorkspaceItem() {
-            return new Data.WorkspaceItem() {
+            return new Data.WorkspaceItem(ID) {
                 Project = Project?.GetProject(),
                 Final = Final,
-                New = New,
-                ID = ID
+                New = New
             };
         }
+
         #endregion Update Methods
 
         #region Compare/Equality Methods

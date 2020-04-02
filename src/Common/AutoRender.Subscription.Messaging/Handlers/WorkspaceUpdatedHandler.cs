@@ -1,11 +1,12 @@
-﻿using AutoRender.Subscription.Messaging.Request;
-using AutoRender.Subscription.Messaging.UnSubscribe;
-using log4net;
-using Mitto.IMessaging;
-using System;
+﻿using System;
 using System.Collections.Concurrent;
 using System.Linq;
 using System.Reflection;
+using AutoRender.Messaging.Request;
+using AutoRender.Subscription.Messaging.Request;
+using AutoRender.Subscription.Messaging.UnSubscribe;
+using log4net;
+using Mitto.IMessaging;
 
 namespace AutoRender.Subscription.Messaging.Handlers {
 
@@ -21,6 +22,17 @@ namespace AutoRender.Subscription.Messaging.Handlers {
 
         public bool NotifyAll(SendWorkspaceUpdatedRequest pNotifyMessage) {
             return Notify(null, pNotifyMessage);
+        }
+
+        public bool NotifyReload() {
+            _dicClients.Select(c => c.Value).ToList().ForEach((c) => {
+                try {
+                    c.Transmit(new ReloadRequest());
+                } catch (Exception ex) {
+                    Log.Error($"Failed to send SendWorkspaceUpdatedRequest to {c.ID}: {ex.Message}");
+                }
+            });
+            return true;
         }
 
         public bool Notify(IClient pSender, SendWorkspaceUpdatedRequest pNotifyMessage) {
@@ -58,7 +70,7 @@ namespace AutoRender.Subscription.Messaging.Handlers {
         }
 
         private void Client_Disconnected(object sender, IClient e) {
-            UnSub(e, new WorkspaceUpdatedUnSubscribe());
+            _ = UnSub(e, new WorkspaceUpdatedUnSubscribe());
         }
     }
 }
