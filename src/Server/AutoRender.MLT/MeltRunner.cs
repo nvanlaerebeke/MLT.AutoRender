@@ -5,7 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using AutoRender.Data;
+using AutoRender.Server.Config;
 using log4net;
 
 namespace AutoRender.MLT {

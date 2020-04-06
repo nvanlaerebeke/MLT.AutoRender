@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{A0B081A6-E257-4169-94AC-FB3729DD2A88}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>AutoRender.Client.Runtime</RootNamespace>
+    <AssemblyName>AutoRender.Client.Runtime</AssemblyName>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AutoRenderClient.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WorkspaceConnection.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\mitto\src\Mitto.Messaging\Mitto.Messaging.csproj">
+      <Project>{c29037e3-9c2f-4996-8434-36600735d465}</Project>
+      <Name>Mitto.Messaging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Common\AutoRender.Data\AutoRender.Data.csproj">
+      <Project>{59d58f7e-ec28-4e70-bbc3-5d02b577bd11}</Project>
+      <Name>AutoRender.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Common\AutoRender.Messaging\AutoRender.Messaging-Devel.csproj">
+      <Project>{1baf5e8c-4a8c-48ce-96f9-db45f2980a47}</Project>
+      <Name>AutoRender.Messaging-Devel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Common\AutoRender.Subscription.Messaging\AutoRender.Subscription.Messaging-Devel.csproj">
+      <Project>{3a84b4ed-cebc-4d32-b094-272917d6e5c6}</Project>
+      <Name>AutoRender.Subscription.Messaging-Devel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AutoRender.Client.Config\AutoRender.Client.Config.csproj">
+      <Project>{b2c97adc-27b4-403f-989d-a338ce82867a}</Project>
+      <Name>AutoRender.Client.Config</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AutoRender.Client.Connection\AutoRender.Client.Connection.csproj">
+      <Project>{7c300a26-fb3c-4d98-b3d4-32cbf54fd51c}</Project>
+      <Name>AutoRender.Client.Connection</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AutoRender.Client.Workspace\AutoRender.Client.Workspace.csproj">
+      <Project>{93b60767-37e3-4a1c-b3d7-bba256b823ad}</Project>
+      <Name>AutoRender.Client.Workspace</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

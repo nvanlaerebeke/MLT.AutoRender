@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using AutoRender.Data;
+using AutoRender.Server.Config;
 using AutoRender.Video;
 using AutoRender.Workspace.Monitor;
 using log4net;
@@ -23,44 +24,58 @@ namespace AutoRender.Workspace {
         public event EventHandler Reloaded;
 
         private readonly VideoInfoProvider VideoInfoProvider;
-        private readonly WorkspaceUpdateCollector UpdateCollector;
-        private readonly WorkspaceContainer WorkspaceContainer;
+        private WorkspaceUpdateCollector UpdateCollector;
+        private WorkspaceContainer WorkspaceContainer;
+        private WorkspaceScanner WorkspaceScanner;
 
-        public Workspace(string pNewDir, string pFinalDir, string pProjectDir, string pTempDir, VideoInfoProvider pVideoInfoProvider) {
+        private string NewDirectory { get; set; }
+        private string FinalDirectory { get; set; }
+        private string ProjectDirectory { get; set; }
+        private string TempDirectory { get; set; }
+
+        public Workspace(string pNewDirectory, string pFinalDirectory, string pProjectDirectory, string pTempDir, VideoInfoProvider pVideoInfoProvider) {
             VideoInfoProvider = pVideoInfoProvider;
-            WorkspaceContainer = new WorkspaceContainer();
 
-            Init(pNewDir, pFinalDir, pProjectDir, pTempDir);
+            NewDirectory = pNewDirectory;
+            FinalDirectory = pFinalDirectory;
+            ProjectDirectory = pProjectDirectory;
+            TempDirectory = pTempDir;
+
+            Init();
+        }
+
+        private void Init() {
+            WorkspaceContainer = new WorkspaceContainer();
+            WorkspaceScanner = new WorkspaceScanner(NewDirectory, ProjectDirectory, FinalDirectory, VideoInfoProvider);
+
+            Log.Debug("Initializing Workspace");
+            if (!Directory.Exists(NewDirectory)) {
+                Log.Debug($"Creating {NewDirectory}");
+                _ = Directory.CreateDirectory(NewDirectory);
+            }
+            if (!Directory.Exists(FinalDirectory)) {
+                Log.Debug($"Creating {FinalDirectory}");
+                _ = Directory.CreateDirectory(FinalDirectory);
+            }
+            if (!Directory.Exists(ProjectDirectory)) {
+                Log.Debug($"Creating {ProjectDirectory}");
+                _ = Directory.CreateDirectory(ProjectDirectory);
+            }
+            if (!Directory.Exists(TempDirectory)) {
+                Log.Debug($"Creating {TempDirectory}");
+                _ = Directory.CreateDirectory(TempDirectory);
+            }
 
             UpdateCollector = new WorkspaceUpdateCollector(
                 WorkspaceContainer,
-                new WorkspaceMonitor(Settings.NewDirectory, Settings.FinalDirectory, Settings.ProjectDirectory),
+                new WorkspaceMonitor(NewDirectory, FinalDirectory, ProjectDirectory),
                 VideoInfoProvider
             );
             UpdateCollector.Updated += UpdateCollector_Updated;
             UpdateCollector.ReloadRequired += UpdateCollector_ReloadRequired;
+            Settings.WorkspaceSourceUpdated += Settings_WorkspaceSourceUpdated;
 
             Reload();
-        }
-
-        private void Init(string pNewDir, string pFinalDir, string pProjectDir, string pTempDir) {
-            Log.Debug("Initializing Workspace");
-            if (!Directory.Exists(pNewDir)) {
-                Log.Debug($"Creating {pNewDir}");
-                _ = Directory.CreateDirectory(pNewDir);
-            }
-            if (!Directory.Exists(pFinalDir)) {
-                Log.Debug($"Creating {pFinalDir}");
-                _ = Directory.CreateDirectory(pFinalDir);
-            }
-            if (!Directory.Exists(pProjectDir)) {
-                Log.Debug($"Creating {pProjectDir}");
-                _ = Directory.CreateDirectory(pProjectDir);
-            }
-            if (!Directory.Exists(pTempDir)) {
-                Log.Debug($"Creating {pTempDir}");
-                _ = Directory.CreateDirectory(pTempDir);
-            }
         }
 
         public WorkspaceItem Get(Guid pItemID) {
@@ -73,7 +88,7 @@ namespace AutoRender.Workspace {
 
         public void Reload() {
             UpdateCollector.Stop();
-            var items = new WorkspaceScanner(Settings.NewDirectory, Settings.FinalDirectory, Settings.ProjectDirectory, VideoInfoProvider).Scan();
+            var items = WorkspaceScanner.Scan();
 
             WorkspaceContainer.Clear();
             items.ForEach(i => {
@@ -89,6 +104,19 @@ namespace AutoRender.Workspace {
 
         private void UpdateCollector_ReloadRequired(object sender, EventArgs e) {
             Reload();
+        }
+
+        private void Settings_WorkspaceSourceUpdated(object sender, EventArgs e) {
+            VideoInfoProvider.Clear();
+            UpdateCollector.Updated -= UpdateCollector_Updated;
+            UpdateCollector.ReloadRequired -= UpdateCollector_ReloadRequired;
+            Settings.WorkspaceSourceUpdated -= Settings_WorkspaceSourceUpdated;
+
+            FinalDirectory = Settings.FinalDirectory;
+            NewDirectory = Settings.NewDirectory;
+            ProjectDirectory = Settings.ProjectDirectory;
+
+            Init();
         }
     }
 }

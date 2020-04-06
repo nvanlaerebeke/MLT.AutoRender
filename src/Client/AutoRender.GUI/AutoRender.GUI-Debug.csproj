@@ -66,12 +66,12 @@
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Xml.Linq" />
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -81,7 +81,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="WorkspaceItemAction.cs" />
+    <Compile Include="ViewModels\SettingsViewModel.cs" />
+    <Compile Include="Windows\SettingsWindow.xaml.cs">
+      <DependentUpon>SettingsWindow.xaml</DependentUpon>
+    </Compile>
     <Page Include="UserControls\ContextMenuButton.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -115,10 +118,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="BaseWindow.cs" />
-    <Compile Include="Connection.cs" />
-    <Compile Include="ConnectionManager.cs" />
     <Compile Include="Lib\MeltConfig.cs" />
-    <Compile Include="Settings.cs" />
     <Compile Include="Status.cs" />
     <Compile Include="UserControls\ContextMenuButton.xaml.cs">
       <DependentUpon>ContextMenuButton.xaml</DependentUpon>
@@ -151,14 +151,15 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Windows\SettingsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="edit.png">
@@ -250,20 +251,30 @@
       <Project>{232647d8-8ca8-4f02-91b9-72ee17e99dd1}</Project>
       <Name>CrazyUtils</Name>
     </ProjectReference>
+    <ProjectReference Include="..\AutoRender.Client.Config\AutoRender.Client.Config.csproj">
+      <Project>{b2c97adc-27b4-403f-989d-a338ce82867a}</Project>
+      <Name>AutoRender.Client.Config</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AutoRender.Client.Connection\AutoRender.Client.Connection.csproj">
+      <Project>{7c300a26-fb3c-4d98-b3d4-32cbf54fd51c}</Project>
+      <Name>AutoRender.Client.Connection</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AutoRender.Client.Runtime\AutoRender.Client.Runtime.csproj">
+      <Project>{a0b081a6-e257-4169-94ac-fb3729dd2a88}</Project>
+      <Name>AutoRender.Client.Runtime</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AutoRender.Client.Workspace\AutoRender.Client.Workspace.csproj">
+      <Project>{93b60767-37e3-4a1c-b3d7-bba256b823ad}</Project>
+      <Name>AutoRender.Client.Workspace</Name>
+    </ProjectReference>
     <ProjectReference Include="..\AutoRender.Messaging.Actions\AutoRender.Messaging.Actions.csproj">
       <Project>{18183397-f6c3-4964-8591-cd61c598ff4e}</Project>
       <Name>AutoRender.Messaging.Actions</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="DirectShowLib">
-      <Version>1.0.0</Version>
-    </PackageReference>
     <PackageReference Include="FontAwesome.WPF">
       <Version>4.7.0.9</Version>
-    </PackageReference>
-    <PackageReference Include="ini-parser">
-      <Version>2.5.2</Version>
     </PackageReference>
     <PackageReference Include="log4net">
       <Version>2.0.8</Version>
@@ -279,9 +290,6 @@
     </PackageReference>
     <PackageReference Include="MaterialDesignThemes.MahApps">
       <Version>0.0.12</Version>
-    </PackageReference>
-    <PackageReference Include="MediaToolkit">
-      <Version>1.1.0.1</Version>
     </PackageReference>
     <PackageReference Include="ShowMeTheXAML.MSBuild">
       <Version>1.0.12</Version>

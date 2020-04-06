@@ -1,5 +1,5 @@
 ﻿using System.Reflection;
-using AutoRender.Data;
+using AutoRender.Server.Config;
 using log4net;
 
 namespace AutoRender.Workspace {

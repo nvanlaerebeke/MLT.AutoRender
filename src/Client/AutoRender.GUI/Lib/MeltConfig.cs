@@ -2,6 +2,7 @@
 using System.IO;
 using System.Text;
 using System.Xml.Linq;
+using AutoRender.Client.Config;
 using AutoRender.Data;
 
 namespace AutoRender {
@@ -9,7 +10,7 @@ namespace AutoRender {
     public static class MeltConfig {
 
         public static FileInfo CreateConfig(WorkspaceItem pWorkspaceItem) {
-            var strSourceFile = "../" + Settings.NewDirectoryName + "/" + pWorkspaceItem.New.Name;
+            var strSourceFile = Settings.NewDirectoryPath + "/" + pWorkspaceItem.New.Name;
             var strNewProjectFile = Path.Combine(Settings.ProjectPath, Path.ChangeExtension(pWorkspaceItem.New.Name, ".mlt"));
 
             if (!Directory.Exists(Settings.ProjectPath)) { throw new Exception("Unable to access " + Settings.ProjectPath); }

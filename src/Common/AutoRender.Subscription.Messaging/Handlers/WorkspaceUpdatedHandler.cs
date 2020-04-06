@@ -10,6 +10,9 @@ using Mitto.IMessaging;
 
 namespace AutoRender.Subscription.Messaging.Handlers {
 
+    /// <summary>
+    /// ToDo: move to server side only
+    /// </summary>
     public class WorkspaceUpdatedHandler :
         ISubscriptionHandler<
             WorkspaceUpdatedSubscribe,

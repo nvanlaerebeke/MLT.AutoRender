@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Net;
 using System.Reflection;
-using Mitto;
 using Mitto.Connection.Websocket;
 
 namespace AutoRender.Server.Services {
@@ -35,8 +34,8 @@ namespace AutoRender.Server.Services {
 
         private void ConfigMitto() {
             Log.Debug("Config Mitto with websockets");
-            Config.Initialize(
-                new Config.ConfigParams() {
+            Mitto.Config.Initialize(
+                new Mitto.Config.ConfigParams() {
                     ConnectionProvider = new WebSocketConnectionProvider() {
                         ServerConfig = new ServerParams() {
                             IP = IPAddress.Any,

@@ -2,19 +2,18 @@
 using AutoRender.Messaging.Request;
 using Mitto.IMessaging;
 using Mitto.Messaging.Action;
-using Mitto.Messaging.Response;
 
 namespace AutoRender.Messaging.Actions.Request {
 
-    public class ReloadRequestAction : RequestAction<ReloadRequest, ACKResponse> {
+    public class ReloadRequestAction : NotificationAction<ReloadRequest> {
+
         public static event EventHandler ReloadRequested;
 
         public ReloadRequestAction(IClient pClient, ReloadRequest pRequest) : base(pClient, pRequest) {
         }
 
-        public override ACKResponse Start() {
+        public override void Start() {
             ReloadRequested?.Invoke(this, new EventArgs());
-            return new ACKResponse(Request);
         }
     }
 }

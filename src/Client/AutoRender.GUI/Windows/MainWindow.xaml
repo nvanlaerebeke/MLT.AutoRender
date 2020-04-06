@@ -168,7 +168,8 @@
                 </DataGrid.Columns>
             </DataGrid>
 
-            <UniformGrid  Grid.Column="1" Grid.Row="1" Rows="3" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="5,0,5,0">
+            <UniformGrid  Grid.Column="1" Grid.Row="1" Rows="4" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="5,0,5,0">
+                <Button Grid.Row="3" x:Name="btnSettings" Content="Settings" Margin="0,5,0,0" Click="Settings_Click" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
                 <Button Grid.Row="2" x:Name="btnReload" Content="ReLoad" Margin="0,5,0,0" Click="ReLoad_Click" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
                 <Button Grid.Row="1" x:Name="btnRefresh" Content="Refresh" Margin="0,5,0,0" Click="Refresh_Click" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
                 <Button Grid.Row="0" x:Name="btnStart" Content="Start Selected" Margin="0,5,0,0" Click="StartAll_Click" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />

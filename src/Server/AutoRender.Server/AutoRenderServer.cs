@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Reflection;
-using AutoRender.Data;
+using AutoRender.Server.Config;
 using log4net;
 
 namespace AutoRender.Server {

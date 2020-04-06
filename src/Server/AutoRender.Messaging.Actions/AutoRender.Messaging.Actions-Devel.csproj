@@ -37,6 +37,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Request\GetSettingsRequestAction.cs" />
+    <Compile Include="Request\UpdateSettingsRequestAction.cs" />
     <Compile Include="Request\GetStatusRequestAction.cs" />
     <Compile Include="Request\JobPauseRequestAction.cs" />
     <Compile Include="Request\JobStartRequestAction.cs" />
@@ -57,6 +59,10 @@
     <ProjectReference Include="..\AutoRender.MLT\AutoRender.MLT-Debug.csproj">
       <Project>{8B35EBCE-B31C-463A-8011-4986560252C3}</Project>
       <Name>AutoRender.MLT-Debug</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Autorender.Server.Config\AutoRender.Server.Config.csproj">
+      <Project>{0862ef44-859a-4922-8eb7-7bfb66199c5c}</Project>
+      <Name>AutoRender.Server.Config</Name>
     </ProjectReference>
     <ProjectReference Include="..\AutoRender.Video\AutoRender.Video-Debug.csproj">
       <Project>{3415eeae-f02c-4d2d-980a-86f597a4a74c}</Project>

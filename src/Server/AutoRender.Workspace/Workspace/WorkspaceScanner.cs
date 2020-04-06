@@ -28,7 +28,7 @@ namespace AutoRender.Workspace {
             return GetMatches(
                 Directory.GetFiles(NewPath, "*.mp4").OrderBy(p => p),
                 GetFinal(FinalDir),
-                Directory.GetFiles(FinalDir, "*.mlt").OrderBy(p => p)
+                Directory.GetFiles(ProjectDir, "*.mlt").OrderBy(p => p)
             );
         }
 

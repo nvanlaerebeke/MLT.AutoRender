@@ -58,6 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Config\ConfigManager.cs" />
+    <Compile Include="Config\RegistryConfig.cs" />
     <Compile Include="Helpers\PathHelper.cs" />
     <Compile Include="SingleInstance.cs" />
     <Compile Include="Extension\StringReplaceAllExtension.cs" />

@@ -1,14 +1,17 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
+using AutoRender.Client.Config;
 
 namespace AutoRender {
+
     public partial class WorkspaceItemViewModel {
+
         public bool CanStart {
             get {
                 switch (Status) {
                     case Status.Processable:
                     case Status.Paused:
                         return true;
+
                     case Status.SourceMissing:
                     case Status.SourceInvalid:
                     case Status.TargetExists:
@@ -25,12 +28,14 @@ namespace AutoRender {
                 }
             }
         }
+
         public bool CanStop {
             get {
                 switch (Status) {
                     case Status.Busy:
                     case Status.Paused:
                         return true;
+
                     case Status.Processable:
                     case Status.SourceMissing:
                     case Status.SourceInvalid:
@@ -47,11 +52,13 @@ namespace AutoRender {
                 }
             }
         }
+
         public bool CanPause {
             get {
                 switch (Status) {
                     case Status.Busy:
                         return true;
+
                     case Status.Processable:
                     case Status.SourceMissing:
                     case Status.SourceInvalid:
@@ -69,9 +76,10 @@ namespace AutoRender {
                 }
             }
         }
+
         public bool CanEditTargetName {
             get {
-                if(TargetNameIsEditing) { return false; }
+                if (TargetNameIsEditing) { return false; }
                 switch (Status) {
                     case Status.Processable:
                     case Status.TargetExists:
@@ -79,6 +87,7 @@ namespace AutoRender {
                     case Status.SourceInvalid:
                     case Status.TargetInvalid:
                         return true;
+
                     case Status.Busy:
                     case Status.ProjectMissing:
                     case Status.Queued:
@@ -92,15 +101,17 @@ namespace AutoRender {
                 }
             }
         }
-        public bool CanEditSourceName{
+
+        public bool CanEditSourceName {
             get {
-                if(SourceNameIsEditing) { return false; }
+                if (SourceNameIsEditing) { return false; }
                 switch (Status) {
                     case Status.SourceMissing:
                     case Status.SourceInvalid:
                     case Status.Processable:
                     case Status.TargetInvalid:
                         return true;
+
                     case Status.TargetExists:
                     case Status.Busy:
                     case Status.ProjectMissing:
@@ -116,11 +127,11 @@ namespace AutoRender {
             }
         }
 
-		public bool CanOpenShotcut {
-			get {
-				string strPath = Path.Combine(Settings.ProjectPath, Path.ChangeExtension(this.ProjectName, ".mlt"));
-				return (!String.IsNullOrEmpty(this.ProjectName) && File.Exists(strPath));
-			}
-		}
-	}
+        public bool CanOpenShotcut {
+            get {
+                var strPath = Path.Combine(Settings.ProjectPath, Path.ChangeExtension(ProjectName, ".mlt"));
+                return (!string.IsNullOrEmpty(ProjectName) && File.Exists(strPath));
+            }
+        }
+    }
 }

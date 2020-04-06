@@ -2,6 +2,10 @@
 using System.IO;
 using System.Reflection;
 using System.Windows;
+using AutoRender.Client.Config;
+using AutoRender.Client.Connection;
+using AutoRender.Client.Runtime;
+using AutoRender.Client.Workspace;
 using AutoRender.Logging;
 using CrazyUtils;
 using log4net;
@@ -35,7 +39,8 @@ namespace AutoRender {
                     }
                 );
                 //show the main window
-                new MainWindow().Show();
+                var obj = new ConnectionManager(Settings.HostName, Settings.Port);
+                new MainWindow(new WorkspaceConnection(obj, new Workspace(obj.Client))).Show();
             }
         }
     }

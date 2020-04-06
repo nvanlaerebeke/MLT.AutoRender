@@ -37,7 +37,7 @@
   <ItemGroup>
     <Compile Include="Project.cs" />
     <Compile Include="ProjectStatus.cs" />
-    <Compile Include="Settings.cs" />
+    <Compile Include="ServerSettings.cs" />
     <Compile Include="VideoInfo.cs" />
     <Compile Include="WorkspaceAction.cs" />
     <Compile Include="WorkspaceItem.cs" />
@@ -46,12 +46,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\CrazyUtils\CrazyUtils.csproj">
-      <Project>{232647d8-8ca8-4f02-91b9-72ee17e99dd1}</Project>
-      <Name>CrazyUtils</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

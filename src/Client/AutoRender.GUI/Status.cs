@@ -1,11 +1,12 @@
 ﻿namespace AutoRender {
+
     public enum Status {
         /**
-         * Statuses that are based on server returns 
+         * Statuses that are based on server returns
          */
 
         ProjectMissing,
-        
+
         SourceMissing,
         SourceInvalid,
 
@@ -25,15 +26,5 @@
          * Statuses based on client actions
          */
         Updating
-
-        //old
-        /*UnScheduled,
-        Scheduled,
-
-        Running,
-        Success,
-        Failed,
-        Exists
-        */
     }
 }

@@ -1,26 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
-using CrazyUtils;
 
-namespace AutoRender.Data {
+namespace AutoRender.Server.Config {
 
-    public enum Section {
-        Global,
-        ConsumerSettings,
-        OverrideConsumerSettings
-    }
+    public class Settings : CrazyUtils.Config.RegistryConfig {
 
-    public static class Settings {
+        public static event EventHandler WorkspaceSourceUpdated;
+
+        static Settings() {
+            ApplicationName = "AutoRender";
+            RegistryROOT = "HKLM";
+        }
 
         private static string AppPath {
             get {
-                if (Environment.OSVersion.Platform == PlatformID.Unix) {
-                    return "";
-                } else {
-                    return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "Shotcut");
-                }
+                return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "Shotcut");
             }
         }
 
@@ -29,7 +24,13 @@ namespace AutoRender.Data {
                 if (Environment.OSVersion.Platform == PlatformID.Unix) {
                     return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "melt");
                 } else {
-                    return ConfigManager.Get<string>(Section.Global.ToString(), "MeltPath", Path.Combine(AppPath, "qmelt.exe"));
+                    return Get("MeltPath", Path.Combine(AppPath, "qmelt.exe"));
+                }
+            }
+            set {
+                if (!MeltPath.Equals(value)) {
+                    Set("MeltPath", value);
+                    WorkspaceSourceUpdated?.Invoke(null, null);
                 }
             }
         }
@@ -37,37 +38,83 @@ namespace AutoRender.Data {
         public static string BasePath {
             get {
                 if (Environment.OSVersion.Platform == PlatformID.Unix) {
-                    return ConfigManager.Get<string>(Section.Global.ToString(), "BasePath", Path.Combine("/mnt/nas/Video/Movies", "Inbox"));
+                    return Get("BasePath", Path.Combine("/mnt/nas/Video/Movies", "Inbox"));
                 } else {
-                    if (Debugger.IsAttached) {
-                        return ConfigManager.Get<string>(Section.Global.ToString(), "BasePath", Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "Inbox"));
-                    } else {
-                        return ConfigManager.Get<string>(Section.Global.ToString(), "BasePath", Path.Combine(@"C:\", "Inbox"));
-                    }
+                    return Get("BasePath", Path.Combine(@"C:\", "Inbox"));
+                }
+            }
+            set {
+                if (!BasePath.Equals(value)) {
+                    Set("BasePath", value);
+                    WorkspaceSourceUpdated?.Invoke(null, null);
                 }
             }
         }
 
         public static string ProjectDirectory {
-            get { return ConfigManager.Get<string>(Section.Global.ToString(), "ProjectDirectory", Path.Combine(BasePath, "Projects")); }
+            get {
+                return Get("ProjectDirectory", Path.Combine(BasePath, "Projects"));
+            }
+            set {
+                if (!ProjectDirectory.Equals(value)) {
+                    Set("ProjectDirectory", value);
+                    WorkspaceSourceUpdated?.Invoke(null, null);
+                }
+            }
         }
 
         public static string FinalDirectory {
-            get { return ConfigManager.Get<string>(Section.Global.ToString(), "FinalDirectory", Path.Combine(BasePath, "Final")); }
+            get {
+                return Get("FinalDirectory", Path.Combine(BasePath, "Final"));
+            }
+            set {
+                if (!FinalDirectory.Equals(value)) {
+                    Set("FinalDirectory", value);
+                    WorkspaceSourceUpdated?.Invoke(null, null);
+                }
+            }
         }
 
         public static string NewDirectory {
-            get { return ConfigManager.Get<string>(Section.Global.ToString(), "NewDirectory", Path.Combine(BasePath, "Onbewerkt")); }
+            get {
+                return Get("NewDirectory", Path.Combine(BasePath, "Onbewerkt"));
+            }
+            set {
+                if (!NewDirectory.Equals(value)) {
+                    Set("NewDirectory", value);
+                    WorkspaceSourceUpdated?.Invoke(null, null);
+                }
+            }
         }
 
-        public static string TempDirectory { get { return Path.Combine(Path.GetTempPath(), "AutoRender"); } }
+        public static string TempDirectory {
+            get {
+                return Path.Combine(Path.GetTempPath(), "AutoRender");
+            }
+        }
 
         public static string LogDirectory {
-            get { return ConfigManager.Get<string>(Section.Global.ToString(), "LogDirectory", Path.Combine(BasePath, "Log")); }
+            get {
+                return Get("LogDirectory", Path.Combine(BasePath, "Log"));
+            }
+            set {
+                if (!LogDirectory.Equals(value)) {
+                    Set("LogDirectory", value);
+                    WorkspaceSourceUpdated?.Invoke(null, null);
+                }
+            }
         }
 
         public static int Threads {
-            get { return ConfigManager.Get<int>(Section.Global.ToString(), "Threads", 2); }
+            get {
+                return Get("Threads", 2);
+            }
+            set {
+                if (!Threads.Equals(value)) {
+                    Set("Threads", value);
+                    WorkspaceSourceUpdated?.Invoke(null, null);
+                }
+            }
         }
 
         public static Dictionary<string, string> ConsumerProperties {

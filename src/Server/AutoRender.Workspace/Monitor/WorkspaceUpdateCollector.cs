@@ -71,7 +71,6 @@ namespace AutoRender.Workspace.Monitor {
         }
 
         private void Add(WorkspaceUpdatedEventArgs pEvent) {
-            _objWaitTimer.Stop();
             _objWaitTimer.Start();
             Updates.Add(pEvent);
         }

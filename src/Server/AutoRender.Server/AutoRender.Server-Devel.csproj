@@ -85,6 +85,10 @@
       <Project>{958222ed-4ba0-45dd-92e5-6b72ba62aba6}</Project>
       <Name>Mitto</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Autorender.Server.Config\AutoRender.Server.Config.csproj">
+      <Project>{0862ef44-859a-4922-8eb7-7bfb66199c5c}</Project>
+      <Name>AutoRender.Server.Config</Name>
+    </ProjectReference>
     <ProjectReference Include="..\AutoRender.Workspace\AutoRender.Workspace-Debug.csproj">
       <Project>{b668b03e-b8fd-4c4a-be79-3a96bab7ad8c}</Project>
       <Name>AutoRender.Workspace-Debug</Name>

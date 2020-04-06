@@ -96,5 +96,10 @@ namespace AutoRender.Video {
                 }
             );
         }
+
+        public void Clear() {
+            FileInfoCache.Clear();
+            VideoCache.Clear();
+        }
     }
 }

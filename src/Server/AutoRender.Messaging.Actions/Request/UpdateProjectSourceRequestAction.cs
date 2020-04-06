@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using AutoRender.Data;
 using AutoRender.Messaging.Request;
 using AutoRender.Messaging.Response;
+using AutoRender.Server.Config;
 using AutoRender.Video;
 using AutoRender.Workspace;
 using Mitto.IMessaging;

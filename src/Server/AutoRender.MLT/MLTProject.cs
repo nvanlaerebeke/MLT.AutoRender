@@ -2,6 +2,7 @@
 using System.IO;
 using System.Reflection;
 using AutoRender.Data;
+using AutoRender.Server.Config;
 using AutoRender.Video;
 using log4net;
 
@@ -119,7 +120,9 @@ namespace AutoRender.MLT {
             if (SourceExists) { _objSourceInfo = VideoInfoProvider.Get(SourcePath); }
 
             Job = new MeltJob(this); // -- ToDo: pass null or the config for the job, not the project itself
-            Job.ProgressChanged += (object sender, System.EventArgs e) => { ProjectChanged?.Invoke(sender, this); };
+            Job.ProgressChanged += (object sender, System.EventArgs e) => {
+                ProjectChanged?.Invoke(sender, this);
+            };
             Job.StatusChanged += (object sender, JobStatus e) => {
                 Log.Info("Project was changed - notify everyone");
                 switch (e) {

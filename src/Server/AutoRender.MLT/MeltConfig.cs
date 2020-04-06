@@ -5,7 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Xml.Linq;
-using AutoRender.Data;
+using AutoRender.Server.Config;
 using AutoRender.Video;
 using log4net;
 
@@ -95,7 +95,7 @@ namespace AutoRender.MLT {
         }
 
         internal void SetTargetName(string pFileName) {
-            TargetPath = CrazyUtils.PathHelper.NormalizeAbsolutePath(Path.Combine(Settings.FinalDirectory, pFileName));
+            TargetPath = Path.Combine(Settings.FinalDirectory, Path.GetFileNameWithoutExtension(pFileName), pFileName);
         }
 
         internal void Reload() {

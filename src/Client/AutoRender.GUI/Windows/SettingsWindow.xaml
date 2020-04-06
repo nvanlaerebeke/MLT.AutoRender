@@ -1,0 +1,143 @@
+﻿<l:BaseWindow x:Class="AutoRender.SettingsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:l="clr-namespace:AutoRender"
+        mc:Ignorable="d"
+        x:Name="mySettingsWindow"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
+        TextElement.FontWeight="Medium"
+        TextElement.FontSize="14"
+        BorderThickness="0"
+        Width="400"
+        SizeToContent="Height"
+        ResizeMode="NoResize"
+        Title="Melt AutoRender Settings" Icon="/AutoRender;component/AutoRender.png">
+    <DockPanel Margin="5">
+        <StatusBar DockPanel.Dock="Bottom">
+            <StatusBarItem BorderThickness="0,1,0,0" BorderBrush="Black">
+                <TextBlock Text="{Binding Status}" />
+            </StatusBarItem>
+        </StatusBar>
+        <StackPanel Orientation="Vertical">
+            <TextBlock TextWrapping="Wrap" Margin="10">
+                Settings can be manually modified in the registry in "ROOT\Software\AutoRender".
+                <LineBreak /><LineBreak />
+                HKCU for client settings and HKLM for server settings
+            </TextBlock>
+            <Separator Margin="5,5,5,5" Height="4" Width="Auto" BorderBrush="Red" HorizontalAlignment="Stretch" />
+
+            <TextBlock Margin="5,5,5,5" Text="Client Settings" />
+            <Grid Margin="0,0,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="100*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <Label Margin="5,5,5,5" Grid.Row="0" Grid.Column="0" Content="Project Directory: " VerticalAlignment="Stretch" HorizontalContentAlignment="Left" Width="Auto" />
+                <Grid Grid.Row="0" Grid.Column="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="100*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBox
+                            Text="{Binding LocalProjectDirectory, Mode=OneWay}"
+                            BorderBrush="Red"
+                            BorderThickness="1"
+                            Margin="5"
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            HorizontalAlignment="Stretch"
+                            Width="150"
+                            IsReadOnly="True" />
+                    <Button Grid.Column="1" Grid.Row="0" Name="btnBrowseProjectDirectory" Click="btnBrowseProjectDirectory_Click" HorizontalAlignment="Right">Browse</Button>
+                </Grid>
+                <Label Margin="5" Grid.Row="1" Grid.Column="0" Content="Shotcut executable: " VerticalAlignment="Stretch" HorizontalContentAlignment="Left" Width="Auto" />
+                <Grid Grid.Row="1" Grid.Column="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="100*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBox
+                        Text="{Binding ShotcutExecutable, Mode=OneWay}"
+                        BorderBrush="Red"
+                        BorderThickness="1"
+                        Margin="5"
+                        Grid.Column="0"
+                        Width="150"
+                        IsReadOnly="True" />
+                    <Button Grid.Column="1" Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Center" Name="btnBrowseShotcutExecutible" Click="btnBrowseShotcutExecutible_Click" DockPanel.Dock="Right">Browse</Button>
+                </Grid>
+            </Grid>
+
+            <Separator Margin="5,5,5,5" Height="4" Width="Auto" BorderBrush="Red" HorizontalAlignment="Stretch" />
+            <Separator Margin="5,5,5,5" Height="4" Width="Auto" BorderBrush="Red" HorizontalAlignment="Stretch" />
+            <TextBlock Margin="5,5,5,5" Text="Server Connection" />
+            <Grid Margin="0,5,0,0">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="100*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <Label Margin="5,5,5,5" Grid.Row="0" Grid.Column="0" Content="HostName: " VerticalAlignment="Stretch" HorizontalContentAlignment="Left" Width="Auto" />
+                <TextBox Text="{Binding HostName, Mode=TwoWay}" BorderBrush="Red" BorderThickness="1" Padding="2,0,2,0" Margin="5,5,5,5" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch" />
+
+                <Label Margin="5,5,5,5" Grid.Row="2" Grid.Column="0" Content="Port: " VerticalAlignment="Stretch" HorizontalContentAlignment="Left" Width="Auto" />
+                <TextBox Text="{Binding Port, Mode=TwoWay}" BorderBrush="Red" BorderThickness="1" Padding="2,0,2,0" Margin="5,5,5,5" Grid.Row="2" Grid.Column="1" VerticalAlignment="Stretch" />
+            </Grid>
+            <Separator Margin="5,5,5,5" Height="4" Width="Auto" BorderBrush="Red" HorizontalAlignment="Stretch" />
+            <TextBlock Margin="5,5,5,5" Text="Server Settings" />
+            <Grid Margin="0,5,0,0">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="100*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <Label Margin="5,5,5,5" Grid.Row="0" Grid.Column="0" Content="MeltPath: " VerticalAlignment="Stretch" HorizontalContentAlignment="Left" Width="Auto" />
+                <TextBox Text="{Binding ServerMeltPath, Mode=TwoWay}" BorderBrush="Red" BorderThickness="1" Padding="2,0,2,0" Margin="5,5,5,5" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch" />
+
+                <Label Margin="5,5,5,5" Grid.Row="2" Grid.Column="0" Content="ProjectDirectory: " VerticalAlignment="Stretch" HorizontalContentAlignment="Left" Width="Auto" />
+                <TextBox Text="{Binding ServerProjectDirectory, Mode=TwoWay}" BorderBrush="Red" BorderThickness="1" Padding="2,0,2,0" Margin="5,5,5,5" Grid.Row="2" Grid.Column="1" VerticalAlignment="Stretch" />
+
+                <Label Margin="5,5,5,5" Grid.Row="3" Grid.Column="0" Content="FinalDirectory: " VerticalAlignment="Stretch" HorizontalContentAlignment="Left" Width="Auto" />
+                <TextBox Text="{Binding ServerFinalDirectory, Mode=TwoWay}" BorderBrush="Red" BorderThickness="1" Padding="2,0,2,0" Margin="5,5,5,5" Grid.Row="3" Grid.Column="1" VerticalAlignment="Stretch" />
+
+                <Label Margin="5,5,5,5" Grid.Row="4" Grid.Column="0" Content="NewDirectory: " VerticalAlignment="Stretch" HorizontalContentAlignment="Left" Width="Auto" />
+                <TextBox Text="{Binding ServerNewDirectory, Mode=TwoWay}" BorderBrush="Red" BorderThickness="1" Padding="2,0,2,0" Margin="5,5,5,5" Grid.Row="4" Grid.Column="1" VerticalAlignment="Stretch" />
+
+                <Label Margin="5,5,5,5" Grid.Row="5" Grid.Column="0" Content="LogDirectory: " VerticalAlignment="Stretch" HorizontalContentAlignment="Left" Width="Auto" />
+                <TextBox Text="{Binding ServerLogDirectory, Mode=TwoWay}" BorderBrush="Red" BorderThickness="1" Padding="2,0,2,0" Margin="5,5,5,5" Grid.Row="5" Grid.Column="1" VerticalAlignment="Stretch" />
+
+                <Label Margin="5,5,5,5" Grid.Row="6" Grid.Column="0" Content="Threads: " VerticalAlignment="Stretch" HorizontalContentAlignment="Left" Width="Auto" />
+                <TextBox Text="{Binding Threads, Mode=TwoWay}" BorderBrush="Red" BorderThickness="1" Padding="2,0,2,0" Margin="5,5,5,5" Grid.Row="6" Grid.Column="1" VerticalAlignment="Stretch" />
+            </Grid>
+            <Button x:Name="btnSave" Content="Save" Margin="5,15,5,5" Click="btnSave_Click" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+        </StackPanel>
+    </DockPanel>
+</l:BaseWindow>
