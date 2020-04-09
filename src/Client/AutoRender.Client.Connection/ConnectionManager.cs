@@ -1,5 +1,5 @@
 ﻿using System;
-using Mitto.Utilities;
+using System.Timers;
 
 namespace AutoRender.Client.Connection {
 
@@ -10,13 +10,16 @@ namespace AutoRender.Client.Connection {
         public readonly Client Client;
         public ConnectionStatus Status = ConnectionStatus.Disconnected;
 
-        private readonly Timer ReconnectTimer;
+        //private readonly Timer ReconnectTimer;
+        private readonly System.Timers.Timer ReconnectTimer;
 
         public ConnectionManager(string pHostName, int pPort) {
             Client = new Client(pHostName, pPort);
             Client.StatusChanged += Connection_StatusChanged;
 
-            ReconnectTimer = new Timer(5);
+            ReconnectTimer = new Timer(5000) {
+                AutoReset = true
+            };
             ReconnectTimer.Elapsed += ReconnectTimer_Elapsed;
         }
 
@@ -25,6 +28,8 @@ namespace AutoRender.Client.Connection {
             StatusChanged?.Invoke(sender, e);
             if (e == ConnectionStatus.Disconnected) {
                 ReconnectTimer.Start();
+            } else if (e == ConnectionStatus.Connected) {
+                ReconnectTimer.Stop();
             }
         }
 

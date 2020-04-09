@@ -61,6 +61,10 @@
       <Project>{d51c4ce3-0473-4ddf-9f0c-b3022e493dbd}</Project>
       <Name>AutoRender.Logging</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Autorender.Server.Config\AutoRender.Server.Config.csproj">
+      <Project>{0862ef44-859a-4922-8eb7-7bfb66199c5c}</Project>
+      <Name>AutoRender.Server.Config</Name>
+    </ProjectReference>
     <ProjectReference Include="..\AutoRender.Video\AutoRender.Video.csproj">
       <Project>{877cefbc-c28a-4326-bd90-3f5950bb53ed}</Project>
       <Name>AutoRender.Video</Name>

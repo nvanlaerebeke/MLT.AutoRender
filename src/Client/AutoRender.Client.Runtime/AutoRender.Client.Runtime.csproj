@@ -42,21 +42,13 @@
     <Compile Include="WorkspaceConnection.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\mitto\src\Mitto.Messaging\Mitto.Messaging.csproj">
-      <Project>{c29037e3-9c2f-4996-8434-36600735d465}</Project>
-      <Name>Mitto.Messaging</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Common\AutoRender.Data\AutoRender.Data.csproj">
       <Project>{59d58f7e-ec28-4e70-bbc3-5d02b577bd11}</Project>
       <Name>AutoRender.Data</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Common\AutoRender.Messaging\AutoRender.Messaging-Devel.csproj">
-      <Project>{1baf5e8c-4a8c-48ce-96f9-db45f2980a47}</Project>
-      <Name>AutoRender.Messaging-Devel</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Common\AutoRender.Subscription.Messaging\AutoRender.Subscription.Messaging-Devel.csproj">
-      <Project>{3a84b4ed-cebc-4d32-b094-272917d6e5c6}</Project>
-      <Name>AutoRender.Subscription.Messaging-Devel</Name>
+    <ProjectReference Include="..\..\Common\AutoRender.Messaging\AutoRender.Messaging.csproj">
+      <Project>{35101fce-d2b0-437b-b694-b0e04dd0bc3c}</Project>
+      <Name>AutoRender.Messaging</Name>
     </ProjectReference>
     <ProjectReference Include="..\AutoRender.Client.Config\AutoRender.Client.Config.csproj">
       <Project>{b2c97adc-27b4-403f-989d-a338ce82867a}</Project>
@@ -69,6 +61,10 @@
     <ProjectReference Include="..\AutoRender.Client.Workspace\AutoRender.Client.Workspace.csproj">
       <Project>{93b60767-37e3-4a1c-b3d7-bba256b823ad}</Project>
       <Name>AutoRender.Client.Workspace</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AutoRender.Messaging.Actions\AutoRender.Messaging.Actions.csproj">
+      <Project>{18183397-f6c3-4964-8591-cd61c598ff4e}</Project>
+      <Name>AutoRender.Messaging.Actions</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

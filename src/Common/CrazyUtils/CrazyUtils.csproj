@@ -62,6 +62,7 @@
     <Compile Include="Helpers\PathHelper.cs" />
     <Compile Include="SingleInstance.cs" />
     <Compile Include="Extension\StringReplaceAllExtension.cs" />
+    <Compile Include="SingleInstanceHelper.cs" />
     <Compile Include="StringWriterWithEncoding.cs" />
     <Compile Include="ProcessRunner.cs" />
   </ItemGroup>

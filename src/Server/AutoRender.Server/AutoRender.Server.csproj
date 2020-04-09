@@ -37,8 +37,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AutoRenderServer.cs" />
-    <Compile Include="WebSocketServer.cs" />
-    <Compile Include="WorkspaceMonitor.cs" />
+    <Compile Include="ServiceManager.cs" />
+    <Compile Include="Services\CommunicationService.cs" />
+    <Compile Include="Services\IService.cs" />
+    <Compile Include="Services\LoggingService.cs" />
+    <Compile Include="Services\Service.cs" />
+    <Compile Include="Services\WorkspaceMonitorService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Common\AutoRender.Data\AutoRender.Data.csproj">
@@ -57,6 +61,14 @@
       <Project>{F973DBC2-F3BA-4160-839B-8491E6827E3B}</Project>
       <Name>AutoRender.Subscription.Messaging</Name>
     </ProjectReference>
+    <ProjectReference Include="..\AutoRender.Messaging.Actions\AutoRender.Messaging.Actions.csproj">
+      <Project>{a35bcc76-8ece-436f-8df7-b7aa12da13bb}</Project>
+      <Name>AutoRender.Messaging.Actions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Autorender.Server.Config\AutoRender.Server.Config.csproj">
+      <Project>{0862ef44-859a-4922-8eb7-7bfb66199c5c}</Project>
+      <Name>AutoRender.Server.Config</Name>
+    </ProjectReference>
     <ProjectReference Include="..\AutoRender.Workspace\AutoRender.Workspace.csproj">
       <Project>{5abe5f5a-6fd0-4db7-a045-00ed6e91c473}</Project>
       <Name>AutoRender.Workspace</Name>
@@ -64,10 +76,6 @@
     <ProjectReference Include="..\..\Common\CrazyUtils\CrazyUtils.csproj">
       <Project>{232647d8-8ca8-4f02-91b9-72ee17e99dd1}</Project>
       <Name>CrazyUtils</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\AutoRender.Messaging.Actions\AutoRender.Messaging.Actions.csproj">
-      <Project>{A35BCC76-8ECE-436F-8DF7-B7AA12DA13BB}</Project>
-      <Name>AutoRender.Messaging.Actions</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -78,7 +86,7 @@
       <Version>2.0.8</Version>
     </PackageReference>
     <PackageReference Include="Mitto">
-      <Version>0.0.5</Version>
+      <Version>0.0.10</Version>
     </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

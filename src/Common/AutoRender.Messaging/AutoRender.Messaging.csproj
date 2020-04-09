@@ -58,12 +58,15 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Request\GetSettingsRequest.cs" />
     <Compile Include="Request\JobStopRequest.cs" />
     <Compile Include="Request\JobPauseRequest.cs" />
     <Compile Include="Request\JobStartRequest.cs" />
     <Compile Include="Request\UpdateProjectSourceRequest.cs" />
     <Compile Include="Request\GetStatusRequest.cs" />
     <Compile Include="Request\UpdateProjectTargetRequest.cs" />
+    <Compile Include="Request\UpdateSettingsRequest.cs" />
+    <Compile Include="Response\GetSettingsResponse.cs" />
     <Compile Include="Response\GetStatusResponse.cs" />
     <Compile Include="Request\ReloadRequest.cs" />
   </ItemGroup>
@@ -81,7 +84,7 @@
       <Version>2.0.8</Version>
     </PackageReference>
     <PackageReference Include="Mitto">
-      <Version>0.0.5</Version>
+      <Version>0.0.10</Version>
     </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

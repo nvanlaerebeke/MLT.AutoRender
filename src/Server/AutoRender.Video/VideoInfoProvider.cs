@@ -1,4 +1,5 @@
-﻿using System.Collections.Concurrent;
+﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -25,14 +26,17 @@ namespace AutoRender.Video {
         }
 
         public VideoInfo Get(string pPath) {
-            var o = GetFromCache(pPath);
-            if (o == null) {
-                o = GetFromFile(pPath);
-                if (o != null) {
-                    AddToCache(pPath, o);
+            try {
+                var o = GetFromCache(pPath);
+                if (o == null) {
+                    o = GetFromFile(pPath);
+                    if (o != null) {
+                        AddToCache(pPath, o);
+                    }
                 }
-            }
-            return o;
+                return o;
+            } catch (Exception) { }
+            return null;
         }
 
         private VideoInfo GetFromCache(string pPath) {

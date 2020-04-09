@@ -29,7 +29,7 @@ namespace AutoRender {
             Connection.ConnectionStatusChanged += Connection_ConnectionStatusChanged;
             Connection.WorkspaceUpdated += Connection_WorkspaceUpdated;
             Connection.RefreshRequired += Connection_RefreshRequired;
-
+            Connection.Start();
             StatusChanged += delegate (WindowStatus pStatus, string pMessage) {
                 _objViewModel.SetStatus(pStatus, pMessage);
             };

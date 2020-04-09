@@ -41,18 +41,15 @@
     <Compile Include="Request\ReloadRequestAction.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\mitto\src\Mitto.IMessaging\Mitto.IMessaging.csproj">
-      <Project>{3bb1c211-9006-4fee-9f40-7556717431b0}</Project>
-      <Name>Mitto.IMessaging</Name>
+    <ProjectReference Include="..\..\Common\AutoRender.Messaging\AutoRender.Messaging.csproj">
+      <Project>{35101fce-d2b0-437b-b694-b0e04dd0bc3c}</Project>
+      <Name>AutoRender.Messaging</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\mitto\src\Mitto.Messaging\Mitto.Messaging.csproj">
-      <Project>{c29037e3-9c2f-4996-8434-36600735d465}</Project>
-      <Name>Mitto.Messaging</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Common\AutoRender.Messaging\AutoRender.Messaging-Devel.csproj">
-      <Project>{1baf5e8c-4a8c-48ce-96f9-db45f2980a47}</Project>
-      <Name>AutoRender.Messaging-Devel</Name>
-    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Mitto">
+      <Version>0.0.10</Version>
+    </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

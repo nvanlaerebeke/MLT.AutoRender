@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{5982A638-65ED-457B-9D82-4C64BD292B7C}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <RootNamespace>AutoRender.Service</RootNamespace>
     <AssemblyName>AutoRender.Service</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
@@ -17,7 +17,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\..\build\</OutputPath>
+    <OutputPath>..\..\..\build\Server\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -27,16 +27,26 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\..\build\</OutputPath>
+    <OutputPath>..\..\..\build\Server\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.ServiceProcess" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AutoRenderService.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="AutoRenderService.Designer.cs">
+      <DependentUpon>AutoRenderService.cs</DependentUpon>
+    </Compile>
     <Compile Include="ErrorHandler.cs" />
     <Compile Include="Program.cs" />
   </ItemGroup>
@@ -44,27 +54,20 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Common\AutoRender.Logging\AutoRender.Logging.csproj">
-      <Project>{d51c4ce3-0473-4ddf-9f0c-b3022e493dbd}</Project>
-      <Name>AutoRender.Logging</Name>
+    <ProjectReference Include="..\..\Common\CrazyUtils\CrazyUtils.csproj">
+      <Project>{232647d8-8ca8-4f02-91b9-72ee17e99dd1}</Project>
+      <Name>CrazyUtils</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AutoRender.Messaging.Actions\AutoRender.Messaging.Actions.csproj">
+      <Project>{a35bcc76-8ece-436f-8df7-b7aa12da13bb}</Project>
+      <Name>AutoRender.Messaging.Actions</Name>
     </ProjectReference>
     <ProjectReference Include="..\AutoRender.Server\AutoRender.Server.csproj">
       <Project>{7ecc99b6-75a2-43aa-934a-f41ce749dac9}</Project>
       <Name>AutoRender.Server</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Common\AutoRender.Messaging\AutoRender.Messaging.csproj">
-      <Project>{35101FCE-D2B0-437B-B694-B0E04DD0BC3C}</Project>
-      <Name>AutoRender.Messaging</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\AutoRender.Messaging.Actions\AutoRender.Messaging.Actions.csproj">
-      <Project>{A35BCC76-8ECE-436F-8DF7-B7AA12DA13BB}</Project>
-      <Name>AutoRender.Messaging.Actions</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="ini-parser">
-      <Version>2.5.2</Version>
-    </PackageReference>
     <PackageReference Include="log4net">
       <Version>2.0.8</Version>
     </PackageReference>

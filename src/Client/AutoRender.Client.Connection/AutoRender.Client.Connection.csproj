@@ -12,6 +12,7 @@
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
+    <RepositoryUrl>https://github.com/nvanlaerebeke/Mitto</RepositoryUrl>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -42,34 +43,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\mitto\src\Mitto.Config\Mitto.Config.csproj">
-      <Project>{e3e0d40d-99ac-4ed4-9e64-19cdc10813b0}</Project>
-      <Name>Mitto.Config</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\mitto\src\Mitto.Connection.Websocket\Mitto.Connection.Websocket.csproj">
-      <Project>{5557b374-341e-4176-9d46-be8606136ada}</Project>
-      <Name>Mitto.Connection.Websocket</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\mitto\src\Mitto.IConnection\Mitto.IConnection.csproj">
-      <Project>{aaf65eba-e48d-491a-ad2e-525bde11ec6f}</Project>
-      <Name>Mitto.IConnection</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\mitto\src\Mitto.IMessaging\Mitto.IMessaging.csproj">
-      <Project>{3bb1c211-9006-4fee-9f40-7556717431b0}</Project>
-      <Name>Mitto.IMessaging</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\mitto\src\Mitto.Main\Mitto.csproj">
-      <Project>{958222ed-4ba0-45dd-92e5-6b72ba62aba6}</Project>
-      <Name>Mitto</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\mitto\src\Mitto.Messaging\Mitto.Messaging.csproj">
-      <Project>{c29037e3-9c2f-4996-8434-36600735d465}</Project>
-      <Name>Mitto.Messaging</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\mitto\src\Mitto.Utilities\Mitto.Utilities.csproj">
-      <Project>{d184bf09-fd6d-4f36-bc6e-bf05e763e3ac}</Project>
-      <Name>Mitto.Utilities</Name>
-    </ProjectReference>
+    <PackageReference Include="Mitto" Version="0.0.10" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

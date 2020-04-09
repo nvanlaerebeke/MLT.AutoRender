@@ -31,9 +31,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
@@ -42,12 +39,18 @@
     <Compile Include="Monitor\FinalMonitor.cs" />
     <Compile Include="Monitor\Monitor.cs" />
     <Compile Include="Monitor\NewMonitor.cs" />
+    <Compile Include="Monitor\Objects\FSEventInfo.cs" />
+    <Compile Include="Monitor\Objects\WorkspaceType.cs" />
     <Compile Include="Monitor\ProjectMonitor.cs" />
+    <Compile Include="Monitor\WorkspaceMonitor.cs" />
+    <Compile Include="Monitor\WorkspaceUpdateCollector.cs" />
+    <Compile Include="Updater.cs" />
     <Compile Include="WorkspaceFactory.cs" />
-    <Compile Include="WorkspaceItem.cs" />
     <Compile Include="Workspace.cs" />
-    <Compile Include="Monitor\WorkspaceWatcher.cs" />
-    <Compile Include="ILog.cs" />
+    <Compile Include="Workspace\WorkspaceContainer.cs" />
+    <Compile Include="Workspace\WorkspaceItem.cs" />
+    <Compile Include="Workspace\WorkspaceItemMatcher.cs" />
+    <Compile Include="Workspace\WorkspaceScanner.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
@@ -61,13 +64,14 @@
       <Project>{0e9a1e35-ba14-4823-83fb-7bdc64c18f91}</Project>
       <Name>AutoRender.MLT</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Autorender.Server.Config\AutoRender.Server.Config.csproj">
+      <Project>{0862ef44-859a-4922-8eb7-7bfb66199c5c}</Project>
+      <Name>AutoRender.Server.Config</Name>
+    </ProjectReference>
     <ProjectReference Include="..\AutoRender.Video\AutoRender.Video.csproj">
       <Project>{877cefbc-c28a-4326-bd90-3f5950bb53ed}</Project>
       <Name>AutoRender.Video</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

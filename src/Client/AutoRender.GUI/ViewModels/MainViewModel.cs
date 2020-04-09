@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Linq;
-using System.Collections.ObjectModel;
-using AutoRender.Messaging;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 using AutoRender.Data;
 
 namespace AutoRender {
@@ -22,7 +21,7 @@ namespace AutoRender {
             get {
                 var lstNames = new ObservableCollection<string>();
                 WorkspaceItems.ToList().ForEach(i => {
-                    if (!String.IsNullOrEmpty(i.SourceName) && !lstNames.Contains(i.SourceName)) {
+                    if (!string.IsNullOrEmpty(i.SourceName) && !lstNames.Contains(i.SourceName)) {
                         lstNames.Add(i.SourceName);
                     }
                 });
@@ -57,13 +56,17 @@ namespace AutoRender {
         }
 
         internal void Update(List<WorkspaceItem> pItems) {
-            pItems.ForEach((i) => { Update(i); });
+            if (pItems != null) {
+                pItems.ForEach((i) => { Update(i); });
+            } else {
+                Console.WriteLine("pItems is null");
+            }
         }
 
         internal void Update(WorkspaceItem pWorkspaceItem) {
             uiFactory.StartNew(() => {
                 lock (WorkspaceItems) {
-                    for (int i = 0; i < WorkspaceItems.Count; i++) {
+                    for (var i = 0; i < WorkspaceItems.Count; i++) {
                         if (WorkspaceItems[i].ID.Equals(pWorkspaceItem.ID)) {
                             WorkspaceItems[i].Update(pWorkspaceItem);
                             return;
