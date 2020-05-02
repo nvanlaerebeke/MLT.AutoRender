@@ -2,29 +2,17 @@
 
 ## Introduction
 
-Auto render MLT projects on CentOS with a Windows Client frontend interface
+Auto render MLT service with a service and separate frontend application
 
-## Client build
+## Requirements
 
-For now the client needs to be build using visual studio 2017+
-Make sure to check out the git submodules and compile those first.
+Client and server require Visual Studio 2019+ to build
+For the installers the Wix toolset and Visual Studio plugin must be installed
 
-## Server build
+## ToDo
 
-There are several ways to run the server:
-1. On CentOS 7 inside a docker image, Dockerfile and dependencies provided by AutoRender-Docker rpm 
-2. Manually using the Dockerfile, requires copying over the Dockerfile and dependencies. Dockerfile with start a CentOS7 container
-3. Installing the AutoRender rpm containing the binaries on a CentOS 7 machine
-4. Compiling the 
+- Create build scripts to build from command line (powershell script)
 
-The server rpm provides a Dockerfile so that the AutoRender server process
-can be run inside a container.
+## Known bugs
 
-The build scripts are written to be run on Centos 7
-
-To start the build
-
-```bash
-make rpm
-```
-
+- Closing the backup window and/or application does not stop the backup (rsync)

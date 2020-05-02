@@ -36,6 +36,9 @@
     <Reference Include="System.Net.Http" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\AssemblyInfo.cs">
+      <Link>Properties\AssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="AutoRenderServer.cs" />
     <Compile Include="ServiceManager.cs" />
     <Compile Include="Services\CommunicationService.cs" />

@@ -52,7 +52,7 @@
     <!-- Define components, shorts, files, registry stuff etc... -->
     <Feature Id="ProductFeature" Title="AutoRender.Client.Installer" Level="1">
       <ComponentGroupRef Id="ProductComponents" />
-      <ComponentGroupRef Id="PublishedComponents" />
+      <ComponentGroupRef Id="AutoRenderClientComponentGroup" />
     </Feature>
   </Product>
 </Wix>

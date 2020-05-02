@@ -4,7 +4,7 @@
     <ComponentGroup Id="ProductComponents">
       <ComponentRef Id="MainAppShortcut" />
     </ComponentGroup>
-    <DirectoryRef Id="AutoRenderClientInstallDir" FileSource="..\..\..\build\">
+    <DirectoryRef Id="AutoRenderClientInstallDir" FileSource="..\..\..\build\Client">
       <!-- Start Menu ShortCut -->
       <Component Id="MainAppShortcut" Guid="{8569EEE8-ADE1-47DF-ABF6-5BDDB8A86A3F}">
         <Shortcut

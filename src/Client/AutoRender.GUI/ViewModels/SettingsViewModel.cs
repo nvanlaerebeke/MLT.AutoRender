@@ -56,6 +56,9 @@
         private string _strServerMeltPath = "";
         private string _strServerNewDirectory = "";
         private string _strServerProjectDirectory = "";
+        private string _strStorageLocation = "";
+        private string _strBackupLocation = "";
+
         private int _intThreads = 2;
 
         private string _strHostName = "";
@@ -153,6 +156,30 @@
                 if (!_intThreads.Equals(value)) {
                     _intThreads = value;
                     OnPropertyChanged(nameof(Threads));
+                }
+            }
+        }
+
+        public string StorageLocation {
+            get {
+                return _strStorageLocation;
+            }
+            set {
+                if (!_strStorageLocation.Equals(value)) {
+                    _strStorageLocation = value;
+                    OnPropertyChanged(nameof(StorageLocation));
+                }
+            }
+        }
+
+        public string BackupLocation {
+            get {
+                return _strBackupLocation;
+            }
+            set {
+                if (!_strBackupLocation.Equals(value)) {
+                    _strBackupLocation = value;
+                    OnPropertyChanged(nameof(BackupLocation));
                 }
             }
         }

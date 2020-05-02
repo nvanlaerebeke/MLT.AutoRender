@@ -58,6 +58,9 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\AssemblyInfo.cs">
+      <Link>Properties\AssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="Request\GetSettingsRequest.cs" />
     <Compile Include="Request\JobStopRequest.cs" />
     <Compile Include="Request\JobPauseRequest.cs" />

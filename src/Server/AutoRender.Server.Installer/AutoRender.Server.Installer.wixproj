@@ -77,7 +77,6 @@
     <PropertyGroup>
       <DefineConstants>BuildVersion=%(AssemblyVersion.Version);BasePath=..\..\..\build\Server</DefineConstants>
     </PropertyGroup>
-    <!--HeatDirectory OutputFile="ComponentsGenerated.wxs" DirectoryRefId="AutoRenderServerInstallDir" ComponentGroupName="PublishedComponents" SuppressCom="true" Directory="..\..\..\build\Server" SuppressFragments="true" SuppressRegistry="true" SuppressRootDirectory="true" AutoGenerateGuids="false" GenerateGuidsNow="true" ToolPath="$(WixToolPath)" PreprocessorVariable="var.BasePath" /-->
   </Target>
   <Target Name="AfterBuild">
   </Target>

@@ -20,10 +20,22 @@
     <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="ComponentsGenerated.wxs" />
     <Compile Include="include\Components.wxs" />
     <Compile Include="include\Directories.wxs" />
     <Compile Include="Product.wxs" />
+    <HarvestDirectory Include="..\..\..\build\Client\">
+      <DirectoryRefId>AutoRenderClientDirRef</DirectoryRefId>
+      <ComponentGroupName>AutoRenderClientComponentGroup</ComponentGroupName>
+      <PreprocessorVariable>var.BasePath</PreprocessorVariable>
+      <SuppressCom>true</SuppressCom>
+      <SuppressFragments>true</SuppressFragments>
+      <SuppressRegistry>true</SuppressRegistry>
+      <SuppressRootDirectory>true</SuppressRootDirectory>
+      <AutoGenerateGuids>false</AutoGenerateGuids>
+      <GenerateGuidsNow>true</GenerateGuidsNow>
+      <Link>
+      </Link>
+    </HarvestDirectory>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="include" />
@@ -54,8 +66,6 @@
     <PropertyGroup>
       <DefineConstants>BuildVersion=%(AssemblyVersion.Version);BasePath=..\..\..\build\Client</DefineConstants>
     </PropertyGroup>
-    <!-- Harvest file components from publish folder -->
-    <HeatDirectory OutputFile="ComponentsGenerated.wxs" DirectoryRefId="AutoRenderClientInstallDir" ComponentGroupName="PublishedComponents" SuppressCom="true" Directory="..\..\..\build\Client" SuppressFragments="true" SuppressRegistry="true" SuppressRootDirectory="true" AutoGenerateGuids="false" GenerateGuidsNow="true" ToolPath="$(WixToolPath)" PreprocessorVariable="var.BasePath" />
   </Target>
   <Target Name="AfterBuild">
   </Target>

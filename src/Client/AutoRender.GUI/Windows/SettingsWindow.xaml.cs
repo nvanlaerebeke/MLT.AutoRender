@@ -23,6 +23,8 @@ namespace AutoRender {
             _objViewModel.ShotcutExecutable = Settings.ShotcutExecutable;
             _objViewModel.HostName = Settings.HostName;
             _objViewModel.Port = Settings.Port;
+            _objViewModel.StorageLocation = Settings.StorageLocation;
+            _objViewModel.BackupLocation = Settings.BackupLocation;
 
             Connection.Workspace.GetSettings((r) => {
                 if (r.Status.State == Mitto.IMessaging.ResponseState.Success) {
@@ -65,6 +67,8 @@ namespace AutoRender {
             Settings.Port = _objViewModel.Port;
             Settings.ProjectPath = _objViewModel.LocalProjectDirectory;
             Settings.ShotcutExecutable = _objViewModel.ShotcutExecutable;
+            Settings.StorageLocation = _objViewModel.StorageLocation;
+            Settings.BackupLocation = _objViewModel.BackupLocation;
         }
 
         private void btnBrowseProjectDirectory_Click(object sender, System.Windows.RoutedEventArgs e) {
@@ -83,6 +87,26 @@ namespace AutoRender {
             };
             if (objDialog.ShowDialog() == true) {
                 _objViewModel.ShotcutExecutable = objDialog.FileName;
+            }
+        }
+
+        private void btnBrowseStorageLocation_Click(object sender, System.Windows.RoutedEventArgs e) {
+            var objDialog = new FolderBrowserDialog {
+                SelectedPath = _objViewModel.StorageLocation
+            };
+            var res = objDialog.ShowDialog();
+            if (res == System.Windows.Forms.DialogResult.OK) {
+                _objViewModel.StorageLocation = objDialog.SelectedPath;
+            }
+        }
+
+        private void btnBrowseBackupLocation_Click(object sender, System.Windows.RoutedEventArgs e) {
+            var objDialog = new FolderBrowserDialog {
+                SelectedPath = _objViewModel.BackupLocation
+            };
+            var res = objDialog.ShowDialog();
+            if (res == System.Windows.Forms.DialogResult.OK) {
+                _objViewModel.BackupLocation = objDialog.SelectedPath;
             }
         }
     }

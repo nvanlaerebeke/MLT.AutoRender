@@ -294,5 +294,9 @@ namespace AutoRender {
             };
             objSettingsWindow.Show();
         }
+
+        private void btnBackup_Click(object sender, RoutedEventArgs e) {
+            new Backup().Show();
+        }
     }
 }

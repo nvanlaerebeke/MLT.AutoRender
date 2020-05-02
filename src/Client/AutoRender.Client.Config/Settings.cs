@@ -60,8 +60,26 @@ namespace AutoRender.Client.Config {
                 return Get(nameof(Port), 37697);
             }
             set {
-                if (!HostName.Equals(value)) {
+                if (!Port.Equals(value)) {
                     Set(nameof(Port), value);
+                }
+            }
+        }
+
+        public static string StorageLocation {
+            get { return Get(nameof(StorageLocation), @"D:\"); }
+            set {
+                if (!StorageLocation.Equals(value)) {
+                    Set(nameof(StorageLocation), value);
+                }
+            }
+        }
+
+        public static string BackupLocation {
+            get { return Get(nameof(BackupLocation), @"E:\"); }
+            set {
+                if (!BackupLocation.Equals(value)) {
+                    Set(nameof(BackupLocation), value);
                 }
             }
         }

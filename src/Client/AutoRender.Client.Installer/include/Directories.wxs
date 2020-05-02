@@ -12,12 +12,14 @@
       <Directory Id="ProgramFiles64Folder">
         <Directory Id="INSTALLFOLDER" Name="AutoRender">
           <Directory Id="AutoRenderClientInstallDir" Name="Client" />
+          <Directory Id="AutoRenderClientDirRef" Name="Client" />
         </Directory>
       </Directory>
       <?else?>
       <Directory Id="ProgramFilesFolder">
         <Directory Id="INSTALLFOLDER" Name="AutoRender">
           <Directory Id="AutoRenderClientInstallDir" Name="Client" />
+          <Directory Id="AutoRenderClientDirRef" Name="Client" />
         </Directory>
       </Directory>
       <?endif?>

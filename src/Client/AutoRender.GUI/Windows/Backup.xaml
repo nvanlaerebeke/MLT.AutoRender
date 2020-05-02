@@ -1,0 +1,25 @@
+﻿<local:BaseWindow x:Class="AutoRender.Backup"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AutoRender"
+        mc:Ignorable="d"
+        Title="Backup" 
+        MinWidth="800" 
+        Height="500" 
+        Width="800">
+    <Grid>
+        <TextBox 
+            Grid.Row="0" 
+            BorderThickness="0" 
+            Background="Transparent" 
+            Name="txtActivity" 
+            VerticalScrollBarVisibility="Visible" 
+            TextWrapping="Wrap" 
+            SnapsToDevicePixels="True" 
+            AllowDrop="False" 
+            IsReadOnly="True"
+        />
+    </Grid>
+</local:BaseWindow>

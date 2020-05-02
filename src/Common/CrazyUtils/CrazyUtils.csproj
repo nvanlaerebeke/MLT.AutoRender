@@ -57,6 +57,9 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\AssemblyInfo.cs">
+      <Link>Properties\AssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="Config\ConfigManager.cs" />
     <Compile Include="Config\RegistryConfig.cs" />
     <Compile Include="Helpers\PathHelper.cs" />
@@ -65,6 +68,7 @@
     <Compile Include="SingleInstanceHelper.cs" />
     <Compile Include="StringWriterWithEncoding.cs" />
     <Compile Include="ProcessRunner.cs" />
+    <Compile Include="Tail.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />

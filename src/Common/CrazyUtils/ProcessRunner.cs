@@ -103,7 +103,7 @@ namespace CrazyUtils {
                 try {
                     _objProcess.PriorityClass = ProcessPriorityClass.BelowNormal;
                 } catch { }
-                var output = _objProcess.StandardOutput.ReadToEnd();
+                //var output = _objProcess.StandardOutput.ReadToEnd();
                 _objProcess.WaitForExit();
             } catch (Exception) {
                 Status = ProcessStatus.Failed;

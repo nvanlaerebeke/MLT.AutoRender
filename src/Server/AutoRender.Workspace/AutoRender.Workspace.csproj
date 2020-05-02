@@ -35,6 +35,9 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\AssemblyInfo.cs">
+      <Link>Properties\AssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="EqualExtension.cs" />
     <Compile Include="Monitor\FinalMonitor.cs" />
     <Compile Include="Monitor\Monitor.cs" />

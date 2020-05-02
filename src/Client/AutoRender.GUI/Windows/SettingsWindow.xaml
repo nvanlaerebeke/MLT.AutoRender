@@ -81,7 +81,57 @@
                 </Grid>
             </Grid>
 
-            <Separator Margin="5,5,5,5" Height="4" Width="Auto" BorderBrush="Red" HorizontalAlignment="Stretch" />
+            <TextBlock Margin="5,5,5,5" Text="Storage Settings" />
+            <Grid Margin="0,0,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="100*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <Label Margin="5,5,5,5" Grid.Row="0" Grid.Column="0" Content="Storage Location: " VerticalAlignment="Stretch" HorizontalContentAlignment="Left" Width="Auto" />
+                <Grid Grid.Row="0" Grid.Column="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="100*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBox
+                            Text="{Binding StorageLocation, Mode=OneWay}"
+                            BorderBrush="Red"
+                            BorderThickness="1"
+                            Margin="5"
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            HorizontalAlignment="Stretch"
+                            Width="150"
+                            IsReadOnly="True" />
+                    <Button Grid.Column="1" Grid.Row="0" Name="btnBrowseStorageLocation" Click="btnBrowseStorageLocation_Click" HorizontalAlignment="Right">Browse</Button>
+                </Grid>
+                <Label Margin="5" Grid.Row="1" Grid.Column="0" Content="Backup Location: " VerticalAlignment="Stretch" HorizontalContentAlignment="Left" Width="Auto" />
+                <Grid Grid.Row="1" Grid.Column="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="100*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBox
+                        Text="{Binding BackupLocation, Mode=OneWay}"
+                        BorderBrush="Red"
+                        BorderThickness="1"
+                        Margin="5"
+                        Grid.Column="0"
+                        Width="150"
+                        IsReadOnly="True" />
+                    <Button Grid.Column="1" Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Center" Name="btnBrowseBackupLocation" Click="btnBrowseBackupLocation_Click" DockPanel.Dock="Right">Browse</Button>
+                </Grid>
+            </Grid>
+
             <Separator Margin="5,5,5,5" Height="4" Width="Auto" BorderBrush="Red" HorizontalAlignment="Stretch" />
             <TextBlock Margin="5,5,5,5" Text="Server Connection" />
             <Grid Margin="0,5,0,0">
