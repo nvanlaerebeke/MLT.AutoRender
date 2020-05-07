@@ -2,7 +2,7 @@
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi" xmlns:bal="http://schemas.microsoft.com/wix/BalExtension">
   <Bundle
     Name="AutoRender"
-    Version="2.0.0.1"
+    Version="2.0.0.12"
     Manufacturer="CrazyTown"
     UpgradeCode="{BFD7E68F-5B5F-4859-B1AF-15DC4915BAAB}"
     IconSourceFile="..\Resources\autorender.ico">

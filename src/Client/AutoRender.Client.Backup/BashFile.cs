@@ -19,18 +19,19 @@ namespace AutoRender.Client.Backup {
         }
 
         private string GetContent() {
+            //    --inplace \
             return $@"#!/bin/bash
-
-cd ~
-
 rsync \
     -vvaWhHA \
     --chmod=Dg+s,ug+w,Fo-w,+X \
     --delete \
     --progress \
-    --inplace \
     --exclude '$RECYCLE.BIN' \
     --exclude 'System Volume Information' \
+    --exclude 'Series/Complete' \
+    --exclude 'Series/Dropped' \
+    --exclude 'Series/Incomplete' \
+    --exclude 'Series/Ongoing' \
     --exclude 'Anime' \
     '{From}' '{To}' \
     | tee '{LogFile}'".Replace(System.Environment.NewLine, "\n");

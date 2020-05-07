@@ -73,6 +73,12 @@ namespace AutoRender.Client.Connection {
             });
         }
 
+        public void Disconnect() {
+            try {
+                _objClient.Disconnect();
+            } catch (Exception) { }
+        }
+
         private void Connected(object sender, Mitto.Client e) {
             StatusChanged?.Invoke(this, ConnectionStatus.Connected);
         }

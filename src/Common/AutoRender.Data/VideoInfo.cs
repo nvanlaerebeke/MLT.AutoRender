@@ -20,6 +20,7 @@ namespace AutoRender.Data {
         #region Audio
 
         public string AudioCodec { get; set; }
+        public float FrameRate { get; set; }
 
         #endregion Audio
     }

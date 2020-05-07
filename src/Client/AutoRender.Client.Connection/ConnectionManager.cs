@@ -34,6 +34,9 @@ namespace AutoRender.Client.Connection {
         }
 
         public void Start() {
+            if (Client.Status == ConnectionStatus.Connecting) {
+                Client.Disconnect();
+            }
             if (Client.Status == ConnectionStatus.Disconnected) {
                 Client.Connect();
             }

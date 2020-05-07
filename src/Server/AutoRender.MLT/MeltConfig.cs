@@ -212,13 +212,18 @@ namespace AutoRender.MLT {
             if (sep != ".") {
                 var matches = pConfig.Descendants().Where(s => (s.Name == "producer" || s.Name == "tractor") && s.Attributes().Any(a => a.Name == "in" || a.Name == "out")).ToList();
                 pConfig.Descendants().Where(s => (s.Name == "producer" || s.Name == "tractor") && s.Attributes().Any(a => a.Name == "in" || a.Name == "out")).ToList().ForEach(r => {
+                    //r.Attribute("in").Value = r.Attribute("in").Value.Replace(sep, ".");
+                    //r.Attribute("out").Value = r.Attribute("out").Value.Replace(sep, ".");
                     r.Attribute("in").Value = r.Attribute("in").Value.Replace(".", sep);
                     r.Attribute("out").Value = r.Attribute("out").Value.Replace(".", sep);
                 });
                 pConfig.Descendants().Where(s => s.Name == "property" && s.Attribute("name").Value == "length").ToList().ForEach(r => {
+                    //r.Value = r.Value.Replace(sep, ".");
                     r.Value = r.Value.Replace(".", sep);
                 });
                 pConfig.Descendants().Where(s => s.Name == "entry" && s.Attributes().Any(a => a.Name == "in" || a.Name == "out")).ToList().ForEach(r => {
+                    //r.Attribute("in").Value = r.Attribute("in").Value.Replace(sep, ".");
+                    //r.Attribute("out").Value = r.Attribute("out").Value.Replace(sep, ".");
                     r.Attribute("in").Value = r.Attribute("in").Value.Replace(".", sep);
                     r.Attribute("out").Value = r.Attribute("out").Value.Replace(".", sep);
                 });

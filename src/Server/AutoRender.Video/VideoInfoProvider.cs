@@ -79,7 +79,8 @@ namespace AutoRender.Video {
                     Name = new FileInfo(pPath).Name,
                     Path = pPath,
                     VideoCodec = GetVideoCodec(v.CodecName),
-                    Width = v.Width
+                    Width = v.Width,
+                    FrameRate = v.FrameRate
                 };
             }
         }

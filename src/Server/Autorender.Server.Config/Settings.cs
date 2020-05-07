@@ -122,9 +122,10 @@ namespace AutoRender.Server.Config {
                 return new Dictionary<string, string> {
                     //crf sets quality
                     //https://trac.ffmpeg.org/wiki/Encode/H.264#a1.ChooseaCRFvalue
-                    { "crf",  "21" },
-                    { "preset",  "medium" },
-                    { "tune", "film" },
+                    { "crf",  "23" },
+                    //{ "preset",  "slower" },
+                    { "preset",  "fast" },
+                    //{ "tune", "film" },
 
                     //required settings melt
                     { "mlt_service",  "avformat" },
@@ -135,7 +136,7 @@ namespace AutoRender.Server.Config {
 
                     //resizing params - hardcoded, no need to change this
                     { "rescale",  "bilinear" },
-                    { "progressive",  "1" },
+                    //{ "progressive",  "1" },
 
                     //Video codec settings
                     { "vcodec",  "libx264" }, // -- x264 by default
@@ -151,32 +152,32 @@ namespace AutoRender.Server.Config {
                     // when files are interlaced, deinterlace them
                     {"deinterlace_method",  "yadif" },
                     {"top_field_first",  "2" },
-                    {"trellis",  "1" },
+                    //{"trellis",  "2" },
 
                     //settings overwritten by source file
                     {"bf",  "3" }, // -- 16 recommended by ffmpeg https://sites.google.com/site/linuxencoding/x264-ffmpeg-mapping
-                    {"b_strategy",  "1" },
+                    {"b_strategy",  "2" },
                     {"height",  "720" },
                     {"width",  "1280" },
 
                     //Final frame rate: r = num/den (24000/1001=23,97...)
                     //{"frame_rate_den",  "1000" }, // devider
                     //{"frame_rate_num",  "25000" }, //frame rate num
-                    {"r",  "25" },
+                    //{"r",  "30" },
 
                     //GOP = keyframe interval, recommended in 250
-                    { "g",  "125" }, // -- https://sites.google.com/site/linuxencoding/x264-ffmpeg-mapping
+                    { "g",  "150" }, // -- https://sites.google.com/site/linuxencoding/x264-ffmpeg-mapping
 
                     //audio
-                    //{ "acodec",  "aac" }, // default audio codec
+                    { "acodec",  "aac" }, // default audio codec
                     //{ "ar",  "48000"  }, // -- sample rate: https://www.mltframework.org/plugins/ConsumerAvformat/#ar
                     //{ "ab",  "384k" }, // -- bitrate
                     //{ "ac",  "2" },
                     //{ "channels",  "2" },
 
-                    { "mbd",  "rd" },
-                    { "subcmp",  "satd" },
-                    { "cmp",  "satd" },
+                    //{ "mbd",  "rd" },
+                    //{ "subcmp",  "satd" },
+                    //{ "cmp",  "satd" },
                     //{ "aspect",  "1,77778" },
                 };
             }

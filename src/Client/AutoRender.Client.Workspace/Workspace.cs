@@ -38,7 +38,7 @@ namespace AutoRender.Client.Workspace {
 
         public bool Subscribe() {
             var res = _objClient.Request<ACKResponse>(new WorkspaceUpdatedSubscribe());
-            res.Wait();
+            res.Wait(5000);
             if (res.IsCompleted && res.Status == TaskStatus.RanToCompletion) {
                 return res.Result.Status.State == ResponseState.Success;
             }

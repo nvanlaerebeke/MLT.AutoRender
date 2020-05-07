@@ -31,13 +31,18 @@ namespace AutoRender {
                 new XElement("mlt",
                     new XAttribute("LC_NUMERIC", "C"),
                     new XAttribute("producer", "main_bin"),
+                    new XElement("profile",
+                        new XAttribute("description", "automatic"),
+                        new XAttribute("width", pWorkspaceItem.New.Width),
+                        new XAttribute("height", pWorkspaceItem.New.Height),
+                        new XAttribute("display_aspect_num", pWorkspaceItem.New.Width),
+                        new XAttribute("display_aspect_den", pWorkspaceItem.New.Height)
+                    //new XAttribute("colorspace", "709")
+                    ),
                     new XElement("playlist",
                         new XAttribute("id", "main_bin"),
                         new XAttribute("autoclose", "1"),
                         new XElement("property", new XAttribute("name", "xml_retain")) { Value = "1" }
-                    ),
-                    new XElement("profile",
-                        new XAttribute("description", "automatic")
                     ),
                     //new XAttribute("width", pWorkspaceItem.New.Width),
                     //new XAttribute("height", pWorkspaceItem.New.Height),
@@ -58,14 +63,14 @@ namespace AutoRender {
                         new XAttribute("out", strDurationEnd),
                         new XElement("property", new XAttribute("name", "length")) { Value = strDurationEnd },
                         new XElement("property", new XAttribute("name", "eof")) { Value = "pause" },
-                        new XElement("property", new XAttribute("name", "resource")) { Value = "black" },
+                        new XElement("property", new XAttribute("name", "resource")) { Value = "0" },
                         new XElement("property", new XAttribute("name", "aspect_ratio")) { Value = "1" },
                         new XElement("property", new XAttribute("name", "mlt_service")) { Value = "color" },
                         new XElement("property", new XAttribute("name", "set.test_audio")) { Value = "0" }
+                        //new XElement("property", new XAttribute("name", "set.mlt_image_format")) { Value = "rgb24a" }
                     ),
                     new XElement("playlist",
                         new XAttribute("id", "background"),
-                        new XAttribute("autoclose", "1"),
                         new XElement("entry",
                             new XAttribute("producer", "black"),
                             new XAttribute("in", strDurationStart),
@@ -76,9 +81,9 @@ namespace AutoRender {
                         new XAttribute("id", "producer0"),
                         new XAttribute("in", strDurationStart),
                         new XAttribute("out", strDurationEnd),
-                        new XElement("property", new XAttribute("name", "resource")) { Value = strSourceFile },
                         new XElement("property", new XAttribute("name", "length")) { Value = strDurationEnd },
                         new XElement("property", new XAttribute("name", "eof")) { Value = "pause" },
+                        new XElement("property", new XAttribute("name", "resource")) { Value = strSourceFile },
                         new XElement("property", new XAttribute("name", "audio_index")) { Value = "1" },
                         new XElement("property", new XAttribute("name", "video_index")) { Value = "0" },
                         new XElement("property", new XAttribute("name", "mute_on_pause")) { Value = "0" },
@@ -86,11 +91,11 @@ namespace AutoRender {
                         new XElement("property", new XAttribute("name", "seekable")) { Value = "1" },
                         new XElement("property", new XAttribute("name", "aspect_ratio")) { Value = "1" },
                         new XElement("property", new XAttribute("name", "ignore_points")) { Value = "0" },
-                        new XElement("property", new XAttribute("name", "global_feed")) { Value = "1" }
+                        new XElement("property", new XAttribute("name", "global_feed")) { Value = "1" },
+                        new XElement("property", new XAttribute("name", "xml")) { Value = "was here" }
                     ),
                     new XElement("playlist",
                         new XAttribute("id", "playlist0"),
-                        new XAttribute("autoclose", "1"),
                         new XElement("entry",
                             new XAttribute("producer", "producer0"),
                             new XAttribute("in", strDurationStart),
@@ -100,9 +105,27 @@ namespace AutoRender {
                     new XElement("tractor",
                         new XAttribute("id", "tractor0"),
                         new XAttribute("global_feed", "1"),
+                        new XAttribute("in", strDurationStart),
+                        new XAttribute("out", strDurationEnd),
                         new XElement("property", new XAttribute("name", "shotcut")) { Value = "1" },
                         new XElement("track", new XAttribute("producer", "background")),
-                        new XElement("track", new XAttribute("producer", "playlist0"))
+                        new XElement("track", new XAttribute("producer", "playlist0")),
+                        new XElement("transition",
+                          new XAttribute("id", "transition0"),
+                          new XElement("property", new XAttribute("name", "a_track")) { Value = "0" },
+                          new XElement("property", new XAttribute("name", "b_track")) { Value = "1" },
+                          new XElement("property", new XAttribute("name", "mlt_service")) { Value = "mix" },
+                          new XElement("property", new XAttribute("name", "always_active")) { Value = "1" },
+                          new XElement("property", new XAttribute("name", "sum")) { Value = "1" }
+                        ),
+                        new XElement("transition",
+                          new XAttribute("id", "transition1"),
+                          new XElement("property", new XAttribute("name", "a_track")) { Value = "0" },
+                          new XElement("property", new XAttribute("name", "b_track")) { Value = "1" },
+                          new XElement("property", new XAttribute("name", "version")) { Value = "0.9" },
+                          new XElement("property", new XAttribute("name", "mlt_service")) { Value = "frei0r.cairoblend" },
+                          new XElement("property", new XAttribute("name", "disable")) { Value = "1" }
+                        )
                     )
                 )
             );
